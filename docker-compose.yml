@@ -5,13 +5,13 @@ services:
     image: sisinflabpoliba/ducho
     tty: true
     stdin_open: true
+    environment:
+      - PYTHONPATH=.
     deploy:
       resources:
         reservations:
           devices:
             - capabilities: [gpu]
-    environment:
-      - PYTHONPATH=.
     command: python3.8 demos/demo1.py
     volumes:
       - ./data:/Ducho/data
