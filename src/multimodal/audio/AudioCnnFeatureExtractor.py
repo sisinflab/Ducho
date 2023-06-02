@@ -30,7 +30,7 @@ class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
         if 'torch' in self._framework_list or 'torchaudio' in self._framework_list:
             model_to_initialize = getattr(torchaudio.pipelines, model_name)
             self._model = model_to_initialize.get_model()
-            self._model.to(self._device)
+            self._model = self._model.to(self._device)
             self._model.eval()
             # self._model.to(self._gpu)
         elif 'transformers' in self._framework_list:

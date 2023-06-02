@@ -78,7 +78,6 @@ class MultimodalFeatureExtractor:
         logging.info(f'TENSORFLOW: {tf.config.list_physical_devices("GPU")}')
         logging.info(f'PYTORCH: {torch.cuda.is_available()}')
 
-
     def execute_extractions(self):
         """
         It executes all the extraction that have to be done

@@ -11,7 +11,7 @@ class CnnFeatureExtractorFather:
         self._model_name = None
         self._gpu = gpu
 
-        self._device = torch.device("cuda:" + str(self._gpu) if self._gpu != '-1' else "cpu")
+        self._device = torch.device(f'cuda:{self._gpu}' if torch.cuda.is_available() else 'cpu')
 
     def set_output_layer(self, output_layer):
         self._output_layer = output_layer
