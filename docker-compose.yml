@@ -12,8 +12,6 @@ services:
         reservations:
           devices:
             - capabilities: [ gpu ]
-    command:
-      - nvidia-smi
-      - python3.8 demos/demo1.py
+    command: bash -c "nvidia-smi && python3.8 demos/demo1.py"
     volumes:
       - ./data:/Ducho/data
