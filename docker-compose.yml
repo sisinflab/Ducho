@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  ducho:
+  demo1:
     image: sisinflabpoliba/ducho
     tty: true
     stdin_open: true
@@ -10,5 +10,6 @@ services:
         reservations:
           devices:
             - capabilities: [gpu]
+    command: PYTHONPATH=. python3.8 demos/demo1.py
     volumes:
       - ./data:/Ducho/data
