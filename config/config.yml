@@ -12,7 +12,7 @@
 
 dataset_path: '../data/'
 gpu list: -1
-model_map: 'modelMap.yml'
+model map: 'modelMap.yml'
 
 visual:
     items:
