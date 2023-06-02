@@ -2,6 +2,8 @@ import os
 import logging
 from tqdm import tqdm
 from art import *
+import tensorflow as tf
+import torch
 
 from src.config.Config import Config
 from src.multimodal.visual.VisualDataset import VisualDataset
@@ -72,6 +74,10 @@ class MultimodalFeatureExtractor:
         logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
         # set gpu to use
         os.environ['CUDA_VISIBLE_DEVICES'] = self._config.get_gpu()
+        logging.info('Checking if CUDA version is compatible with TensorFlow and PyTorch...')
+        logging.info(f'TENSORFLOW: {tf.config.list_physical_devices("GPU")}')
+        logging.info(f'PYTORCH: {torch.cuda.is_available()}')
+
 
     def execute_extractions(self):
         """
