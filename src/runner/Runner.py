@@ -32,17 +32,19 @@ def _execute_extraction_from_models_list(models, extractor, dataset, modality_ty
         # set model
         # extractor.set_model(model['name'])
         extractor.set_model(model)
+
         dataset.set_model(model['name'])
 
         # set preprocessing flag
+
+        print('ciao 1')
+
         dataset.set_preprocessing_flag(model['preprocessing_flag'])
 
-        print('ciao')
+        print('ciao 2')
 
         # execute extractions
         for model_layer in model['output_layers']:
-
-            print('ciao ciao')
 
             logging.info(' Now using layer: - %s', str(model_layer))
 
