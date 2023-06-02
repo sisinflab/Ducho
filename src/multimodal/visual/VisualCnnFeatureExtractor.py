@@ -34,11 +34,11 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
 
         self._model_name = model_name
         if self._model_name in tensorflow_keras_list and 'tensorflow' in self._framework_list:
-            self._model = getattr(tensorflow.keras.applications, self._model_name)()
+            self.__setattr__(self._model_name, getattr(tensorflow.keras.applications, self._model_name)())
         elif self._model_name.lower() in torchvision_list and 'torch' in self._framework_list:
-            self._model = getattr(torchvision.models, self._model_name.lower())(weights='DEFAULT')
-            self._model.to(self._device)
-            self._model.eval()
+            self.__setattr__(self._model_name.lower(), getattr(torchvision.models, self._model_name.lower())(weights='DEFAULT'))
+            self.__getattribute__(self._model_name.lower()).to(self._device)
+            self.__getattribute__(self._model_name.lower()).eval()
         else:
             raise NotImplemented('This feature extractor has not been added yet!')
 
@@ -52,14 +52,14 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
         torchvision_list = list(torchvision.models.__dict__)
         if self._model_name.lower() in torchvision_list and 'torch' in self._framework_list:
             # torch
-            if isinstance(list(self._model.children())[-1], torch.nn.Linear):
-                s1 = torch.nn.Sequential(*list(self._model.children())[:-self._output_layer])
+            if isinstance(list(self.__getattribute__(self._model_name.lower()).children())[-1], torch.nn.Linear):
+                s1 = torch.nn.Sequential(*list(self.__getattribute__(self._model_name.lower()).children())[:-self._output_layer])
                 s2 = torch.nn.Flatten()
                 feature_model = torch.nn.Sequential(s1, s2)
             else:
-                s1 = torch.nn.Sequential(*list(self._model.children())[:-1])
+                s1 = torch.nn.Sequential(*list(self.__getattribute__(self._model_name.lower()).children())[:-1])
                 s2 = torch.nn.Flatten()
-                s3 = torch.nn.Sequential(*list(list(self._model.children())[-1][1:-self._output_layer]))
+                s3 = torch.nn.Sequential(*list(list(self.__getattribute__(self._model_name.lower()).children())[-1][1:-self._output_layer]))
                 feature_model = torch.nn.Sequential(s1, s2, s3)
             feature_model.eval()
             output = np.squeeze(feature_model(
@@ -69,8 +69,8 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
             self._framework_list = ['torch']
         else:
             # tensorflow
-            input_model = self._model.input
-            output_layer = self._model.get_layer(self._output_layer).output
+            input_model = self.__getattribute__(self._model_name).input
+            output_layer = self.__getattribute__(self._model_name).get_layer(self._output_layer).output
             output = tf.keras.Model(input_model, output_layer)(image, training=False)
             # update the framework list
             self._framework_list = ['tensorflow']
