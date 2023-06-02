@@ -19,7 +19,7 @@ visual:
         input_folder: 'images'
         output_folder: 'embeddings'
         model: [
-              { name: 'ResNet50' , output_layers: [ 'avg_pool','conv5_block3_out' ], reshape: [ 224 ,224 ], framework: ['tensorflow'] },
+              # { name: 'ResNet50' , output_layers: [ 'avg_pool','conv5_block3_out' ], reshape: [ 224 ,224 ], framework: ['tensorflow'] },
               { name: 'AlexNet',  output_layers: 5, reshape: [ 224,224 ]},
               { name: 'ResNet50' , output_layers: 3 , reshape: [ 224,224 ], framework: ['torch'] }
             ]
