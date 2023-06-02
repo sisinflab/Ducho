@@ -14,7 +14,7 @@ pandas
 pip-chill
 python-version
 sacremoses
-sklearn
+scikit-learn
 soundfile
 tensorflow-estimator
 tensorflow
