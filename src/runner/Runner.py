@@ -27,21 +27,28 @@ def _execute_extraction_from_models_list(models, extractor, dataset, modality_ty
 
         # set framework
         extractor.set_framework(model['framework'])
+
+        print('ciao 1')
+
         dataset.set_framework(model['framework'])
+
+        print('ciao 2')
 
         # set model
         # extractor.set_model(model['name'])
         extractor.set_model(model)
 
+        print('ciao 3')
+
         dataset.set_model(model['name'])
+
+        print('ciao 4')
 
         # set preprocessing flag
 
-        print('ciao 1')
-
         dataset.set_preprocessing_flag(model['preprocessing_flag'])
 
-        print('ciao 2')
+        print('ciao 5')
 
         # execute extractions
         for model_layer in model['output_layers']:
