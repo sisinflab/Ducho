@@ -19,4 +19,4 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    main(['--dataset_path=./data/demo1', '--gpu_list=0'])
+    main(['--dataset_path=./data/demo1', '--gpu list=0'])
