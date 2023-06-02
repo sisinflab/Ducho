@@ -19,6 +19,7 @@ scikit-learn
 soundfile
 tensorflow-estimator
 tensorflow
+nvidia-cudnn-cu11==8.7.0.84
 torchaudio==2.0.1
 torchtext
 torchvision==0.15.1+cu118
