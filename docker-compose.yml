@@ -11,7 +11,8 @@ services:
       resources:
         reservations:
           devices:
-            - capabilities: [gpu]
+            - driver: nvidia
+              capabilities: [gpu]
     command: python3.8 demos/demo1.py
     volumes:
       - ./data:/Ducho/data
