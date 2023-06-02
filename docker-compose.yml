@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  demo-graph:
+    image: sisinflabpoliba/ducho
+    tty: true
+    stdin_open: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    volumes:
+      - ./data:/Ducho/data

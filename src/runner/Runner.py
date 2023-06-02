@@ -58,7 +58,7 @@ def _execute_extraction_from_models_list(models, extractor, dataset, modality_ty
 
 class MultimodalFeatureExtractor:
 
-    def __init__(self, config_file_path='./config/config.yml', argv=None):
+    def __init__(self, config_file_path='../config/config.yml', argv=None):
         """
         It instantiates the framework. Note the config file is a yml file
         :param config_file_path: As a String, it could be the absolute path, or the path to the folder of the confg file

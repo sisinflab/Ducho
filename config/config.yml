@@ -10,14 +10,14 @@
 # if it is visual extraction then there is another flag in model: reshape(x,y)
 # otherwise if is a textual extraction: clear_text True/False
 
-dataset_path: 'D:\dati\uni\tesi\datasetFolder'
+dataset_path: '../data/'
 gpu list: -1
 model map: 'modelMap.yml'
 
 visual:
     items:
-        input_folder: 'inputVisual'
-        output_folder: 'outputVisual'
+        input_folder: 'images'
+        output_folder: 'embeddings'
         model: [
               { name: 'ResNet50' , output_layers: [ 'avg_pool','conv5_block3_out' ], reshape: [ 224 ,224 ], framework: ['tensorflow'] },
               { name: 'AlexNet',  output_layers: 5, reshape: [ 224,224 ]},

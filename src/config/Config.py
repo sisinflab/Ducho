@@ -41,8 +41,9 @@ class Config:
         self._yaml_manager = YamlFileManager(config_file_path)
         self._data_dict = self._yaml_manager.get_raw_dict()
 
-        for kv in argv:
-            self.__update_dict(kv.split("=")[0], kv.split("=")[1])
+        if argv:
+            for kv in argv:
+                self.__update_dict(kv.split("=")[0], kv.split("=")[1])
 
         self._data_dict = self.__clean_dict(self._data_dict)
 
