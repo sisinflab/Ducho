@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  demo-graph:
+  ducho:
     image: sisinflabpoliba/ducho
     tty: true
     stdin_open: true
