@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.multimodal.textual.TextualCnnFeatureExtractor &mdash; Ducho 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Ducho
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Ducho</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.multimodal.textual.TextualCnnFeatureExtractor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.multimodal.textual.TextualCnnFeatureExtractor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">FeatureExtractionPipeline</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">PreTrainedModel</span>
+<span class="c1"># import transformers.pipelines.</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="c1"># import torchtext</span>
+<span class="kn">from</span> <span class="nn">src.internal.father_classes.CnnFeatureExtractorFather</span> <span class="kn">import</span> <span class="n">CnnFeatureExtractorFather</span>
+
+
+<div class="viewcode-block" id="TextualCnnFeatureExtractor"><a class="viewcode-back" href="../../../../src.multimodal.textual.html#src.multimodal.textual.TextualCnnFeatureExtractor.TextualCnnFeatureExtractor">[docs]</a><span class="k">class</span> <span class="nc">TextualCnnFeatureExtractor</span><span class="p">(</span><span class="n">CnnFeatureExtractorFather</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gpu</span><span class="o">=</span><span class="s1">&#39;-1&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It does Textual extraction. It is needed also to give the model name, the framework and the output_layer. You can</span>
+<span class="sd">        later change one of them as needed.</span>
+<span class="sd">        :param gpu: gpu: String on which is explained which gpu to use. &#39;-1&#39; -&gt; cpu</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">gpu</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TextualCnnFeatureExtractor.set_model"><a class="viewcode-back" href="../../../../src.multimodal.textual.html#src.multimodal.textual.TextualCnnFeatureExtractor.TextualCnnFeatureExtractor.set_model">[docs]</a>    <span class="k">def</span> <span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            model_name: is the name of the model to use as a String.</span>
+<span class="sd">                        NOTE: in this case we are using transformers so the model name have to be in its list.</span>
+<span class="sd">                        Since we are using transformers here, it is needed also to point the repo so: &#39;repo/model&#39;</span>
+<span class="sd">        Returns: nothing but it initializes the protected model and tokenizer attributes, later used for extraction</span>
+<span class="sd">        :param model:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model_name</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="n">model_task</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;transformers&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_framework_list</span><span class="p">:</span>
+            <span class="n">built_pipeline</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">model_task</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">built_pipeline</span><span class="o">.</span><span class="n">model</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer</span> <span class="o">=</span> <span class="n">built_pipeline</span><span class="o">.</span><span class="n">tokenizer</span></div>
+            <span class="c1"># self._pipeline = built_pipeline</span>
+            <span class="c1"># sentiment_pipeline = pipeline(model=model_name)</span>
+            <span class="c1"># model = list(sentiment_pipeline.model.children())[-3]</span>
+            <span class="c1"># model.eval()</span>
+            <span class="c1"># model.to(self._device)</span>
+            <span class="c1"># self._model = model</span>
+            <span class="c1"># self._tokenizer = sentiment_pipeline.tokenizer</span>
+
+            <span class="c1"># extraction_pipeline = pipeline(&quot;sentiment-analysis&quot;, model=&quot;bert-base-uncased&quot;)</span>
+            <span class="c1"># self._model = extraction_pipeline</span>
+
+<div class="viewcode-block" id="TextualCnnFeatureExtractor.extract_feature"><a class="viewcode-back" href="../../../../src.multimodal.textual.html#src.multimodal.textual.TextualCnnFeatureExtractor.TextualCnnFeatureExtractor.extract_feature">[docs]</a>    <span class="k">def</span> <span class="nf">extract_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_input</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It does extract the feature from the input. Framework, model and layer HAVE TO be already set with their set</span>
+<span class="sd">        methods.</span>
+<span class="sd">        :param sample_input: the String in input to process</span>
+<span class="sd">        :return: a numpy array that will be put in a .npy file calling the right Dataset Class&#39; method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;transformers&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_framework_list</span><span class="p">:</span>
+            <span class="n">model_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer</span><span class="p">(</span><span class="n">sample_input</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+            <span class="n">model_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">(</span><span class="o">**</span><span class="n">model_input</span><span class="p">,</span> <span class="n">output_hidden_states</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">layer_output</span> <span class="o">=</span> <span class="n">model_output</span><span class="o">.</span><span class="n">hidden_states</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_layer</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">layer_output</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></div></div>
+
+            <span class="c1"># output = self._tokenizer.encode_plus(sample_input, return_tensors=&quot;pt&quot;).to(self._device)</span>
+            <span class="c1"># return self._model(**output.to(self._device)).pooler_output.detach().cpu().numpy()</span>
+
+            <span class="c1"># output = self._model(sample_input)</span>
+            <span class="c1"># layer = output[0][&quot;hidden_states&quot;][self._output_layer]</span>
+            <span class="c1"># return layer.detach().numpy()</span>
+            <span class="c1"># extraction_pipeline = pipeline(&quot;sentiment-analysis&quot;, model=&quot;bert-base-uncased&quot;)</span>
+            <span class="c1"># output = extraction_pipeline(sample_input)</span>
+            <span class="c1"># print(output)</span>
+
+            <span class="c1"># model = PreTrainedModel(&quot;bert-base-uncased&quot;)</span>
+            <span class="c1"># the_pipeline = FeatureExtractionPipeline(model=&#39;&#39;)</span>
+            <span class="c1"># model = pipeline(&quot;feature-extraction&quot;, model=&quot;bert-base-uncased&quot;)</span>
+            <span class="c1"># print(&#39;heo&#39;)</span>
+
+            <span class="c1"># classifier = pipeline(&quot;question-answering&quot;, model=&quot;stevhliu/my_awesome_model&quot;)</span>
+            <span class="c1"># model = classifier.model</span>
+            <span class="c1"># tokenizer = classifier.tokenizer</span>
+            <span class="c1"># inputt = tokenizer(sample_input, return_tensors=&quot;pt&quot;)</span>
+            <span class="c1"># output = model(**inputt, output_hidden_states=True)</span>
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniele Malitesta, Giuseppe Gassi, Claudio Pomo, Tommaso Di Noia.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

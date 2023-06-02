@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.multimodal.textual.TextualDataset &mdash; Ducho 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Ducho
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Ducho</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.multimodal.textual.TextualDataset</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.multimodal.textual.TextualDataset</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">src.internal.father_classes.DatasetFather</span> <span class="kn">import</span> <span class="n">DatasetFather</span>
+<span class="kn">from</span> <span class="nn">src.internal.utils.TextualFileManager</span> <span class="kn">import</span> <span class="n">TextualFileManager</span>
+
+
+<span class="c1"># the following function is not called right now. but it will be needed in the future</span>
+<div class="viewcode-block" id="complex_spit_of_list_of_string"><a class="viewcode-back" href="../../../../src.multimodal.textual.html#src.multimodal.textual.TextualDataset.complex_spit_of_list_of_string">[docs]</a><span class="k">def</span> <span class="nf">complex_spit_of_list_of_string</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">splitter</span><span class="p">):</span>
+    <span class="n">sample_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">el</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">splitter</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">temp</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">sentence</span> <span class="o">=</span> <span class="n">sentence</span> <span class="o">+</span> <span class="n">splitter</span>
+            <span class="n">sample_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+        <span class="c1"># now append the last that was excluded in the for each</span>
+        <span class="n">sample_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">sample_list</span></div>
+
+
+<div class="viewcode-block" id="TextualDataset"><a class="viewcode-back" href="../../../../src.multimodal.textual.html#src.multimodal.textual.TextualDataset.TextualDataset">[docs]</a><span class="k">class</span> <span class="nc">TextualDataset</span><span class="p">(</span><span class="n">DatasetFather</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_directory_path</span><span class="p">,</span> <span class="n">output_directory_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Manage the Text Dataset (folder of input and folder of output).</span>
+<span class="sd">        It will Manage data of input (and their preprocessing), and data of output</span>
+<span class="sd">        :param input_directory_path: folder of the input data to elaborate as String</span>
+<span class="sd">        :param output_directory_path: folder of where put Output as String, it will be created if does not exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">input_directory_path</span><span class="p">,</span> <span class="n">output_directory_path</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_text_to_be_cleaned</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_textual_file_manager</span> <span class="o">=</span> <span class="n">TextualFileManager</span><span class="p">()</span>
+        <span class="c1"># if num_sample is 1, it means it have to be the num of sample in the single file</span>
+        <span class="c1"># in this case the textual file manager have to behave accordingly</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_samples</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_environment_for_single_file_extractions</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_prepare_environment_for_single_file_extractions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        it prepares the env to utilize only one file</span>
+<span class="sd">        the runner cycles trought the num samples. if there is only one file the num samples is the number of row of</span>
+<span class="sd">        the file. Right now this is the only choice, but in the future maybe a user will need to give different files,</span>
+<span class="sd">        so this func is accommodated to build this kind of login in the future</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_directory_path</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_input_directory_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_textual_file_manager</span><span class="o">.</span><span class="n">set_file_path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_textual_file_manager</span><span class="o">.</span><span class="n">initiate_element_list_and_get_len</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It retrieves a sample preprocessed given its id. Only in the Textual case the id refers to the row of the file</span>
+<span class="sd">        Args:</span>
+<span class="sd">            index: is the index in the filenames list from which extract the name of te file to elaborate</span>
+<span class="sd">        Returns: a String which contains the data of the file. It may be processed and cleaned</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_textual_file_manager</span><span class="o">.</span><span class="n">get_item_from_id</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_pre_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It cleans the String</span>
+<span class="sd">        :param sample: String to clean</span>
+<span class="sd">        :return: Cleaned String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># the following code is inspired by:</span>
+        <span class="c1"># https://github.com/JarenceSJ/ReviewGraph/blob/main/nlp_util.py#L123</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_to_be_cleaned</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^A-Za-z0-9&#39;,.!;?()]&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\.&quot;</span><span class="p">,</span> <span class="s2">&quot; . &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;!+&quot;</span><span class="p">,</span> <span class="s2">&quot; ! &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot; , &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="s2">&quot; ; &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\\</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot; ! &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\(&quot;</span><span class="p">,</span> <span class="s2">&quot; ( &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\)&quot;</span><span class="p">,</span> <span class="s2">&quot; ) &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\?&quot;</span><span class="p">,</span> <span class="s2">&quot; ? &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s{2,}&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\.|\s){7,}&quot;</span><span class="p">,</span> <span class="s2">&quot; ... &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(?&lt;= )(\w \. )+(\w \.)&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="c1"># sample = re.sub(r&quot;(\.|\s){4,}&quot;, &quot; ... &quot;, sample)</span>
+
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\&#39;s&quot;</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\&#39;</span><span class="s2">s&quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\&#39;ve&quot;</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\&#39;</span><span class="s2">ve&quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;n\&#39;t&quot;</span><span class="p">,</span> <span class="s2">&quot; n</span><span class="se">\&#39;</span><span class="s2">t&quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\&#39;re&quot;</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\&#39;</span><span class="s2">re&quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\&#39;d&quot;</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\&#39;</span><span class="s2">d&quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\&#39;m&quot;</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\&#39;</span><span class="s2">m&quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\&#39;ll&quot;</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\&#39;</span><span class="s2">ll&quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+
+            <span class="c1"># sample = re.sub(r&quot;[^A-Za-z0-9&#39;]&quot;, &quot; &quot;, sample)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+                <span class="sa">r</span><span class="s2">&quot;(?!((&#39;(?=s\b))|(&#39;(?=ve\b))|(&#39;(?=re\b))|(&#39;(?=d\b))|(&#39;(?=ll\b))|(&#39;(?=m\b))|((?&lt;=n\b)&#39;(?=t\b))))&#39;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+
+            <span class="c1"># Glove style</span>
+            <span class="c1"># sample = re.sub(&#39; [0-9]{5,} &#39;, &#39; ##### &#39;, sample)</span>
+            <span class="c1"># sample = re.sub(&#39; [0-9]{4} &#39;, &#39; #### &#39;, sample)</span>
+            <span class="c1"># sample = re.sub(&#39; [0-9]{3} &#39;, &#39; ### &#39;, sample)</span>
+            <span class="c1"># sample = re.sub(&#39; [0-9]{2} &#39;, &#39; ## &#39;, sample)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; 0 &#39;</span><span class="p">,</span> <span class="s1">&#39; zero &#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; 1 &#39;</span><span class="p">,</span> <span class="s1">&#39; one &#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; 2 &#39;</span><span class="p">,</span> <span class="s1">&#39; two &#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; 3 &#39;</span><span class="p">,</span> <span class="s1">&#39; three &#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; 4 &#39;</span><span class="p">,</span> <span class="s1">&#39; four &#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; 5 &#39;</span><span class="p">,</span> <span class="s1">&#39; five &#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; 6 &#39;</span><span class="p">,</span> <span class="s1">&#39; six &#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; 7 &#39;</span><span class="p">,</span> <span class="s1">&#39; seven &#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; 8 &#39;</span><span class="p">,</span> <span class="s1">&#39; eight &#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; 9 &#39;</span><span class="p">,</span> <span class="s1">&#39; nine &#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s{2,}&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+            <span class="n">sample</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">sample</span>
+
+<div class="viewcode-block" id="TextualDataset.set_clean_flag"><a class="viewcode-back" href="../../../../src.multimodal.textual.html#src.multimodal.textual.TextualDataset.TextualDataset.set_clean_flag">[docs]</a>    <span class="k">def</span> <span class="nf">set_clean_flag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_to_be_cleaned</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It does set the flag to clean the String before preprocessing, this phase is heavily recommended, therefore the</span>
+<span class="sd">        flag by default is set to True</span>
+<span class="sd">        Args:</span>
+<span class="sd">            text_to_be_cleaned: flag True/False if the text will be preprocessed and cleaned</span>
+
+<span class="sd">        Returns: nothing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_text_to_be_cleaned</span> <span class="o">=</span> <span class="n">text_to_be_cleaned</span></div>
+
+<div class="viewcode-block" id="TextualDataset.set_preprocessing_flag"><a class="viewcode-back" href="../../../../src.multimodal.textual.html#src.multimodal.textual.TextualDataset.TextualDataset.set_preprocessing_flag">[docs]</a>    <span class="k">def</span> <span class="nf">set_preprocessing_flag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preprocessing_flag</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_text_to_be_cleaned</span> <span class="o">=</span> <span class="n">preprocessing_flag</span></div>
+
+<div class="viewcode-block" id="TextualDataset.set_type_of_extraction"><a class="viewcode-back" href="../../../../src.multimodal.textual.html#src.multimodal.textual.TextualDataset.TextualDataset.set_type_of_extraction">[docs]</a>    <span class="k">def</span> <span class="nf">set_type_of_extraction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">type_of_extraction</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It set the origin of the data, from item or users interactions, it is needed later to read correctly the tsv</span>
+<span class="sd">        :param type_of_extraction: &#39;items&#39; or &#39;interactions&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_textual_file_manager</span><span class="o">.</span><span class="n">set_type_of_extraction</span><span class="p">(</span><span class="n">type_of_extraction</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TextualDataset.create_output_file"><a class="viewcode-back" href="../../../../src.multimodal.textual.html#src.multimodal.textual.TextualDataset.TextualDataset.create_output_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_output_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">extracted_data</span><span class="p">,</span> <span class="n">model_layer</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overwrites the method of the Father class because all the Strings come from the same file, and it only changes</span>
+<span class="sd">        the row</span>
+<span class="sd">        :param index: it indicates the row of the String</span>
+<span class="sd">        :param extracted_data: the output to put in the file</span>
+<span class="sd">        :param model_layer: the layer used, it is a String, it will be shown on the final name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># generate file name</span>
+        <span class="n">input_file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_textual_file_manager</span><span class="o">.</span><span class="n">build_path_from_id</span><span class="p">(</span>
+            <span class="n">index</span><span class="p">)</span>
+        <span class="n">output_file_name</span> <span class="o">=</span> <span class="n">input_file_name</span> <span class="o">+</span> <span class="s1">&#39;.npy&#39;</span>
+
+        <span class="c1"># generate output path</span>
+        <span class="n">framework</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_framework_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_directory_path</span><span class="p">,</span> <span class="n">framework</span><span class="p">)</span>
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_name</span><span class="p">)</span>
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">model_layer</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+
+        <span class="c1"># create file</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">output_file_name</span><span class="p">)</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">extracted_data</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniele Malitesta, Giuseppe Gassi, Claudio Pomo, Tommaso Di Noia.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

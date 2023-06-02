@@ -1,0 +1,52 @@
+# CONFIGURATION FILE
+
+# how to use: write down only the thing you intend to use, leave blank all the others settings
+# DATASET is the main folder
+# GPU LIST is the list of gpu you intend to use, write -1 if you intend to use cpu
+# INPUT/OUTPUT are the names of the folder (that have to be in the dataset folder) used for extraction.
+#              note: the output folder may miss and in that case will be created
+# MODEL TEMPLATE: { name:'name' , output_layers: [layers list],
+#                 in addition you CAN add the 'framework' tag to describe which framework you intend to use 'tensorflow'/'torch'}
+# if it is visual extraction then there is another flag in model: reshape(x,y)
+# otherwise if is a textual extraction: clear_text True/False
+
+dataset_path: 'D:\dati\uni\tesi\datasetFolder'
+gpu list: -1
+model map: 'modelMap.yml'
+
+visual:
+    items:
+        input_folder: 'inputVisual'
+        output_folder: 'outputVisual'
+        model: [
+              { name: 'ResNet50' , output_layers: [ 'avg_pool','conv5_block3_out' ], reshape: [ 224 ,224 ], framework: ['tensorflow'] },
+              { name: 'AlexNet',  output_layers: 5, reshape: [ 224,224 ]},
+              { name: 'ResNet50' , output_layers: 3 , reshape: [ 224,224 ], framework: ['torch'] }
+            ]
+#    interactions:
+#        input_folder:
+#        output_folder:
+#        model: []
+#textual:
+#    items:
+#        input_folder: 'inputTextual\esempio.csv'
+#        output_folder: 'outputTextual'
+#        model: [
+#              { name: 'nlptown/bert-base-multilingual-uncased-sentiment',  output_layers: 3, task: 'sentiment-analysis', clear_text: True }
+#          ]
+#    interactions:
+#        input_folder:
+#        output_folder:
+#        model: []
+#audio:
+#      interactions:
+#            input_folder: 'inputAudio'
+#            output_folder: 'outputAudio'
+#            model: [
+#                      { name: 'HUBERT_BASE',  output_layers: 3, framework: 'torch' },
+#                      { name: 'facebook/wav2vec2-base-960h',  output_layers: 3, framework: 'transformers' }
+#            ]
+
+
+
+

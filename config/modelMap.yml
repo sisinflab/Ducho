@@ -1,0 +1,23 @@
+# HOW TO USE:
+# this map store the call for the models, if you want to add a new model of tensorflow or torch please write it down here
+# following the rules:
+# - for tensorflow it is needed the call both for extraction and for normalization (needed for normalize the images)
+
+tensorflow models for extraction :
+    'ResNet50': tf.keras.applications.ResNet50,
+    'VGG19': tf.keras.applications.VGG19,
+    'ResNet152': tf.keras.applications.ResNet152
+
+tensorflow models for normalization :
+    'ResNet50': tf.keras.applications.resnet,
+    'VGG19': tf.keras.applications.vgg19,
+    'ResNet152': tf.keras.applications.resnet
+
+torch models for extraction :
+    'AlexNet': models.alexnet,
+    'VGG19': models.vgg19,
+    'VGG11': models.vgg11,
+    'ResNet50': models.resnet50
+
+
+
