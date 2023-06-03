@@ -11,6 +11,6 @@ RUN apt-get update -y && \
     git clone https://github.com/sisinflab/Ducho.git && \
     apt-get install -y python3.8-dev && \
     pip install --upgrade pip && \
-    pip install -r Ducho/requirements.txt --ignore-installed
+    pip install -r Ducho/requirements_docker.txt --ignore-installed
 
 WORKDIR Ducho
