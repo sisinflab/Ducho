@@ -7,12 +7,19 @@ import torch
 import datetime
 
 from src.config.Config import Config
+print('ciao 1')
 from src.multimodal.visual.VisualDataset import VisualDataset
+print('ciao 2')
 from src.multimodal.textual.TextualDataset import TextualDataset
+print('ciao 3')
 from src.multimodal.visual.VisualCnnFeatureExtractor import VisualCnnFeatureExtractor
+print('ciao 4')
 from src.multimodal.textual.TextualCnnFeatureExtractor import TextualCnnFeatureExtractor
+print('ciao 5')
 from src.multimodal.audio.AudioDataset import AudioDataset
+print('ciao 6')
 from src.multimodal.audio.AudioCnnFeatureExtractor import AudioCnnFeatureExtractor
+print('ciao 7')
 
 
 def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):

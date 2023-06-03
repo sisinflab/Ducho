@@ -1,5 +1,4 @@
 from src.runner.Runner import MultimodalFeatureExtractor
-print('ciao')
 from torchvision.datasets import FashionMNIST
 import shutil
 import numpy as np
