@@ -1,4 +1,6 @@
 import os
+import logging
+import json
 from src.internal.utils.YamlFileManager import YamlFileManager
 
 
@@ -44,11 +46,19 @@ class Config:
         custom_data_dict = self._yaml_manager.get_raw_dict()
         self._data_dict.update(custom_data_dict)
 
+        if config_file_path != './config/config.yml':
+            logging.info(f'Custom configuration file {config_file_path} provided. Will override the default one')
+        else:
+            logging.info('No custom configuration file provided. Will use the default one')
+
         if argv:
             for kv in argv:
                 self.__update_dict(kv.split("=")[0], kv.split("=")[1])
 
         self._data_dict = self.__clean_dict(self._data_dict)
+
+        logging.info('Loaded configuration:')
+        logging.info(json.dumps(self._data_dict, indent=1) + '\n')
 
     def __update_dict(self, keys_as_string, value):
         def sub_of_update_dict(lists_of_keys, last_value, sub_dict):

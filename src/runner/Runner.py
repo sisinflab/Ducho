@@ -4,6 +4,7 @@ from tqdm import tqdm
 from art import *
 import tensorflow as tf
 import torch
+import datetime
 
 from src.config.Config import Config
 from src.multimodal.visual.VisualDataset import VisualDataset
@@ -23,9 +24,10 @@ def _execute_extraction_from_models_list(models, extractor, dataset, modality_ty
     :param modality_type: 'audio'/'visual'/'textual'
     """
     for model in models:
-        logging.info(' Now using model: %s', str(model['name']))
+        logging.info(f'Extraction model: {model["name"]}')
 
         # set framework
+        logging.info(f'Framework: {model["framework"]}')
         extractor.set_framework(model['framework'])
         dataset.set_framework(model['framework'])
 
@@ -41,7 +43,7 @@ def _execute_extraction_from_models_list(models, extractor, dataset, modality_ty
         # execute extractions
         for model_layer in model['output_layers']:
 
-            logging.info(' Now using layer: - %s', str(model_layer))
+            logging.info(f'Extraction layer: {model["name"]}.{model_layer}')
 
             # set output layer
             extractor.set_output_layer(model_layer)
@@ -58,6 +60,10 @@ def _execute_extraction_from_models_list(models, extractor, dataset, modality_ty
                     # update the progress bar
                     t.update()
 
+            logging.info(f'Extraction with layer: {model["name"]}.{model_layer} is complete')
+
+        logging.info(f'Extraction with model: {model["name"]} is complete')
+
 
 class MultimodalFeatureExtractor:
 
@@ -66,18 +72,34 @@ class MultimodalFeatureExtractor:
         It instantiates the framework. Note the config file is a yml file
         :param config_file_path: As a String, it could be the absolute path, or the path to the folder of the confg file
         """
+        if not os.path.exists('./local/logs/'):
+            os.makedirs('./local/logs/')
+
+        log_file = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s [%(levelname)s] %(message)s",
+            datefmt='%Y-%m-%d-%H:%M:%S',
+            handlers=[
+                logging.FileHandler(filename=f'./local/logs/{log_file}.log'),
+                logging.StreamHandler()
+            ]
+        )
+
         framework = text2art("Ducho")
-        print(framework)
-        print('*** A Unified Framework for the Extraction of Multimodal Features in Recommendation ***')
-        print('*** Brought to you by: SisInfLab, Politecnico di Bari, Italy (https://sisinflab.poliba.it) ***')
-        print()
+        logging.info('\n' + framework)
+        logging.info('*** DUCHO: A Unified Framework for the Extraction of Multimodal Features in Recommendation ***')
+        logging.info('*** Brought to you by: SisInfLab, Politecnico di Bari, Italy (https://sisinflab.poliba.it) ***\n')
         self._config = Config(config_file_path, argv)
-        logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
         # set gpu to use
         os.environ['CUDA_VISIBLE_DEVICES'] = self._config.get_gpu()
         logging.info('Checking if CUDA version is compatible with TensorFlow and PyTorch...')
-        logging.info(f'TENSORFLOW: {tf.config.list_physical_devices("GPU")}')
-        logging.info(f'PYTORCH: {torch.cuda.is_available()}')
+        logging.info(f'TENSORFLOW: Your tf version ({tf.__version__}) is compatible with you CUDA version!'
+                     if len(tf.config.list_physical_devices("GPU")) > 0
+                     else f'TENSORFLOW: Your tf version ({tf.__version__}) is not compatible with you CUDA version!')
+        logging.info(f'PYTORCH: Your torch version ({torch.__version__}) is compatible with you CUDA version!'
+                     if torch.cuda.is_available()
+                     else f'TENSORFLOW: Your torch version ({torch.__version__}) is not compatible with you CUDA version!')
 
     def execute_extractions(self):
         """
@@ -91,7 +113,7 @@ class MultimodalFeatureExtractor:
 
     def do_item_visual_extractions(self):
         if self._config.has_config('items', 'visual'):
-            logging.info(' Config for visual extractions from items detected, the extraction is going to start ...')
+            logging.info('Extraction on items for visual modality')
 
             # get paths and models
             working_paths = self._config.paths_for_extraction('items', 'visual')
@@ -103,13 +125,13 @@ class MultimodalFeatureExtractor:
             # visual_dataset.set_model_map(self._config.get_model_map_path())
             # cnn_feature_extractor.set_model_map(self._config.get_model_map_path())
 
-            logging.info(' Working environment created')
-            logging.info(' Number of models to use: %s', str(models.__len__()))
+            logging.info('Extraction is starting...')
             _execute_extraction_from_models_list(models, cnn_feature_extractor, visual_dataset, 'visual')
+            logging.info(f'Extraction is complete!')
 
     def do_item_textual_extractions(self):
         if self._config.has_config('items', 'textual'):
-            logging.info(' Config for textual extractions from items detected, the extraction is going to start ...')
+            logging.info('Extraction on items for textual modality')
 
             # get paths and models
             working_paths = self._config.paths_for_extraction('items', 'textual')
@@ -118,17 +140,15 @@ class MultimodalFeatureExtractor:
             textual_dataset = TextualDataset(working_paths['input_path'], working_paths['output_path'])
             cnn_feature_extractor = TextualCnnFeatureExtractor(self._config.get_gpu())
 
-            logging.info(' Working environment created')
-            logging.info(' Number of models to use: %s', str(models.__len__()))
-
             textual_dataset.set_type_of_extraction('items')
+
+            logging.info('Extraction is starting...')
             _execute_extraction_from_models_list(models, cnn_feature_extractor, textual_dataset, 'textual')
+            logging.info('Extraction is complete!')
 
     def do_interaction_visual_extractions(self):
         if self._config.has_config('interactions', 'visual'):
-            logging.info(
-                ' Config for visual extractions from interactions detected, the extraction is going to start ...')
-
+            logging.info('Extraction on interactions for visual modality')
             # get paths and models
             working_paths = self._config.paths_for_extraction('interactions', 'visual')
             models = self._config.get_models_list('interactions', 'visual')
@@ -139,14 +159,13 @@ class MultimodalFeatureExtractor:
             # visual_dataset.set_model_map(self._config.get_model_map_path())
             # cnn_feature_extractor.set_model_map(self._config.get_model_map_path())
 
-            logging.info(' Working environment created')
-            logging.info(' Number of models to use: %s', str(models.__len__()))
+            logging.info('Extraction is starting...')
             _execute_extraction_from_models_list(models, cnn_feature_extractor, visual_dataset, 'visual')
+            logging.info('Extraction is complete!')
 
     def do_interaction_textual_extractions(self):
         if self._config.has_config('interactions', 'textual'):
-            logging.info(' Config for textual extractions from items detected, the extraction is going to start ...')
-
+            logging.info('Extraction on interactions for textual modality')
             # get paths and models
             working_paths = self._config.paths_for_extraction('interactions', 'textual')
             models = self._config.get_models_list('interactions', 'textual')
@@ -154,11 +173,10 @@ class MultimodalFeatureExtractor:
             textual_dataset = TextualDataset(working_paths['input_path'], working_paths['output_path'])
             cnn_feature_extractor = TextualCnnFeatureExtractor(self._config.get_gpu())
 
-            logging.info(' Working environment created')
-            logging.info(' Number of models to use: %s', str(models.__len__()))
-
+            logging.info('Extraction is starting...')
             textual_dataset.set_type_of_extraction('interactions')
             _execute_extraction_from_models_list(models, cnn_feature_extractor, textual_dataset, 'textual')
+            logging.info('Extraction is complete!')
 
     # DEPRECATED:
     def __execute_extractions_second_delete(self):
@@ -185,18 +203,15 @@ class MultimodalFeatureExtractor:
                 _execute_extraction_from_models_list(models, cnn_feature_extractor, visual_dataset, 'visual')
 
     def do_interaction_audio_extractions(self):
-        if self._config.has_config('interactions', 'audio'):
-            logging.info(
-                ' Config for audio extractions from interactions detected, the extraction is going to start ...')
-
+        if self._config.has_config('items', 'audio'):
+            logging.info('Extraction on items for audio modality')
             # get paths and models
-            working_paths = self._config.paths_for_extraction('interactions', 'audio')
-            models = self._config.get_models_list('interactions', 'audio')
+            working_paths = self._config.paths_for_extraction('items', 'audio')
+            models = self._config.get_models_list('items', 'audio')
             # generate dataset and extractor
             audio_dataset = AudioDataset(working_paths['input_path'], working_paths['output_path'])
             cnn_feature_extractor = AudioCnnFeatureExtractor(self._config.get_gpu())
 
-            logging.info(' Working environment created')
-            logging.info(' Number of models to use: %s', str(models.__len__()))
-
+            logging.info('Extraction is starting...')
             _execute_extraction_from_models_list(models, cnn_feature_extractor, audio_dataset, 'audio')
+            logging.info('Extraction is complete!')

@@ -1,2 +1,2 @@
-dataset_path: ./data/demo1
+dataset_path: ./local/data/demo1
 gpu list: 0
