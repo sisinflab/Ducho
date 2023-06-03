@@ -2,7 +2,9 @@ import os
 import logging
 from tqdm import tqdm
 from art import *
+print('ciao')
 import tensorflow as tf
+print('ciao ciao')
 import torch
 import datetime
 
