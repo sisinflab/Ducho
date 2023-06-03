@@ -15,18 +15,18 @@ from src.multimodal.audio.AudioDataset import AudioDataset
 from src.multimodal.audio.AudioCnnFeatureExtractor import AudioCnnFeatureExtractor
 
 
-def _execute_extraction_from_models_list(models, gpu, dataset, modality_type):
+def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
     """
     Takes in input the class of Dataset and Extractor, then for every model, for every layer of the model,
     :param models: dicts of data (see Config.get_models)
+    :param extractor_class: class Extractor
     :param gpu: gpu list
     :param dataset: class Dataset
-    :param modality_type: 'audio'/'visual'/'textual'
     """
     for model in models:
         logging.info(f'Extraction model: {model["name"]}')
 
-        extractor = VisualCnnFeatureExtractor(gpu=gpu)
+        extractor = extractor_class(gpu=gpu)
 
         # set framework
         logging.info(f'Framework: {model["framework"]}')
@@ -124,7 +124,10 @@ class MultimodalFeatureExtractor:
             visual_dataset = VisualDataset(working_paths['input_path'], working_paths['output_path'])
 
             logging.info('Extraction is starting...')
-            _execute_extraction_from_models_list(models, self._config.get_gpu(), visual_dataset, 'visual')
+            _execute_extraction_from_models_list(models=models,
+                                                 extractor_class=VisualCnnFeatureExtractor,
+                                                 gpu=self._config.get_gpu(),
+                                                 dataset=visual_dataset)
             logging.info(f'Extraction is complete!')
 
     def do_item_textual_extractions(self):
