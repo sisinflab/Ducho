@@ -1,15 +1,10 @@
 import tensorflow as tf
 import torch
 import numpy as np
-# import torchvision.models import
-# from torchvision import
 import torchvision
 import tensorflow
-# from torchvision.models import ResNet50_Weights
-
 
 from src.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
-import sys
 
 
 class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
