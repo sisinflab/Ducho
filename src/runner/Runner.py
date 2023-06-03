@@ -78,6 +78,15 @@ class MultimodalFeatureExtractor:
             os.makedirs('./local/logs/')
 
         log_file = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s [%(levelname)s] %(message)s",
+            datefmt='%Y-%m-%d-%H:%M:%S',
+            handlers=[
+                logging.FileHandler(filename=f'./local/logs/{log_file}.log'),
+                logging.StreamHandler()
+            ]
+        )
 
         framework = text2art("Ducho")
         logging.info('\n' + framework)
