@@ -1,27 +1,9 @@
-import os
-import logging
-import datetime
-
-if not os.path.exists('./local/logs/'):
-    os.makedirs('./local/logs/')
-
-log_file = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt='%Y-%m-%d-%H:%M:%S',
-    handlers=[
-        logging.FileHandler(filename=f'./local/logs/{log_file}.log'),
-        logging.StreamHandler()
-    ]
-)
-
-
 from src.runner.Runner import MultimodalFeatureExtractor
 from torchvision.datasets import FashionMNIST
 import shutil
 import numpy as np
 import torch
+import os
 
 
 def main():

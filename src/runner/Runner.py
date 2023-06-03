@@ -74,6 +74,20 @@ class MultimodalFeatureExtractor:
         It instantiates the framework. Note the config file is a yml file
         :param config_file_path: As a String, it could be the absolute path, or the path to the folder of the confg file
         """
+        if not os.path.exists('./local/logs/'):
+            os.makedirs('./local/logs/')
+
+        log_file = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s [%(levelname)s] %(message)s",
+            datefmt='%Y-%m-%d-%H:%M:%S',
+            handlers=[
+                logging.FileHandler(filename=f'./local/logs/{log_file}.log'),
+                logging.StreamHandler()
+            ]
+        )
+
         framework = text2art("Ducho")
         logging.info('\n' + framework)
         logging.info('*** DUCHO: A Unified Framework for the Extraction of Multimodal Features in Recommendation ***')
