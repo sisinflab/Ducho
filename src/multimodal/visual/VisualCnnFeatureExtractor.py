@@ -37,7 +37,7 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
             self._model = getattr(tensorflow.keras.applications, self._model_name)()
         elif self._model_name.lower() in torchvision_list and 'torch' in self._framework_list:
             self._model = getattr(torchvision.models, self._model_name.lower())(weights='DEFAULT')
-            self._model.to(self._device)
+            # self._model.to(self._device)
             self._model.eval()
         else:
             raise NotImplemented('This feature extractor has not been added yet!')
