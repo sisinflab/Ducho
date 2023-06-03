@@ -10,6 +10,7 @@ class YamlFileManager:
         :param yaml_file_path: the path of the file as a String. It is preferred to be the absolute path.
 
         """
+        self._default_yaml_file_path = './config/config.yml'
         self._correct_yaml_file_path(yaml_file_path)
 
     def _correct_yaml_file_path(self, old_path):
@@ -58,5 +59,14 @@ class YamlFileManager:
         # there is no need here to raise an exception if the file is not found
         # since the os raises it autonomously
         with open(self._yaml_file_path, 'r') as file:
+            return yaml.safe_load(file)
+
+    def get_default_dict(self):
+        """
+        it simply loads the data contained in the default config file
+        Returns:
+            the String that is contained in the default yaml file
+        """
+        with open(self._default_yaml_file_path, 'r') as file:
             return yaml.safe_load(file)
 

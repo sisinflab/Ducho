@@ -6,7 +6,7 @@ import torch
 import os
 
 
-def main(argv):
+def main():
     dataset = FashionMNIST(root='./data/demo1/', download=True)
     dataset = torch.utils.data.Subset(dataset, np.random.choice(len(dataset), 100, replace=False))
     if not os.path.exists('./data/demo1/images/'):
@@ -14,9 +14,9 @@ def main(argv):
     for idx, (img, _) in enumerate(dataset):
         img.save('./data/demo1/images/{:03d}.jpg'.format(idx))
     shutil.rmtree('./data/demo1/FashionMNIST/')
-    extractor_obj = MultimodalFeatureExtractor(argv=argv)
+    extractor_obj = MultimodalFeatureExtractor(config_file_path='./demos/demo1/demo1.yml')
     extractor_obj.execute_extractions()
 
 
 if __name__ == '__main__':
-    main(['--dataset_path=./data/demo1', '--gpu list=0'])
+    main()

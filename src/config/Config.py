@@ -39,7 +39,10 @@ class Config:
         """
         # both absolute and relative path are fine
         self._yaml_manager = YamlFileManager(config_file_path)
-        self._data_dict = self._yaml_manager.get_raw_dict()
+
+        self._data_dict = self._yaml_manager.get_default_dict()
+        custom_data_dict = self._yaml_manager.get_raw_dict()
+        self._data_dict.update(custom_data_dict)
 
         if argv:
             for kv in argv:
