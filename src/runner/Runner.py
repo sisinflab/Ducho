@@ -69,13 +69,13 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
 
 class MultimodalFeatureExtractor:
 
-    def __init__(self, config_file_path='../../config/config.yml', argv=None):
+    def __init__(self, config_file_path='./config/config.yml', argv=None):
         """
         It instantiates the framework. Note the config file is a yml file
         :param config_file_path: As a String, it could be the absolute path, or the path to the folder of the confg file
         """
-        if not os.path.exists('../../local/logs/'):
-            os.makedirs('../../local/logs/')
+        if not os.path.exists('./local/logs/'):
+            os.makedirs('./local/logs/')
 
         log_file = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
         logging.basicConfig(
@@ -83,7 +83,7 @@ class MultimodalFeatureExtractor:
             format="%(asctime)s [%(levelname)s] %(message)s",
             datefmt='%Y-%m-%d-%H:%M:%S',
             handlers=[
-                logging.FileHandler(filename=f'../../local/logs/{log_file}.log'),
+                logging.FileHandler(filename=f'./local/logs/{log_file}.log'),
                 logging.StreamHandler()
             ]
         )

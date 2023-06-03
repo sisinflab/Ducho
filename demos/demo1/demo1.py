@@ -14,7 +14,7 @@ def main():
     for idx, (img, _) in enumerate(dataset):
         img.save('./local/data/demo1/images/{:03d}.jpg'.format(idx))
     shutil.rmtree('./local/data/demo1/FashionMNIST/')
-    extractor_obj = MultimodalFeatureExtractor(config_file_path='../../demos/demo1/demo1.yml')
+    extractor_obj = MultimodalFeatureExtractor(config_file_path='./demos/demo1/demo1.yml')
     extractor_obj.execute_extractions()
 
 
