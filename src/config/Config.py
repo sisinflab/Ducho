@@ -57,8 +57,7 @@ class Config:
 
         self._data_dict = self.__clean_dict(self._data_dict)
 
-        logging.info('Loaded configuration:')
-        logging.info(json.dumps(self._data_dict, indent=1) + '\n')
+        logging.info(f'Loaded configuration:\n{json.dumps(self._data_dict, indent=1)}\n')
 
     def __update_dict(self, keys_as_string, value):
         def sub_of_update_dict(lists_of_keys, last_value, sub_dict):
