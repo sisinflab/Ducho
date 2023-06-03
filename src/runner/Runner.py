@@ -3,7 +3,9 @@ import logging
 from tqdm import tqdm
 from art import *
 import tensorflow as tf
+print('ciao tf')
 import torch
+print('ciao torch')
 import datetime
 
 from src.config.Config import Config
