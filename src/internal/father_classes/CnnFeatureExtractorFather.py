@@ -6,7 +6,7 @@ import numpy as np
 class CnnFeatureExtractorFather:
     def __init__(self, gpu='-1'):
         self._framework_list = None
-        # self._model = None
+        self._model = None
         self._output_layer = None
         self._model_name = None
         self._gpu = gpu
