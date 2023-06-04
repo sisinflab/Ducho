@@ -8,4 +8,5 @@ build:
 
 python:
    install:
-   - requirements: readthedocs_req.txt
+    - requirements: docs/requirements.txt
+    - requirements: requirements.txt
