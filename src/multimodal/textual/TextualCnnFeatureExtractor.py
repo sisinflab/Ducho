@@ -1,4 +1,5 @@
 from transformers import pipeline
+from sentence_transformers import SentenceTransformer
 from transformers import FeatureExtractionPipeline
 from transformers import PreTrainedModel
 # import transformers.pipelines.
@@ -29,21 +30,14 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         :param model:
         """
         model_name = model['name']
-        model_task = model['task']
+        if 'task' in model.keys():
+            model_task = model['task']
         if 'transformers' in self._framework_list:
             built_pipeline = pipeline(model_task, model=model_name)
             self._model = built_pipeline.model
             self._tokenizer = built_pipeline.tokenizer
-            # self._pipeline = built_pipeline
-            # sentiment_pipeline = pipeline(model=model_name)
-            # model = list(sentiment_pipeline.model.children())[-3]
-            # model.eval()
-            # model.to(self._device)
-            # self._model = model
-            # self._tokenizer = sentiment_pipeline.tokenizer
-
-            # extraction_pipeline = pipeline("sentiment-analysis", model="bert-base-uncased")
-            # self._model = extraction_pipeline
+        elif 'sentence_transformers' in self._framework_list:
+            self._model = SentenceTransformer(model_name)
 
     def extract_feature(self, sample_input):
         """
@@ -57,7 +51,8 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
             model_output = self._model(**model_input, output_hidden_states=True)
             layer_output = model_output.hidden_states[self._output_layer]
             return layer_output.detach().numpy()
-
+        elif 'sentence_transformers' in self._framework_list:
+            return self._model.encode(sentences=sample_input)
             # output = self._tokenizer.encode_plus(sample_input, return_tensors="pt").to(self._device)
             # return self._model(**output.to(self._device)).pooler_output.detach().cpu().numpy()
 

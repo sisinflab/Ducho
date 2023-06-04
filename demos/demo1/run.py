@@ -5,6 +5,8 @@ import numpy as np
 import torch
 import os
 
+np.random.seed(42)
+
 
 def main():
     dataset = FashionMNIST(root='./local/data/demo1/', download=True)

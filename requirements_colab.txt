@@ -1,2 +1,4 @@
 art
+datasets
+sentence-transformers
 transformers

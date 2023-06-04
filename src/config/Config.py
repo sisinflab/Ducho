@@ -249,7 +249,7 @@ class Config:
                 if type_of_extraction == 'textual':
                     # textual case
                     # in this case we use the 'transformers' framework
-                    model.update({'framework': ['transformers']})
+                    model.update({'framework': ['transformers', 'sentence-transformers']})
                 elif type_of_extraction == 'visual':
                     # it is in the visual case, it uses tensorflow or torch, but doesn't know which one
                     # so both are set as plausible

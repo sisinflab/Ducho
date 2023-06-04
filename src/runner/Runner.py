@@ -139,12 +139,13 @@ class MultimodalFeatureExtractor:
             models = self._config.get_models_list('items', 'textual')
             # generate dataset and extractor
             textual_dataset = TextualDataset(working_paths['input_path'], working_paths['output_path'])
-            cnn_feature_extractor = TextualCnnFeatureExtractor(self._config.get_gpu())
-
             textual_dataset.set_type_of_extraction('items')
 
             logging.info('Extraction is starting...')
-            _execute_extraction_from_models_list(models, cnn_feature_extractor, textual_dataset, 'textual')
+            _execute_extraction_from_models_list(models=models,
+                                                 extractor_class=TextualCnnFeatureExtractor,
+                                                 gpu=self._config.get_gpu(),
+                                                 dataset=textual_dataset)
             logging.info('Extraction is complete!')
 
     def do_interaction_visual_extractions(self):

@@ -3,6 +3,7 @@ art
 babel
 charset-normalizer
 config
+datasets
 docopt
 flask-markdown
 frozen-flask
@@ -17,6 +18,7 @@ pip-chill
 python-version
 sacremoses
 scikit-learn
+sentence-transformers
 soundfile
 tensorflow-estimator
 tensorflow

@@ -1,0 +1,19 @@
+dataset_path: ./local/data/demo2
+gpu list: 0
+
+visual:
+    items:
+        input_folder: images
+        output_folder: visual
+        model: [
+            { name: VGG19,  output_layers: 5, reshape: [224, 224], framework: torch},
+            { name: Xception , output_layers: avg_pool, reshape: [299, 299], framework: tensorflow},
+        ]
+
+textual:
+    items:
+        input_folder: descriptions/descriptions.tsv
+        output_folder: textual
+        model: [
+              { name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: True, framework: sentence_transformers}
+          ]
