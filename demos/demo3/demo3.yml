@@ -6,5 +6,5 @@ audio:
             input_folder: songs
             output_folder: embeddings
             model: [
-                      { name: 'HUBERT_BASE',  output_layers: 1, framework: 'torch' }
+                      { name: 'HDEMUCS_HIGH_MUSDB',  output_layers: 1, framework: 'torch' }
             ]

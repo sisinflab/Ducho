@@ -1,4 +1,6 @@
 import torchaudio
+import torch
+import numpy as np
 from src.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
 from transformers import Wav2Vec2Model
 
@@ -48,10 +50,24 @@ class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
         if 'torch' in self._framework_list or 'torchaudio' in self._framework_list:
             # extraction
             # num_layer is the number of layers to go through
-            features, _ = self._model.extract_features(audio, num_layers=self._output_layer)
-            feature = features[-1]
-            # return the N-Dimensional Tensor as a numpy array
-            return feature.detach().numpy()
+            try:
+                features, _ = self._model.extract_features(audio, num_layers=self._output_layer)
+                feature = features[-1]
+                # return the N-Dimensional Tensor as a numpy array
+                return feature.detach().numpy()
+            except AttributeError:
+                if isinstance(list(self._model.children())[-1], torch.nn.Linear):
+                    feature_model = torch.nn.Sequential(*list(self._model.children())[:-self._output_layer])
+                else:
+                    feature_model = self._model
+                feature_model.eval()
+                output = np.squeeze(feature_model(
+                    audio[None, ...].to(self._device)
+                ).data.cpu().numpy())
+                # update the framework list
+                self._framework_list = ['torch']
+                return output
+
         elif 'transformers' in self._framework_list:
             # feature extraction
             outputs = self._model(audio, output_hidden_states=True)

@@ -14,7 +14,10 @@ def main():
     print('Dataset: MUSDB18-HQ - a corpus for music separation')
     print('Visit the original website at: https://sigsep.github.io/datasets/musdb.html#musdb18-compressed-stems')
 
-    if not os.path.exists('./local/data/demo3/songs/musdb18hq.zip'):
+    if not os.path.exists('./local/data/demo3/songs/musdb18hq.zip') \
+            and set(os.listdir('./local/data/demo3/songs/')) != \
+            {'0.wav', '1.wav', '2.wav', '3.wav', '4.wav', '5.wav',
+             '6.wav', '7.wav', '8.wav', '9.wav'}:
         print('\nPlease, download the music dataset at: https://zenodo.org/record/3338373/files/musdb18hq.zip')
         print('It might take some time...')
         print('Once you are done, move the file to ./local/data/demo3/songs/')
