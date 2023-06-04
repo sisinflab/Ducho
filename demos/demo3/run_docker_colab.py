@@ -13,18 +13,23 @@ def main():
         os.makedirs('./local/data/demo3/songs/')
     print('Dataset: MUSDB18-HQ - a corpus for music separation')
     print('Visit the original website at: https://sigsep.github.io/datasets/musdb.html#musdb18-compressed-stems')
-    shutil.move('./musdb18hq.zip', './local/data/demo3/songs/')
-    print('Unzipping the file. This could take some time...')
-    shutil.unpack_archive('./local/data/demo3/songs/musdb18.zip', './local/data/demo3/songs/')
-    os.remove('./local/data/demo3/songs/musdb18hq.zip')
-    print('Unzipping complete!')
-    songs = os.listdir('./local/data/demo3/songs/train/')
-    random.shuffle(songs)
-    for idx, s in enumerate(songs[:100]):
-        shutil.move(f'./local/data/demo3/songs/train/{s}', f'./local/data/demo3/songs/{idx}.wav')
-    shutil.rmtree('./local/data/demo3/songs/train/')
-    shutil.rmtree('./local/data/demo3/songs/test/')
-    os.remove('./local/data/demo3/songs/README.md')
+    if not os.path.exists('./local/data/demo3/songs/musdb18hq.zip'):
+        if len(os.listdir('./local/data/demo3/songs/')) != 100:
+            print('The file is not to the right path...')
+            exit(1)
+    else:
+        shutil.move('./musdb18hq.zip', './local/data/demo3/songs/')
+        print('Unzipping the file. This could take some time...')
+        shutil.unpack_archive('./local/data/demo3/songs/musdb18.zip', './local/data/demo3/songs/')
+        os.remove('./local/data/demo3/songs/musdb18hq.zip')
+        print('Unzipping complete!')
+        songs = os.listdir('./local/data/demo3/songs/train/')
+        random.shuffle(songs)
+        for idx, s in enumerate(songs[:100]):
+            shutil.move(f'./local/data/demo3/songs/train/{s}', f'./local/data/demo3/songs/{idx}.wav')
+        shutil.rmtree('./local/data/demo3/songs/train/')
+        shutil.rmtree('./local/data/demo3/songs/test/')
+        os.remove('./local/data/demo3/songs/README.md')
     extractor_obj = MultimodalFeatureExtractor(config_file_path='./demos/demo3/demo3.yml')
     extractor_obj.execute_extractions()
 
