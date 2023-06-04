@@ -1,9 +1,6 @@
-import torch
-from transformers import pipeline
 import torchaudio
 from src.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
-import numpy
-from transformers import Wav2Vec2Model, Wav2Vec2FeatureExtractor, Wav2Vec2Processor, AutoModel
+from transformers import Wav2Vec2Model
 
 
 class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
@@ -50,7 +47,7 @@ class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
         sample_rate = sample_input[1]
         if 'torch' in self._framework_list or 'torchaudio' in self._framework_list:
             # extraction
-            # num_layer is the number of layers to go trought
+            # num_layer is the number of layers to go through
             features, _ = self._model.extract_features(audio, num_layers=self._output_layer)
             feature = features[-1]
             # return the N-Dimensional Tensor as a numpy array
