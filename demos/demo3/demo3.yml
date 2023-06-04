@@ -1,0 +1,11 @@
+dataset_path: ./local/data/demo3
+gpu list: 0
+
+audio:
+      items:
+            input_folder: songs
+            output_folder: embeddings
+            model: [
+                      { name: 'HUBERT_BASE',  output_layers: 3, framework: 'torch' },
+                      { name: 'facebook/wav2vec2-base-960h',  output_layers: 3, framework: 'transformers' }
+            ]

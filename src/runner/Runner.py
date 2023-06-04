@@ -139,7 +139,6 @@ class MultimodalFeatureExtractor:
             models = self._config.get_models_list('items', 'textual')
             # generate dataset and extractor
             textual_dataset = TextualDataset(working_paths['input_path'], working_paths['output_path'])
-            textual_dataset.set_type_of_extraction('items')
 
             logging.info('Extraction is starting...')
             _execute_extraction_from_models_list(models=models,
@@ -148,72 +147,71 @@ class MultimodalFeatureExtractor:
                                                  dataset=textual_dataset)
             logging.info('Extraction is complete!')
 
-    def do_interaction_visual_extractions(self):
-        if self._config.has_config('interactions', 'visual'):
-            logging.info('Extraction on interactions for visual modality')
-            # get paths and models
-            working_paths = self._config.paths_for_extraction('interactions', 'visual')
-            models = self._config.get_models_list('interactions', 'visual')
-            # generate dataset and extractor
-            visual_dataset = VisualDataset(working_paths['input_path'], working_paths['output_path'])
-            cnn_feature_extractor = VisualCnnFeatureExtractor(self._config.get_gpu())
-
-            # visual_dataset.set_model_map(self._config.get_model_map_path())
-            # cnn_feature_extractor.set_model_map(self._config.get_model_map_path())
-
-            logging.info('Extraction is starting...')
-            _execute_extraction_from_models_list(models, cnn_feature_extractor, visual_dataset, 'visual')
-            logging.info('Extraction is complete!')
-
-    def do_interaction_textual_extractions(self):
-        if self._config.has_config('interactions', 'textual'):
-            logging.info('Extraction on interactions for textual modality')
-            # get paths and models
-            working_paths = self._config.paths_for_extraction('interactions', 'textual')
-            models = self._config.get_models_list('interactions', 'textual')
-            # generate dataset and extractor
-            textual_dataset = TextualDataset(working_paths['input_path'], working_paths['output_path'])
-            cnn_feature_extractor = TextualCnnFeatureExtractor(self._config.get_gpu())
-
-            logging.info('Extraction is starting...')
-            textual_dataset.set_type_of_extraction('interactions')
-            _execute_extraction_from_models_list(models, cnn_feature_extractor, textual_dataset, 'textual')
-            logging.info('Extraction is complete!')
-
-    # DEPRECATED:
-    def __execute_extractions_second_delete(self):
-        visual_work_env_ls = self._config.get_visual_working_environment_list()
-        print(visual_work_env_ls)
-        # self._execute_visual_extractions(visual_work_env_ls)
-        textual_work_env_ls = self._config.get_textual_working_environment_list()
-        print(textual_work_env_ls)
-
-    # DEPRECATED
-    def __execute_visual_extractions_delete(self, work_env_ls):
-        for work_env in work_env_ls:
-            if self._config.has_config(work_env, 'visual'):
-                # logging...
-                # get paths and models
-                working_paths = self._config.paths_for_extraction(work_env, 'visual')
-                models = self._config.get_models_list(work_env, 'visual')
-                # generate dataset and extractor
-                visual_dataset = VisualDataset(working_paths['input_path'], working_paths['output_path'])
-                cnn_feature_extractor = VisualCnnFeatureExtractor(self._config.get_gpu())
-
-                # logging.info(' Working environment created')
-                # logging.info(' Number of models to use: %s', str(models.__len__()))
-                _execute_extraction_from_models_list(models, cnn_feature_extractor, visual_dataset, 'visual')
-
-    def do_interaction_audio_extractions(self):
+    def do_item_audio_extractions(self):
         if self._config.has_config('items', 'audio'):
             logging.info('Extraction on items for audio modality')
+
             # get paths and models
             working_paths = self._config.paths_for_extraction('items', 'audio')
             models = self._config.get_models_list('items', 'audio')
             # generate dataset and extractor
             audio_dataset = AudioDataset(working_paths['input_path'], working_paths['output_path'])
-            cnn_feature_extractor = AudioCnnFeatureExtractor(self._config.get_gpu())
 
             logging.info('Extraction is starting...')
-            _execute_extraction_from_models_list(models, cnn_feature_extractor, audio_dataset, 'audio')
+            _execute_extraction_from_models_list(models=models,
+                                                 extractor_class=AudioCnnFeatureExtractor,
+                                                 gpu=self._config.get_gpu(),
+                                                 dataset=audio_dataset)
+            logging.info('Extraction is complete!')
+
+    def do_interaction_visual_extractions(self):
+        if self._config.has_config('interactions', 'visual'):
+            logging.info('Extraction on interactions for visual modality')
+
+            # get paths and models
+            working_paths = self._config.paths_for_extraction('interactions', 'visual')
+            models = self._config.get_models_list('interactions', 'visual')
+            # generate dataset and extractor
+            visual_dataset = VisualDataset(working_paths['input_path'], working_paths['output_path'])
+
+            logging.info('Extraction is starting...')
+            _execute_extraction_from_models_list(models=models,
+                                                 extractor_class=VisualCnnFeatureExtractor,
+                                                 gpu=self._config.get_gpu(),
+                                                 dataset=visual_dataset)
+            logging.info('Extraction is complete!')
+
+    def do_interaction_textual_extractions(self):
+        if self._config.has_config('interactions', 'textual'):
+            logging.info('Extraction on interactions for textual modality')
+
+            # get paths and models
+            working_paths = self._config.paths_for_extraction('interactions', 'textual')
+            models = self._config.get_models_list('interactions', 'textual')
+            # generate dataset and extractor
+            textual_dataset = TextualDataset(working_paths['input_path'], working_paths['output_path'])
+
+            logging.info('Extraction is starting...')
+            textual_dataset.set_type_of_extraction('interactions')
+            _execute_extraction_from_models_list(models=models,
+                                                 extractor_class=TextualCnnFeatureExtractor,
+                                                 gpu=self._config.get_gpu(),
+                                                 dataset=textual_dataset)
+            logging.info('Extraction is complete!')
+
+    def do_interaction_audio_extractions(self):
+        if self._config.has_config('items', 'audio'):
+            logging.info('Extraction on items for audio modality')
+
+            # get paths and models
+            working_paths = self._config.paths_for_extraction('items', 'audio')
+            models = self._config.get_models_list('items', 'audio')
+            # generate dataset and extractor
+            audio_dataset = AudioDataset(working_paths['input_path'], working_paths['output_path'])
+
+            logging.info('Extraction is starting...')
+            _execute_extraction_from_models_list(models=models,
+                                                 extractor_class=AudioCnnFeatureExtractor,
+                                                 gpu=self._config.get_gpu(),
+                                                 dataset=audio_dataset)
             logging.info('Extraction is complete!')
