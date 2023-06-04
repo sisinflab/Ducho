@@ -7,7 +7,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 import os
 import sys
+import sphinx_rtd_theme
 sys.path.insert(0, os.path.abspath('../..'))
+sys.setrecursionlimit(10000)
 
 project = 'Ducho'
 copyright = '2023, Daniele Malitesta, Giuseppe Gassi, Claudio Pomo, Tommaso Di Noia'
