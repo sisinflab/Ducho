@@ -20,7 +20,7 @@ def main():
     else:
         shutil.move('./musdb18hq.zip', './local/data/demo3/songs/')
         print('Unzipping the file. This could take some time...')
-        shutil.unpack_archive('./local/data/demo3/songs/musdb18.zip', './local/data/demo3/songs/')
+        shutil.unpack_archive('./local/data/demo3/songs/musdb18hq.zip', './local/data/demo3/songs/')
         os.remove('./local/data/demo3/songs/musdb18hq.zip')
         print('Unzipping complete!')
         songs = os.listdir('./local/data/demo3/songs/train/')
