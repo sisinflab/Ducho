@@ -36,6 +36,6 @@ services:
         reservations:
           devices:
             - capabilities: [ gpu ]
-    command: bash -c "nvidia-smi && wget https://zenodo.org/record/3338373/files/musdb18hq.zip && python3.8 demos/demo3/run_docker_colab.py"
+    command: bash -c "nvidia-smi && wget https://zenodo.org/record/3338373/files/musdb18hq.zip && mkdir -p ./local/data/demo3/songs/ && mv musdb18hq.zip ./local/data/demo3/songs/ && unzip ./local/data/demo3/songs/musdb18hq.zip && rm ./local/data/demo3/songs/musdb18hq.zip && python3.8 demos/demo3/run_docker_colab.py"
     volumes:
       - ./local:/Ducho/local
