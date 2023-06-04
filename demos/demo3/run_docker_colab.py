@@ -15,7 +15,7 @@ def main():
     songs = os.listdir('./local/data/demo3/songs/train/')
     random.shuffle(songs)
     for idx, s in enumerate(songs[:10]):
-        shutil.move(f'./local/data/demo3/songs/train/{s}', f'./local/data/demo3/songs/{idx}.wav')
+        shutil.move(f'./local/data/demo3/songs/train/{s}/mixture.wav', f'./local/data/demo3/songs/{idx}.wav')
     shutil.rmtree('./local/data/demo3/songs/train/')
     shutil.rmtree('./local/data/demo3/songs/test/')
     extractor_obj = MultimodalFeatureExtractor(config_file_path='./demos/demo3/demo3.yml')
