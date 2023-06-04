@@ -25,5 +25,17 @@ services:
           devices:
             - capabilities: [ gpu ]
     command: bash -c "nvidia-smi && python3.8 demos/demo2/run.py"
+  demo3:
+    image: sisinflabpoliba/ducho
+    tty: true
+    stdin_open: true
+    environment:
+      - PYTHONPATH=.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+    command: bash -c "nvidia-smi && wget https://zenodo.org/record/3338373/files/musdb18hq.zip && python3.8 demos/demo3/run_docker_colab.py"
     volumes:
       - ./local:/Ducho/local
