@@ -15,7 +15,7 @@ def main():
     print('Visit the original website at: https://sigsep.github.io/datasets/musdb.html#musdb18-compressed-stems')
 
     if not os.path.exists('./local/data/demo3/songs/musdb18hq.zip'):
-        shutil.move('./musdb18hq.zip', './local/data/demo3/songs/')
+        shutil.copy('./musdb18hq.zip', './local/data/demo3/songs/')
         print('Unzipping the file. This could take some time...')
         shutil.unpack_archive('./local/data/demo3/songs/musdb18hq.zip', './local/data/demo3/songs/')
         os.remove('./local/data/demo3/songs/musdb18hq.zip')
