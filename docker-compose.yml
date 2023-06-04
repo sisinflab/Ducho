@@ -13,5 +13,17 @@ services:
           devices:
             - capabilities: [ gpu ]
     command: bash -c "nvidia-smi && python3.8 demos/demo1/run.py"
+  demo2:
+    image: sisinflabpoliba/ducho
+    tty: true
+    stdin_open: true
+    environment:
+      - PYTHONPATH=.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+    command: bash -c "nvidia-smi && python3.8 demos/demo2/run.py"
     volumes:
       - ./local:/Ducho/local
