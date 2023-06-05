@@ -3,6 +3,7 @@ import tensorflow as tf
 import numpy as np
 import torchvision
 import tensorflow
+from torchvision.models.feature_extraction import get_graph_node_names, create_feature_extractor
 
 from src.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
 
@@ -46,20 +47,19 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
         """
         torchvision_list = list(torchvision.models.__dict__)
         if self._model_name.lower() in torchvision_list and 'torch' in self._framework_list:
-            # torch
-            if isinstance(list(self._model.children())[-1], torch.nn.Linear):
-                s1 = torch.nn.Sequential(*list(self._model.children())[:-self._output_layer])
-                s2 = torch.nn.Flatten()
-                feature_model = torch.nn.Sequential(s1, s2)
-            else:
-                s1 = torch.nn.Sequential(*list(self._model.children())[:-1])
-                s2 = torch.nn.Flatten()
-                s3 = torch.nn.Sequential(*list(list(self._model.children())[-1][1:-self._output_layer]))
-                feature_model = torch.nn.Sequential(s1, s2, s3)
+            _, eval_nodes = get_graph_node_names(self._model)
+            return_nodes = {}
+            output_layer = 'layer0'
+            for idx, e in enumerate(eval_nodes):
+                return_nodes[e] = f'layer{idx}'
+                if e == self._output_layer:
+                    output_layer = f'layer{idx}'
+                    break
+            feature_model = create_feature_extractor(self._model, return_nodes)
             feature_model.eval()
             output = np.squeeze(feature_model(
                 image[None, ...].to(self._device)
-            ).data.cpu().numpy())
+            )[output_layer].data.cpu().numpy())
             # update the framework list
             self._framework_list = ['torch']
         else:

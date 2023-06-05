@@ -1,22 +1,28 @@
 from src.runner.Runner import MultimodalFeatureExtractor
-from torchvision.datasets import FashionMNIST
-import shutil
+from datasets import load_dataset
 import numpy as np
-import torch
 import os
 
 np.random.seed(42)
 
 
 def main():
-    dataset = FashionMNIST(root='./local/data/demo1/', download=True)
-    dataset = torch.utils.data.Subset(dataset, np.random.choice(len(dataset), 100, replace=False))
+    dataset = load_dataset('ashraq/fashion-product-images-small')
+    dataset = np.array(dataset['train'])[np.random.choice(len(dataset['train']), 100, replace=False)].tolist()
     if not os.path.exists('./local/data/demo1/images/'):
         os.makedirs('./local/data/demo1/images/')
-    for idx, (img, _) in enumerate(dataset):
-        img.save('./local/data/demo1/images/{:03d}.jpg'.format(idx))
-    shutil.rmtree('./local/data/demo1/FashionMNIST/')
-    extractor_obj = MultimodalFeatureExtractor(config_file_path='./demos/demo1/demo1.yml')
+    with open(f'./local/data/demo1/descriptions.tsv', 'a') as f:
+        f.write('PRODUCT_ID\tdescription\n')
+        for file in dataset:
+            img = file['image']
+            description = f'{file["gender"]} {file["masterCategory"]} ' \
+                          f'{file["subCategory"]} {file["articleType"]} ' \
+                          f'{file["baseColour"]} {file["season"]} ' \
+                          f'{file["year"]} {file["usage"]} ' \
+                          f'{file["productDisplayName"]}'
+            img.save(f'./local/data/demo1/images/{file["id"]}.jpg')
+            f.write(f'{file["id"]}\t{description}\n')
+    extractor_obj = MultimodalFeatureExtractor(config_file_path='./demos/demo1/config.yml')
     extractor_obj.execute_extractions()
 
 

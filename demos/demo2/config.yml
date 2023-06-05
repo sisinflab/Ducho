@@ -1,18 +1,18 @@
-dataset_path: ./local/data/demo3
+dataset_path: ./local/data/demo2
 gpu list: 0
 
 audio:
       items:
-            input_folder: songs
-            output_folder: embeddings
+            input_path: songs
+            output_path: audio_embeddings
             model: [
                       { name: 'HDEMUCS_HIGH_MUSDB',  output_layers: 1, framework: 'torch' }
             ]
 
 textual:
     items:
-        input_folder: genres/genres.tsv
-        output_folder: textual
+        input_path: genres.tsv
+        output_path: textual_embeddings
         model: [
               { name: sentence-transformers/all-MiniLM-L12-v2,  output_layers: 1, clear_text: True, framework: sentence_transformers}
           ]

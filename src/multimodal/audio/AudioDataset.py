@@ -33,10 +33,10 @@ class AudioDataset(DatasetFather):
 
         if 'torch' in self._framework_list or 'torchaudio' in self._framework_list:
             audio, sample_rate = torchaudio.load(audio_path)
-            return self._pre_processing([audio, sample_rate])
+            return self._pre_processing([audio, sample_rate]), None
         elif 'transformers' in self._framework_list:
             audio, sample_rate = torchaudio.load(audio_path)
-            return self._pre_processing([audio, sample_rate])
+            return self._pre_processing([audio, sample_rate]), None
 
     def set_model(self, model):
         """

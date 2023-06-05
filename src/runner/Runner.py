@@ -54,11 +54,11 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                 # for evey item do the extraction
                 for index in range(dataset.__len__()):
                     # retrieve the item (preprocessed) from dataset
-                    preprocessed_item = dataset.__getitem__(index)
+                    preprocessed_item, current_id = dataset.__getitem__(index)
                     # do the extraction
                     extractor_output = extractor.extract_feature(preprocessed_item)
                     # create the npy file with the extraction output
-                    dataset.create_output_file(index, extractor_output, model_layer)
+                    dataset.create_output_file((current_id if current_id else index), extractor_output, model_layer)
                     # update the progress bar
                     t.update()
 
@@ -138,7 +138,9 @@ class MultimodalFeatureExtractor:
             working_paths = self._config.paths_for_extraction('items', 'textual')
             models = self._config.get_models_list('items', 'textual')
             # generate dataset and extractor
-            textual_dataset = TextualDataset(working_paths['input_path'], working_paths['output_path'])
+            textual_dataset = TextualDataset(working_paths['input_path'],
+                                             working_paths['output_path'],
+                                             column=self._config.get_item_column())
             textual_dataset.set_type_of_extraction('items')
 
             logging.info('Extraction is starting...')
@@ -190,7 +192,9 @@ class MultimodalFeatureExtractor:
             working_paths = self._config.paths_for_extraction('interactions', 'textual')
             models = self._config.get_models_list('interactions', 'textual')
             # generate dataset and extractor
-            textual_dataset = TextualDataset(working_paths['input_path'], working_paths['output_path'])
+            textual_dataset = TextualDataset(working_paths['input_path'],
+                                             working_paths['output_path'],
+                                             column=self._config.get_interaction_column())
 
             logging.info('Extraction is starting...')
             textual_dataset.set_type_of_extraction('interactions')

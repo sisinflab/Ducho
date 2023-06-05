@@ -148,14 +148,26 @@ class Config:
         if type_of_extraction in self._data_dict and origin_of_elaboration in self._data_dict[type_of_extraction]:
             local_dict = self._data_dict[type_of_extraction][origin_of_elaboration]
             # check if local dict has input/output/model
-            if 'input_folder' in local_dict and 'output_folder' in local_dict and 'model' in local_dict:
+            if 'input_path' in local_dict and 'output_path' in local_dict and 'model' in local_dict:
                 # in this case it's all right but must be checked that the values are not empty
-                input_value = local_dict['input_folder']
-                output_value = local_dict['output_folder']
+                input_value = local_dict['input_path']
+                output_value = local_dict['output_path']
                 model_value = local_dict['model']
                 if input_value is not None and output_value is not None and model_value is not None:
                     return True
         return False
+
+    def get_item_column(self):
+        if 'textual' in self._data_dict.keys() and 'item_column' in self._data_dict['textual']['items'].keys():
+            return self._data_dict['textual']['items']['item_column']
+        else:
+            return None
+
+    def get_interaction_column(self):
+        if 'textual' in self._data_dict.keys() and 'interaction_column' in self._data_dict['textual']['interactions'].keys():
+            return self._data_dict['textual']['interactions']['interaction_column']
+        else:
+            return None
 
     def paths_for_extraction(self, origin_of_elaboration, type_of_extraction):
         """
@@ -168,8 +180,8 @@ class Config:
 
         """
         # {'input_path': ///, 'output_path': ///}
-        relative_input_path = self._data_dict[type_of_extraction][origin_of_elaboration]['input_folder']
-        relative_output_path = self._data_dict[type_of_extraction][origin_of_elaboration]['output_folder']
+        relative_input_path = self._data_dict[type_of_extraction][origin_of_elaboration]['input_path']
+        relative_output_path = self._data_dict[type_of_extraction][origin_of_elaboration]['output_path']
 
         return {
             'input_path': os.path.join(self._data_dict['dataset_path'], relative_input_path),

@@ -47,9 +47,10 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         :return: a numpy array that will be put in a .npy file calling the right Dataset Class' method
         """
         if 'transformers' in self._framework_list:
-            model_input = self._tokenizer(sample_input, return_tensors="pt")
-            model_output = self._model(**model_input, output_hidden_states=True)
-            layer_output = model_output.hidden_states[self._output_layer]
+            model_input = self._tokenizer.encode_plus(sample_input, truncation=True, return_tensors="pt")
+            layer_output = list(self._model.children())[-self._output_layer](**model_input).pooler_output
+            # model_output = self._model(**model_input, output_hidden_states=True)
+            # layer_output = model_output.hidden_states[self._output_layer]
             return layer_output.detach().numpy()
         elif 'sentence_transformers' in self._framework_list:
             return self._model.encode(sentences=sample_input)

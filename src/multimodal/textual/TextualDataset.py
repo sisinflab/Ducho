@@ -20,7 +20,7 @@ def complex_spit_of_list_of_string(sample, splitter):
 
 class TextualDataset(DatasetFather):
 
-    def __init__(self, input_directory_path, output_directory_path):
+    def __init__(self, input_directory_path, output_directory_path, column=None):
         """
         Manage the Text Dataset (folder of input and folder of output).
         It will Manage data of input (and their preprocessing), and data of output
@@ -29,7 +29,8 @@ class TextualDataset(DatasetFather):
         """
         super().__init__(input_directory_path, output_directory_path, model_name=None)
         self._text_to_be_cleaned = True
-        self._textual_file_manager = TextualFileManager()
+        self._textual_file_manager = TextualFileManager(column=column)
+        self._ids = None
         # if num_sample is 1, it means it have to be the num of sample in the single file
         # in this case the textual file manager have to behave accordingly
         if self._num_samples == 1:
@@ -47,7 +48,7 @@ class TextualDataset(DatasetFather):
         else:
             file_path = os.path.join(self._input_directory_path, self._filenames[0])
         self._textual_file_manager.set_file_path(file_path)
-        self._num_samples = self._textual_file_manager.initiate_element_list_and_get_len()
+        self._num_samples, self._ids = self._textual_file_manager.initiate_element_list_and_get_len()
 
     def __getitem__(self, index):
         """
@@ -57,7 +58,7 @@ class TextualDataset(DatasetFather):
         Returns: a String which contains the data of the file. It may be processed and cleaned
         """
 
-        return self._textual_file_manager.get_item_from_id(index)
+        return self._textual_file_manager.get_item_from_id(self._ids[index]), self._ids[index]
 
     def _pre_processing(self, sample):
         """

@@ -41,10 +41,10 @@ class VisualDataset(DatasetFather, ABC):
 
         if 'tensorflow' in self._framework_list:
             # np for tensorflow
-            return np.expand_dims(norm_sample, axis=0)
+            return np.expand_dims(norm_sample, axis=0), None
         else:
             # torch
-            return norm_sample
+            return norm_sample, None
 
     def _pre_processing(self, sample):
         """
