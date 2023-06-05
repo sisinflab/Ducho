@@ -2,8 +2,8 @@ import os
 import re
 import numpy
 import torchaudio
-from src.internal.father_classes.DatasetFather import DatasetFather
-from src.internal.utils.TextualFileManager import TextualFileManager
+from ducho.internal.father_classes.DatasetFather import DatasetFather
+from ducho.internal.utils.TextualFileManager import TextualFileManager
 import soundfile
 from transformers import Wav2Vec2Processor
 

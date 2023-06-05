@@ -7,7 +7,7 @@ from operator import attrgetter
 
 import torch
 # import torchtext
-from src.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
+from ducho.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
 
 
 # def flatten_model(previous_name, model, layer_list):

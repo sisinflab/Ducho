@@ -1,7 +1,7 @@
 from abc import ABC
 
 from PIL import Image
-from src.internal.father_classes.DatasetFather import DatasetFather
+from ducho.internal.father_classes.DatasetFather import DatasetFather
 from torchvision import transforms
 import tensorflow
 import numpy as np

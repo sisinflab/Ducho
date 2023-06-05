@@ -1,7 +1,7 @@
 import os
 import logging
 import json
-from src.internal.utils.YamlFileManager import YamlFileManager
+from ducho.internal.utils.YamlFileManager import YamlFileManager
 
 
 def _clean_preprocessing_flag_of_models(model, type_of_extraction):

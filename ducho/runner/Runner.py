@@ -6,13 +6,13 @@ import torch
 import tensorflow as tf
 import datetime
 
-from src.config.Config import Config
-from src.multimodal.visual.VisualDataset import VisualDataset
-from src.multimodal.textual.TextualDataset import TextualDataset
-from src.multimodal.visual.VisualCnnFeatureExtractor import VisualCnnFeatureExtractor
-from src.multimodal.textual.TextualCnnFeatureExtractor import TextualCnnFeatureExtractor
-from src.multimodal.audio.AudioDataset import AudioDataset
-from src.multimodal.audio.AudioCnnFeatureExtractor import AudioCnnFeatureExtractor
+from ducho.config.Config import Config
+from ducho.multimodal.visual.VisualDataset import VisualDataset
+from ducho.multimodal.textual.TextualDataset import TextualDataset
+from ducho.multimodal.visual.VisualCnnFeatureExtractor import VisualCnnFeatureExtractor
+from ducho.multimodal.textual.TextualCnnFeatureExtractor import TextualCnnFeatureExtractor
+from ducho.multimodal.audio.AudioDataset import AudioDataset
+from ducho.multimodal.audio.AudioCnnFeatureExtractor import AudioCnnFeatureExtractor
 
 
 def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
@@ -29,7 +29,6 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
         extractor = extractor_class(gpu=gpu)
 
         # set framework
-        logging.info(f'Framework: {model["framework"]}')
         extractor.set_framework(model['framework'])
         dataset.set_framework(model['framework'])
 

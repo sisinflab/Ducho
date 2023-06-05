@@ -7,7 +7,7 @@ setup(
     author='John Doe',
     author_email='jdoe@example.com',
     packages=find_packages(
-        where='src'
+        where='ducho'
     ),
     install_requires=[
         'numpy',

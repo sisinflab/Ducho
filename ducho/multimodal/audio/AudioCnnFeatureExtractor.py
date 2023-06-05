@@ -1,7 +1,7 @@
 import torchaudio
 import torch
 import numpy as np
-from src.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
+from ducho.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
 from transformers import Wav2Vec2Model
 
 

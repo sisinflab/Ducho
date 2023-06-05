@@ -1,8 +1,8 @@
 import os
 import re
 import numpy
-from src.internal.father_classes.DatasetFather import DatasetFather
-from src.internal.utils.TextualFileManager import TextualFileManager
+from ducho.internal.father_classes.DatasetFather import DatasetFather
+from ducho.internal.utils.TextualFileManager import TextualFileManager
 
 
 # the following function is not called right now. but it will be needed in the future

@@ -1,4 +1,4 @@
-from src.runner.Runner import MultimodalFeatureExtractor
+from ducho.runner.Runner import MultimodalFeatureExtractor
 from datasets import load_dataset
 import numpy as np
 import pandas as pd

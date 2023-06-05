@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from src.internal.utils.human_sorting import human_sort
+from ducho.internal.utils.human_sorting import human_sort
 import os
 import numpy
 import logging

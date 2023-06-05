@@ -4,7 +4,7 @@ import torchvision
 import tensorflow
 from torchvision.models.feature_extraction import get_graph_node_names, create_feature_extractor
 
-from src.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
+from ducho.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
 
 
 class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
@@ -68,5 +68,4 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
             output = tf.keras.Model(input_model, output_layer)(image, training=False)
             # update the framework list
             self._framework_list = ['tensorflow']
-
         return output
