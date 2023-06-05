@@ -57,8 +57,7 @@ class TextualDataset(DatasetFather):
             index: is the index in the filenames list from which extract the name of te file to elaborate
         Returns: a String which contains the data of the file. It may be processed and cleaned
         """
-
-        return self._textual_file_manager.get_item_from_id(self._ids[index]), self._ids[index]
+        return self._pre_processing(self._textual_file_manager.get_item_from_id(self._ids[index])), self._ids[index]
 
     def _pre_processing(self, sample):
         """

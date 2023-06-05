@@ -2,11 +2,25 @@ from transformers import pipeline
 from sentence_transformers import SentenceTransformer
 from transformers import FeatureExtractionPipeline
 from transformers import PreTrainedModel
+from operator import attrgetter
 # import transformers.pipelines.
 
 import torch
 # import torchtext
 from src.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
+
+
+# def flatten_model(previous_name, model, layer_list):
+#     current_list = list(model.named_children())
+#     if current_list:
+#         for current_name, value in current_list:
+#             next_name = f'{previous_name}.{current_name}'
+#             flat = flatten_model(next_name, value, layer_list)
+#             if not isinstance(flat, list):
+#                 layer_list.append(flat)
+#     else:
+#         return previous_name.replace('x.', '')
+#     return layer_list
 
 
 class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
@@ -48,32 +62,10 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         """
         if 'transformers' in self._framework_list:
             model_input = self._tokenizer.encode_plus(sample_input, truncation=True, return_tensors="pt")
-            layer_output = list(self._model.children())[-self._output_layer](**model_input).pooler_output
-            # model_output = self._model(**model_input, output_hidden_states=True)
-            # layer_output = model_output.hidden_states[self._output_layer]
-            return layer_output.detach().numpy()
+            model_output = list(self._model.children())[-self._output_layer](**model_input, output_hidden_states=True).pooler_output
+            return model_output.detach().numpy()
         elif 'sentence_transformers' in self._framework_list:
             return self._model.encode(sentences=sample_input)
-            # output = self._tokenizer.encode_plus(sample_input, return_tensors="pt").to(self._device)
-            # return self._model(**output.to(self._device)).pooler_output.detach().cpu().numpy()
-
-            # output = self._model(sample_input)
-            # layer = output[0]["hidden_states"][self._output_layer]
-            # return layer.detach().numpy()
-            # extraction_pipeline = pipeline("sentiment-analysis", model="bert-base-uncased")
-            # output = extraction_pipeline(sample_input)
-            # print(output)
-
-            # model = PreTrainedModel("bert-base-uncased")
-            # the_pipeline = FeatureExtractionPipeline(model='')
-            # model = pipeline("feature-extraction", model="bert-base-uncased")
-            # print('heo')
-
-            # classifier = pipeline("question-answering", model="stevhliu/my_awesome_model")
-            # model = classifier.model
-            # tokenizer = classifier.tokenizer
-            # inputt = tokenizer(sample_input, return_tensors="pt")
-            # output = model(**inputt, output_hidden_states=True)
 
 
 

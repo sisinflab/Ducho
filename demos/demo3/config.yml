@@ -2,18 +2,18 @@ dataset_path: ./local/data/demo3
 gpu list: 0
 
 textual:
-#    items:
-#        input_path: descriptions.tsv
-#        output_path: textual_descriptions
-#        item_column: DESCRIPTION
-#        model: [
-#              { name: sentence-transformers/all-mpnet-base-v2, output_layers: 3, clear_text: True, framework: sentence_transformers}
-#          ]
+    items:
+        input_path: descriptions.tsv
+        output_path: textual_descriptions
+        item_column: DESCRIPTION
+        model: [
+              { name: sentence-transformers/all-mpnet-base-v2, output_layers: out, clear_text: True, framework: sentence_transformers}
+          ]
 
     interactions:
         input_path: reviews.tsv
         output_path: textual_reviews
         interaction_column: REVIEW
         model: [
-          { name: cardiffnlp/twitter-roberta-base-sentiment, output_layers: 1, task: sentiment-analysis, clear_text: True, framework: transformers }
+          { name: nlptown/bert-base-multilingual-uncased-sentiment, output_layers: 3, task: sentiment-analysis, clear_text: True, framework: transformers }
         ]
