@@ -139,6 +139,7 @@ class MultimodalFeatureExtractor:
             models = self._config.get_models_list('items', 'textual')
             # generate dataset and extractor
             textual_dataset = TextualDataset(working_paths['input_path'], working_paths['output_path'])
+            textual_dataset.set_type_of_extraction('items')
 
             logging.info('Extraction is starting...')
             _execute_extraction_from_models_list(models=models,

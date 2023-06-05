@@ -8,3 +8,11 @@ audio:
             model: [
                       { name: 'HDEMUCS_HIGH_MUSDB',  output_layers: 1, framework: 'torch' }
             ]
+
+textual:
+    items:
+        input_folder: genres/genres.tsv
+        output_folder: textual
+        model: [
+              { name: sentence-transformers/all-MiniLM-L12-v2,  output_layers: 1, clear_text: True, framework: sentence_transformers}
+          ]
