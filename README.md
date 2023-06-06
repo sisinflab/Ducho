@@ -11,6 +11,7 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
   - [Local](#local)
   - [Docker](#docker)
   - [Google Colab](#google-colab)
+- [Installation](#installation)
 
 ## What is Ducho
 
@@ -100,3 +101,5 @@ meaning that the installation is ok and you are finally ready to pull ducho's im
 ### Google Colab
 
 You just need a Google Drive account!
+
+## Installation
