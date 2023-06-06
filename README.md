@@ -12,6 +12,9 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
   - [Docker](#docker)
   - [Google Colab](#google-colab)
 - [Installation](#installation)
+  - [Local](#local)
+  - [Docker](#docker)
+  - [Google Colab](#google-colab)
 - [Try Ducho](#try-ducho)
 - [Use Ducho](#use-ducho)
 
@@ -105,6 +108,12 @@ meaning that the installation is ok and you are finally ready to pull ducho's im
 You just need a Google Drive account!
 
 ## Installation
+
+Depending on where you are running Ducho, you might need to first clone this repo and install the necessary packages.
+
+### Local
+
+
 
 ## Try Ducho
 
