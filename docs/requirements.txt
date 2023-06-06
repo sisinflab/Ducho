@@ -23,11 +23,10 @@ sacremoses
 sentence-transformers
 scikit-learn
 soundfile
-
 torchaudio
 torchtext
 torchvision
 tqdm
 transformers
 tensorflow-estimator
-tensorflow
+tensorflow==2.10
