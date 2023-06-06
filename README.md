@@ -117,8 +117,8 @@ git clone https://github.com/sisinflab/Ducho.git
 Then, install the needed dependencies through pip:
 
 ```
-pip install -r requirements.txt # LOCAL
-pip install -r requirements_colab.txt # GOOGLE COLAB
+pip install -r requirements.txt # Local
+pip install -r requirements_colab.txt # Google Colab
 ```
 
 P.S. Since Google Colab already comes with almost all necessary packages, you just need to install very few missing ones.
@@ -126,5 +126,11 @@ P.S. Since Google Colab already comes with almost all necessary packages, you ju
 Note that these two steps are not necessary for the docker version because the image already comes with the suitable environment.
 
 ## Try Ducho
+
+To ease the usage of Ducho, here we provide three demos spanning different multimodal recommendation scenarios. Use them to better familiarize with the framework:
+
+- **Demo 1: visual and textual feature extraction from items**: [link](demos/demo1/README.md)
+- **Demo 2: audio and textual feature extraction from items**: [link](demos/demo2/README.md)
+- **Demo 3: textual feature extraction from items and interactions**: [link](demos/demo3/README.md)
 
 ## Use Ducho
