@@ -1,21 +1,21 @@
-src.multimodal.textual package
+ducho.multimodal.textual package
 ==============================
 
 Submodules
 ----------
 
-src.multimodal.textual.TextualCnnFeatureExtractor module
+ducho.multimodal.textual.TextualCnnFeatureExtractor module
 --------------------------------------------------------
 
-.. automodule:: src.multimodal.textual.TextualCnnFeatureExtractor
+.. automodule:: ducho.multimodal.textual.TextualCnnFeatureExtractor
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.multimodal.textual.TextualDataset module
+ducho.multimodal.textual.TextualDataset module
 --------------------------------------------
 
-.. automodule:: src.multimodal.textual.TextualDataset
+.. automodule:: ducho.multimodal.textual.TextualDataset
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ src.multimodal.textual.TextualDataset module
 Module contents
 ---------------
 
-.. automodule:: src.multimodal.textual
+.. automodule:: ducho.multimodal.textual
    :members:
    :undoc-members:
    :show-inheritance:
