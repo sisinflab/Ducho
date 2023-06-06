@@ -46,7 +46,7 @@ MANIFEST
 docs/source/_build
 docs/source/_static
 docs/source/_templates
-
+docs/_build
 
 !/data/README.md
 !/data/cat_dbpedia_movielens_1m/features.tsv
