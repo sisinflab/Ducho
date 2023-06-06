@@ -15,3 +15,11 @@ Assuming the virtual environment has been correctly created and activated, this 
 ```
 PYTHONPATH=. python3 demos/demo1/run.py
 ```
+
+### Docker
+
+This is the command to run:
+
+```
+docker compose run demo1
+```
