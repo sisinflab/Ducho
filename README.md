@@ -49,7 +49,7 @@ Docker is easily the best option to run any NVIDIA/CUDA-based framework, because
 
 First of all, you need to install docker engine on your machine. Here is the official link for ubuntu: https://docs.docker.com/engine/install/ubuntu/. Then, for the sake of the demos provided in this repository, you might also need docker compose (here is a reference https://docs.docker.com/compose/install/standalone/).
 
-Quite conveniently, you can find several CUDA-equipped images on Docker Hub. You may refer to this link: https://hub.docker.com/r/nvidia/cuda (P.S. depending on your CUDA version, you may also need to install nvidia-docker2 (in case, here is a reference: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html).
+Quite conveniently, you can find several CUDA-equipped images on Docker Hub. You may refer to this link: https://hub.docker.com/r/nvidia/cuda Depending on your CUDA version, you may also need to install nvidia-docker2 (in case, here is a reference: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html).
 
 To test if everything worked smoothly, pull and run a container from the following docker image through this command:
 
