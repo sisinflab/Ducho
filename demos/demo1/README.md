@@ -23,3 +23,13 @@ This is the command to run:
 ```
 docker compose run demo1
 ```
+
+Note that Ducho saves all extracted files, along with the log files, into the folder ./local/data.
+
+For this demo, you may find them at:
+
+- visual embeddings: ./local/data/demo1/visual_embeddings
+- textual embeddings: ./local/data/demo1/textual_embeddings
+- logs: ./local/logs
+
+
