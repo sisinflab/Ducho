@@ -21,7 +21,7 @@ Ducho is a Python framework for the extraction of multimodal features for recomm
 You may choose among three options:
 
 - Locally by cloning this GitHub repo.
-- By pulling our docker image on DockerHub ([link](https://hub.docker.com/repository/docker/sisinflabpoliba/ducho/general)).
+- By pulling our docker image on Docker Hub ([link](https://hub.docker.com/repository/docker/sisinflabpoliba/ducho/general)).
 - On Google Colab ([link](https://colab.research.google.com/drive/1ouKkdxOObOL0BI00r0c157oNRqwxqTgt)).
 
 ## Prerequisites
