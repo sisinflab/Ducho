@@ -129,8 +129,8 @@ Note that these two steps are not necessary for the docker version because the i
 
 To ease the usage of Ducho, here we provide three demos spanning different multimodal recommendation scenarios. Use them to better familiarize with the framework:
 
-- **Demo 1: visual and textual feature extraction from items**: [link](demos/demo1/README.md)
-- **Demo 2: audio and textual feature extraction from items**: [link](demos/demo2/README.md)
-- **Demo 3: textual feature extraction from items and interactions**: [link](demos/demo3/README.md)
+- **Demo 1:** visual and textual feature extraction from items ([link](demos/demo1/README.md))
+- **Demo 2:** audio and textual feature extraction from items ([link](demos/demo2/README.md))
+- **Demo 3:** textual feature extraction from items and interactions ([link](demos/demo3/README.md))
 
 ## Use Ducho
