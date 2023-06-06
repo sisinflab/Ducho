@@ -13,6 +13,8 @@ services:
           devices:
             - capabilities: [ gpu ]
     command: bash -c "nvidia-smi && python3.8 demos/demo1/run.py"
+    volumes:
+      - ./local:/Ducho/local
   demo2:
     image: sisinflabpoliba/ducho
     tty: true
@@ -25,6 +27,8 @@ services:
           devices:
             - capabilities: [ gpu ]
     command: bash -c "nvidia-smi && python3.8 demos/demo2/run.py"
+    volumes:
+      - ./local:/Ducho/local
   demo3:
     image: sisinflabpoliba/ducho
     tty: true
