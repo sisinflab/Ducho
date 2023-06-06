@@ -95,7 +95,7 @@ Tue Jun  6 14:11:59 2023
 |  No running processes found                                                 |
 +-----------------------------------------------------------------------------+
 ```
-meaning that the installation is ok and you are finally ready to pull ducho's image from Docker Hub!
+meaning that the installation is ok and you are finally ready to pull ducho's image (which is actually built from this CUDA image) from Docker Hub!
 
 ### Google Colab
 
