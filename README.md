@@ -32,4 +32,4 @@ You may choose among three options:
 
 ### Google Colab
 
-You just need a google drive account!
+You just need a Google Drive account!
