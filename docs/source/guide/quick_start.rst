@@ -4,8 +4,8 @@ How can I run Ducho
 You may choose among three options:
 
 - Locally by cloning this GitHub repo.
-- By pulling our docker image on Docker Hub ([link](https://hub.docker.com/repository/docker/sisinflabpoliba/ducho/general)).
-- On Google Colab ([link](https://colab.research.google.com/drive/1ouKkdxOObOL0BI00r0c157oNRqwxqTgt)).
+- By pulling our docker image on Docker Hub (`link <https://hub.docker.com/repository/docker/sisinflabpoliba/ducho/general>`_).
+- On Google Colab (`link <https://colab.research.google.com/drive/1ouKkdxOObOL0BI00r0c157oNRqwxqTgt>`_).
 
 Prerequisites
 ^^^^^^^^^^^^
@@ -26,16 +26,16 @@ For example, a possible working environment involves the following (you may refe
     Pip: 23.1.2
 
 
-Please, refer to this [link](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) for the official guidelines on how to install the nvidia toolkit on linux from scratch.
+Please, refer to this `link <https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html>`_ for the official guidelines on how to install the nvidia toolkit on linux from scratch.
 
 Docker
 ^^^^^^^^^
 
 Docker is easily the best option to run any NVIDIA/CUDA-based framework, because it provides docker images with everything already setup for almost all your needs.
 
-First of all, you need to install the docker engine on your machine. Here is the official [link](https://docs.docker.com/engine/install/ubuntu/) for ubuntu. Then, for the sake of the demos provided in this repository, you might also need docker compose (here is a reference [link](https://docs.docker.com/compose/install/standalone/)).
+First of all, you need to install the docker engine on your machine. Here is the official `link <https://docs.docker.com/engine/install/ubuntu/>`_ for ubuntu. Then, for the sake of the demos provided in this repository, you might also need docker compose (here is a reference `link <https://docs.docker.com/compose/install/standalone/>`_).
 
-Quite conveniently, you can find several CUDA-equipped images on Docker Hub. You may refer to this [link](https://hub.docker.com/r/nvidia/cuda ). Depending on your CUDA version, you may also need to install nvidia-docker2 (in case, here is a [reference](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)).
+Quite conveniently, you can find several CUDA-equipped images on Docker Hub. You may refer to this `link <https://hub.docker.com/r/nvidia/cuda>`_. Depending on your CUDA version, you may also need to install nvidia-docker2 (in case, here is a `reference <https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html>`_).
 
 To test if everything worked smoothly, pull and run a container from the following docker image through this command:
 
