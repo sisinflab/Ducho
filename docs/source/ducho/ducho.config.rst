@@ -1,13 +1,13 @@
-src.runner package
+ducho.config package
 ==================
 
 Submodules
 ----------
 
-src.runner.Runner module
+ducho.config.Config module
 ------------------------
 
-.. automodule:: src.runner.Runner
+.. automodule:: ducho.config.Config
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ src.runner.Runner module
 Module contents
 ---------------
 
-.. automodule:: src.runner
+.. automodule:: ducho.config
    :members:
    :undoc-members:
    :show-inheritance:

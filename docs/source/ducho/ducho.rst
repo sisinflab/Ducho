@@ -1,4 +1,4 @@
-src package
+ducho package
 ===========
 
 Subpackages
@@ -7,15 +7,15 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   src.config
-   src.internal
-   src.multimodal
-   src.runner
+   ducho.config
+   ducho.internal
+   ducho.multimodal
+   ducho.runner
 
 Module contents
 ---------------
 
-.. automodule:: src
+.. automodule:: ducho
    :members:
    :undoc-members:
    :show-inheritance:

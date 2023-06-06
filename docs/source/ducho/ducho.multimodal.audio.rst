@@ -1,21 +1,21 @@
-src.multimodal.audio package
+ducho.multimodal.audio package
 ============================
 
 Submodules
 ----------
 
-src.multimodal.audio.AudioCnnFeatureExtractor module
+ducho.multimodal.audio.AudioCnnFeatureExtractor module
 ----------------------------------------------------
 
-.. automodule:: src.multimodal.audio.AudioCnnFeatureExtractor
+.. automodule:: ducho.multimodal.audio.AudioCnnFeatureExtractor
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.multimodal.audio.AudioDataset module
+ducho.multimodal.audio.AudioDataset module
 ----------------------------------------
 
-.. automodule:: src.multimodal.audio.AudioDataset
+.. automodule:: ducho.multimodal.audio.AudioDataset
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ src.multimodal.audio.AudioDataset module
 Module contents
 ---------------
 
-.. automodule:: src.multimodal.audio
+.. automodule:: ducho.multimodal.audio
    :members:
    :undoc-members:
    :show-inheritance:

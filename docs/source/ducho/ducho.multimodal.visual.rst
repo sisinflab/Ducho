@@ -1,21 +1,21 @@
-src.multimodal.visual package
+ducho.multimodal.visual package
 =============================
 
 Submodules
 ----------
 
-src.multimodal.visual.VisualCnnFeatureExtractor module
+ducho.multimodal.visual.VisualCnnFeatureExtractor module
 ------------------------------------------------------
 
-.. automodule:: src.multimodal.visual.VisualCnnFeatureExtractor
+.. automodule:: ducho.multimodal.visual.VisualCnnFeatureExtractor
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.multimodal.visual.VisualDataset module
+ducho.multimodal.visual.VisualDataset module
 ------------------------------------------
 
-.. automodule:: src.multimodal.visual.VisualDataset
+.. automodule:: ducho.multimodal.visual.VisualDataset
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ src.multimodal.visual.VisualDataset module
 Module contents
 ---------------
 
-.. automodule:: src.multimodal.visual
+.. automodule:: ducho.multimodal.visual
    :members:
    :undoc-members:
    :show-inheritance:

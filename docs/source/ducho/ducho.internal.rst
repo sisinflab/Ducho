@@ -1,4 +1,4 @@
-src.internal package
+ducho.internal package
 ====================
 
 Subpackages
@@ -7,13 +7,13 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   src.internal.father_classes
-   src.internal.utils
+   ducho.internal.father_classes
+   ducho.internal.utils
 
 Module contents
 ---------------
 
-.. automodule:: src.internal
+.. automodule:: ducho.internal
    :members:
    :undoc-members:
    :show-inheritance:

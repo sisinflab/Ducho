@@ -1,21 +1,21 @@
-src.internal.father\_classes package
+ducho.internal.father\_classes package
 ====================================
 
 Submodules
 ----------
 
-src.internal.father\_classes.CnnFeatureExtractorFather module
+ducho.internal.father\_classes.CnnFeatureExtractorFather module
 -------------------------------------------------------------
 
-.. automodule:: src.internal.father_classes.CnnFeatureExtractorFather
+.. automodule:: ducho.internal.father_classes.CnnFeatureExtractorFather
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.internal.father\_classes.DatasetFather module
+ducho.internal.father\_classes.DatasetFather module
 -------------------------------------------------
 
-.. automodule:: src.internal.father_classes.DatasetFather
+.. automodule:: ducho.internal.father_classes.DatasetFather
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ src.internal.father\_classes.DatasetFather module
 Module contents
 ---------------
 
-.. automodule:: src.internal.father_classes
+.. automodule:: ducho.internal.father_classes
    :members:
    :undoc-members:
    :show-inheritance:

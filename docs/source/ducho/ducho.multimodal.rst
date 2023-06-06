@@ -1,4 +1,4 @@
-src.multimodal package
+ducho.multimodal package
 ======================
 
 Subpackages
@@ -7,14 +7,14 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   src.multimodal.audio
-   src.multimodal.textual
-   src.multimodal.visual
+   ducho.multimodal.audio
+   ducho.multimodal.textual
+   ducho.multimodal.visual
 
 Module contents
 ---------------
 
-.. automodule:: src.multimodal
+.. automodule:: ducho.multimodal
    :members:
    :undoc-members:
    :show-inheritance:
