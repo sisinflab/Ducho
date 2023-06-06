@@ -7,6 +7,10 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
 
 - [What is Ducho](#what-is-ducho)
 - [How can I run Ducho](#how-can-i-run-ducho)
+- [Prerequisites](#prerequisites)
+  - [Local](#local)
+  - [Docker](#docker)
+  - [Google Colab](#google-colab)
 
 ## What is Ducho
 
