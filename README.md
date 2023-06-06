@@ -12,9 +12,6 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
   - [Docker](#docker)
   - [Google Colab](#google-colab)
 - [Installation](#installation)
-  - [Local](##local)
-  - [Docker](#docker)
-  - [Google Colab](#google-colab)
 - [Try Ducho](#try-ducho)
 - [Use Ducho](#use-ducho)
 
@@ -111,9 +108,22 @@ You just need a Google Drive account!
 
 Depending on where you are running Ducho, you might need to first clone this repo and install the necessary packages.
 
-### Local
+If you are running Ducho on your local machine or Google Colab, you first need to clone this repository:
 
+```
+git clone https://github.com/sisinflab/Ducho.git
+```
 
+Then, install the needed dependencies through pip:
+
+```
+pip install -r requirements.txt # LOCAL
+pip install -r requirements_colab.txt # GOOGLE COLAB
+```
+
+P.S. Since Google Colab already comes with almost all necessary packages, you just need to install very few missing ones.
+
+Note that these two steps are not necessary for the docker version because the image already comes with the suitable environment.
 
 ## Try Ducho
 
