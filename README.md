@@ -5,6 +5,6 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
 
 ## Table of contents
 
-- [Where can I run Ducho][#where-can-i-run-ducho]
+- [Where can I run Ducho](#where-can-i-run-ducho)
 
 ## Where can I run Ducho
