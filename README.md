@@ -41,6 +41,8 @@ Python: 3.10.11
 Pip: 23.1.2
 ```
 
+Please, refer to this link (https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) for the official guidelines on how to install the nvidia toolkit on linux.
+
 ### Docker
 
 ### Google Colab
