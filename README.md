@@ -12,7 +12,7 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
   - [Docker](#docker)
   - [Google Colab](#google-colab)
 - [Installation](#installation)
-  - [Local](#local)
+  - [Local](##local)
   - [Docker](#docker)
   - [Google Colab](#google-colab)
 - [Try Ducho](#try-ducho)
