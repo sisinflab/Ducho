@@ -24,6 +24,10 @@ This is the command to run:
 docker compose run demo1
 ```
 
+### Google Colab
+
+Follow this link: https://colab.research.google.com/drive/1ouKkdxOObOL0BI00r0c157oNRqwxqTgt#scrollTo=TAGeT3ONZAGU&line=7&uniqifier=1
+
 ## Outputs
 
 Note that Ducho saves all extracted files, along with the log files, into the folder ./local/data.
