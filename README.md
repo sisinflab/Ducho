@@ -35,10 +35,10 @@ In that case, if you machine is equipped with NVIDIA drivers, you should first m
 For example, a possible working environment involves the following (you may refer to any Google Colab notebook):
 
 ```
-Nvidia drivers: 525.85.12
-Cuda: 11.8.89
-Python: 3.10.11
-Pip: 23.1.2
+Nvidia drivers==525.85.12
+Cuda==11.8.89
+Python==3.10.11
+Pip==23.1.2
 ```
 
 ### Docker
