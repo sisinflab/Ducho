@@ -41,9 +41,61 @@ Python: 3.10.11
 Pip: 23.1.2
 ```
 
-Please, refer to this link (https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) for the official guidelines on how to install the nvidia toolkit on linux.
+Please, refer to this link (https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) for the official guidelines on how to install the nvidia toolkit on linux from scratch.
 
 ### Docker
+
+Docker is easily the best option to run any NVIDIA/CUDA-based framework, because it provides docker images with everything already setup for almost all your needs.
+
+First of all, you need to install docker engine on your machine. Here is the official link for ubuntu: https://docs.docker.com/engine/install/ubuntu/. Then, for the sake of the demos provided in this repository, you might also need docker compose (here is a reference https://docs.docker.com/compose/install/standalone/).
+
+Quite conveniently, you can find several CUDA-equipped images on Docker Hub. You may refer to this link: https://hub.docker.com/r/nvidia/cuda (P.S. depending on your CUDA version, you may also need to install nvidia-docker2 (in case, here is a reference: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html).
+
+To test if everything worked smoothly, pull and run a container from the following docker image through this command:
+
+```
+docker run --rm --gpus all nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 nvidia-smi
+```
+
+You should be able to see something like this:
+
+```
+==========
+== CUDA ==
+==========
+
+CUDA Version 11.8.0
+
+Container image Copyright (c) 2016-2022, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
+
+Tue Jun  6 14:11:59 2023       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.129.06   Driver Version: 470.129.06   CUDA Version: 11.8     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  Tesla T4            Off  | 00000001:00:00.0 Off |                    0 |
+| N/A   33C    P0    26W /  70W |      0MiB / 15109MiB |      4%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+```
+meaning that the installation is ok and you are finally ready to pull ducho's image from Docker Hub!
 
 ### Google Colab
 
