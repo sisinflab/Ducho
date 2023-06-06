@@ -1,4 +1,4 @@
-## Demo 1: visual and textual feature extraction from items
+# Demo 1: visual and textual feature extraction from items
 
 This demo shows how to extract visual and textual features from fashion product images and descriptions, respectively.
 
@@ -6,7 +6,7 @@ Dataset source: https://huggingface.co/datasets/ashraq/fashion-product-images-sm
 
 Please note that the original dataset has been sampled for the sake of this demo (i.e., 100 fashion items are randomly sampled).
 
-In the following, we show how to run this demo.
+## Run the demo
 
 ### Local
 
@@ -23,6 +23,8 @@ This is the command to run:
 ```
 docker compose run demo1
 ```
+
+## Outputs
 
 Note that Ducho saves all extracted files, along with the log files, into the folder ./local/data.
 
