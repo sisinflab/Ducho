@@ -19,7 +19,7 @@ sentence-transformers
 scikit-learn
 soundfile
 tensorflow-estimator
-tensorflow
+tensorflow==2.10
 torchaudio
 torchtext
 torchvision
