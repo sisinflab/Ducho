@@ -7,10 +7,14 @@ Welcome to Ducho's documentation!
 =================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: API REFERENCE:
 
-   modules
+   ducho/ducho
+   ducho/ducho.config
+   ducho/ducho.internal
+   ducho/ducho.multimodal
+   ducho/ducho.runner
 
 Indices and tables
 ==================
