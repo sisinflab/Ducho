@@ -134,3 +134,7 @@ To ease the usage of Ducho, here we provide three demos spanning different multi
 - **Demo 3:** textual feature extraction from items and interactions ([link](demos/demo3/README.md))
 
 ## Use Ducho
+
+Once you have familiarized with Ducho, you can use it for your own datasets and custom multimodal feature extractions! Please refer to the official [documentation](https://ducho.readthedocs.io/en/latest/) where all modules, classes, and methods are explained in detail.
+
+You may also consider to take a look at this [guideline](config/README.md) to better understand how to fill in your custom configuration files.
