@@ -5,7 +5,7 @@ Ducho is a Python framework for the extraction of multimodal features for recomm
 
 
 
-For all other details about Ducho please refer to our `paper <https://google.it>` _ and cite [Ducho]_
+For all other details about Ducho please refer to our `paper <https://google.it>`_ and cite [Ducho]_
 
 
 .. [Ducho]
