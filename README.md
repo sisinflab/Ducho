@@ -30,7 +30,7 @@ You may choose among three options:
 
 Ducho may work on both CPU and GPU. However, if you want to speed up your feature extraction, we highly recommend to go for the GPU-accelerated option. 
 
-In that case, if you machine is equipped with NVIDIA drivers, you should first make sure CUDA is installed along with the compatible NVIDIA drivers. 
+In that case, if your machine is equipped with NVIDIA drivers, you should first make sure CUDA is installed along with the compatible NVIDIA drivers. 
 
 For example, a possible working environment involves the following (you may refer to any Google Colab notebook):
 
