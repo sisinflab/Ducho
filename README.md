@@ -37,7 +37,7 @@ In that case, if your machine is equipped with NVIDIA drivers, you should first 
 
 For example, a possible working environment involves the following (you may refer to any Google Colab notebook):
 
-```
+```sh
 Nvidia drivers: 525.85.12
 Cuda: 11.8.89
 Python: 3.10.11
@@ -62,7 +62,7 @@ docker run --rm --gpus all nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 nvidia-sm
 
 Once the docker image has been downloaded from the hub, you should be able to see something like this:
 
-```sh
+```
 ==========
 == CUDA ==
 ==========
