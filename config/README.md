@@ -49,9 +49,9 @@ visual|textual|audio:
 ## Notes
 Please refer to the \[*\] reported in the YAML schema from above.
 
-**\[1\]** If no item column is provided, Ducho takes the last column of the tsv file as item column by default.
+**\[1\]** If no ```item_column``` is provided, Ducho takes the last column of the tsv file as item column by default.
 
-**\[2\]** If not interaction column is provided, Ducho takes the last column of the tsv file as interaction column by default.
+**\[2\]** If not ```interaction_column``` is provided, Ducho takes the last column of the tsv file as interaction column by default.
 
 **\[3\]** It is required to put the exact same model name as reported in the related backend's documentation. Here we try to provide useful links which list all available pre-trained models for each backend/modality:
 
