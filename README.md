@@ -62,7 +62,7 @@ docker run --rm --gpus all nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 nvidia-sm
 
 Once the docker image has been downloaded from the hub, you should be able to see something like this:
 
-```
+```sh
 ==========
 == CUDA ==
 ==========
