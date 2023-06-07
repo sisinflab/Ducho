@@ -31,10 +31,10 @@ class AudioDataset(DatasetFather):
         # right now both torchaudio and transformers do the same thing, but it is preferable to keep them work
         # separately for future improvement
 
-        if 'torch' in self._framework_list or 'torchaudio' in self._framework_list:
+        if 'torch' in self._backend_libraries_list or 'torchaudio' in self._backend_libraries_list:
             audio, sample_rate = torchaudio.load(audio_path)
             return self._pre_processing([audio, sample_rate]), None
-        elif 'transformers' in self._framework_list:
+        elif 'transformers' in self._backend_libraries_list:
             audio, sample_rate = torchaudio.load(audio_path)
             return self._pre_processing([audio, sample_rate]), None
 
@@ -56,11 +56,11 @@ class AudioDataset(DatasetFather):
         """
         audio = pre_process_input[0]
         rate = pre_process_input[1]
-        if 'torch' in self._framework_list or 'torchaudio' in self._framework_list:
+        if 'torch' in self._backend_libraries_list or 'torchaudio' in self._backend_libraries_list:
             bundle = getattr(torchaudio.pipelines, self._model_name)
             waveform = torchaudio.functional.resample(audio, rate, bundle.sample_rate)
             return [waveform, bundle.sample_rate]
-        elif 'transformers' in self._framework_list:
+        elif 'transformers' in self._backend_libraries_list:
             pre_processor = torchaudio.transforms.Resample(rate, 16000)
             resampled_audio = pre_processor(audio)
             return [resampled_audio, 16000]

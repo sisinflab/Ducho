@@ -46,11 +46,11 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         model_name = model['name']
         if 'task' in model.keys():
             model_task = model['task']
-        if 'transformers' in self._framework_list:
+        if 'transformers' in self._backend_libraries_list:
             built_pipeline = pipeline(model_task, model=model_name)
             self._model = built_pipeline.model
             self._tokenizer = built_pipeline.tokenizer
-        elif 'sentence_transformers' in self._framework_list:
+        elif 'sentence_transformers' in self._backend_libraries_list:
             self._model = SentenceTransformer(model_name)
 
     def extract_feature(self, sample_input):
@@ -60,11 +60,11 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         :param sample_input: the String in input to process
         :return: a numpy array that will be put in a .npy file calling the right Dataset Class' method
         """
-        if 'transformers' in self._framework_list:
+        if 'transformers' in self._backend_libraries_list:
             model_input = self._tokenizer.encode_plus(sample_input, truncation=True, return_tensors="pt")
             model_output = list(self._model.children())[-self._output_layer](**model_input, output_hidden_states=True).pooler_output
             return model_output.detach().numpy()
-        elif 'sentence_transformers' in self._framework_list:
+        elif 'sentence_transformers' in self._backend_libraries_list:
             return self._model.encode(sentences=sample_input)
 
 

@@ -39,7 +39,7 @@ class VisualDataset(DatasetFather, ABC):
 
         norm_sample = self._pre_processing(sample)
 
-        if 'tensorflow' in self._framework_list:
+        if 'tensorflow' in self._backend_libraries_list:
             # np for tensorflow
             return np.expand_dims(norm_sample, axis=0), None
         else:
@@ -60,13 +60,13 @@ class VisualDataset(DatasetFather, ABC):
 
         # normalize
         tensorflow_keras_list = list(tensorflow.keras.applications.__dict__)
-        if self._model_name.lower() in tensorflow_keras_list and 'tensorflow' in self._framework_list:
+        if self._model_name.lower() in tensorflow_keras_list and 'tensorflow' in self._backend_libraries_list:
             # if the model is a tensorflow model, each one execute a different command (retrieved from the model map)
             # command_two = tensorflow_models_for_normalization[self._model_name]
             command = getattr(tensorflow.keras.applications, self._model_name.lower())
             norm_sample = command.preprocess_input(np.array(res_sample))
             # update the framework list
-            self._framework_list = ['tensorflow']
+            self._backend_libraries_list= ['tensorflow']
         else:
             # if the model is a torch model, the normalization is the same for everyone
             transform = transforms.Compose([transforms.ToTensor(),
@@ -75,7 +75,7 @@ class VisualDataset(DatasetFather, ABC):
                                             ])
             norm_sample = transform(res_sample)
             # update the framework list
-            self._framework_list = ['torch']
+            self._backend_libraries_list = ['torch']
 
         return norm_sample
 

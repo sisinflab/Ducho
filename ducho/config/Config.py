@@ -219,16 +219,19 @@ class Config:
             #   different way to call their layers
             # - if OUTPUT FRAMEWORK is ['tensorflow', 'torch'] then outside of this method it means that
             #   the framework in which operate is not known but only one of them will be executed
-            if 'framework' in model.keys():
-                framework_value = model['framework']
+
+            # this name refers to the way the libraries of models are called in Ducho
+            library_key = 'backend'
+            if library_key in model.keys():
+                framework_value = model[library_key]
 
                 if framework_value == ['tensorflow', 'torch']:
                     # this setting does not work properly because the two framework used calls different layers
                     first_model = model
-                    first_model.update({'framework': ['tensorflow']})
+                    first_model.update({library_key: ['tensorflow']})
 
                     second_model = model
-                    second_model.update({'framework': ['torch']})
+                    second_model.update({library_key: ['torch']})
 
                     # layers
 
@@ -250,7 +253,7 @@ class Config:
                     raise ValueError(' unfortunately calling both framework simultaneity doesnt work')
                 # framework value must be a list
                 elif isinstance(framework_value, str):
-                    model.update({'framework': [framework_value]})
+                    model.update({library_key: [framework_value]})
 
                 # the following elif was written with the idea that every type of extraction would have only torch or
                 # tensorflow. Now this only make sense in the visual case
@@ -261,15 +264,15 @@ class Config:
                 if type_of_extraction == 'textual':
                     # textual case
                     # in this case we use the 'transformers' framework
-                    model.update({'framework': ['transformers', 'sentence-transformers']})
+                    model.update({library_key: ['transformers', 'sentence-transformers']})
                 elif type_of_extraction == 'visual':
                     # it is in the visual case, it uses tensorflow or torch, but doesn't know which one
                     # so both are set as plausible
-                    model.update({'framework': ['tensorflow', 'torch']})
+                    model.update({library_key: ['tensorflow', 'torch']})
                 elif type_of_extraction == 'audio':
                     # it is the audio case, it uses torchaudio or transformers
                     # both are plausible, it will try torchaudio and if the model is not in its list, it will try
                     # transformers
-                    model.update({'framework': ['torch', 'transformers']})
+                    model.update({library_key: ['torch', 'transformers']})
 
         return models

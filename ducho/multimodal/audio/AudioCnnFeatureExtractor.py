@@ -26,13 +26,13 @@ class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
         """
         model_name = model['name']
         self._model_name = model_name
-        if 'torch' in self._framework_list or 'torchaudio' in self._framework_list:
+        if 'torch' in self._backend_libraries_list or 'torchaudio' in self._backend_libraries_list:
             model_to_initialize = getattr(torchaudio.pipelines, model_name)
             self._model = model_to_initialize.get_model()
             self._model.to(self._device)
             self._model.eval()
             # self._model.to(self._gpu)
-        elif 'transformers' in self._framework_list:
+        elif 'transformers' in self._backend_libraries_list:
             self._model = Wav2Vec2Model.from_pretrained(self._model_name)
 
     def extract_feature(self, sample_input):
@@ -47,7 +47,7 @@ class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
         """
         audio = sample_input[0]
         sample_rate = sample_input[1]
-        if 'torch' in self._framework_list or 'torchaudio' in self._framework_list:
+        if 'torch' in self._backend_libraries_list or 'torchaudio' in self._backend_libraries_list:
             # extraction
             # num_layer is the number of layers to go through
             try:
@@ -65,10 +65,10 @@ class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
                     audio[None, ...].to(self._device)
                 ).data.cpu().numpy())
                 # update the framework list
-                self._framework_list = ['torch']
+                self._backend_libraries_list = ['torch']
                 return output
 
-        elif 'transformers' in self._framework_list:
+        elif 'transformers' in self._backend_libraries_list:
             # feature extraction
             outputs = self._model(audio, output_hidden_states=True)
             # layer extraction
