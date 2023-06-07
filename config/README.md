@@ -53,6 +53,6 @@ Please refer to the \[*\] reported in the YAML schema from above.
 
 **\[2\]** If not ```interaction_column``` is provided, Ducho takes the last column of the tsv file as interaction column by default.
 
-**\[3\]** It is required to put the exact same model name as reported in the related backend's documentation. Here we try to provide useful links which list all available pre-trained models for each backend/modality:
+**\[3\]** We provide a modality/backend table for this:
 
 **\[4\]** We provide a modality/backend table for this:
