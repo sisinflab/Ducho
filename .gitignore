@@ -48,13 +48,4 @@ docs/source/_static
 docs/source/_templates
 docs/_build
 
-!/data/README.md
-!/data/cat_dbpedia_movielens_1m/features.tsv
-!/data/cat_dbpedia_movielens_1m/map.tsv
-!/data/cat_dbpedia_movielens_1m/properties.conf
-!/data/movielens_1m/i_pop.tsv
-!/data/movielens_1m/u_pop.tsv
-!/data/cat_dbpedia_movielens_1m_v030/features.tsv
-!/data/cat_dbpedia_movielens_1m_v030/map.tsv
-!/data/cat_dbpedia_movielens_1m_v030/properties.conf
-./local/
+!local/

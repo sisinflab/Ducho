@@ -17,6 +17,8 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
 
 ## What is Ducho
 
+![ducho pipeline](ducho.png)
+
 Ducho is a Python framework for the extraction of multimodal features for recommendation. It provides a unified interface to most of the common libraries for deep learning (e.g., TensorFlow, PyTorch, Transformers) to extract high-level features from items (e.g., product images/descriptions) and user-item interactions (e.g., users reviews). It is highly configurable through a YAML-based configuration file (which may be override by input arguments from the command line in case). Users can indicate the source from which to extract the multimodal features (i.e., items/interactions), the modalities (i.e., visual/textual/audio), and the list of models along with output layers and preprocessing steps to extract the features.
 
 ## How can I run Ducho
@@ -138,3 +140,8 @@ To ease the usage of Ducho, here we provide three demos spanning different multi
 Once you have familiarized with Ducho, you can use it for your own datasets and custom multimodal feature extractions! Please refer to the official [documentation](https://ducho.readthedocs.io/en/latest/) where all modules, classes, and methods are explained in detail.
 
 You may also consider to take a look at this [guideline](config/README.md) to better understand how to fill in your custom configuration files.
+
+
+### Overwrite Configuration trought command
+To change an entry in the Configuration dict, you need to write the changes in a list that will be given to the Runner with the key argv.
+This list is composed of tuples key-value where each entry is a String that needs to be write in this way: ’key=value’. As the config dictionary is built of other nested dictionaries, the key is used also to describe the path within to follow, to do so the ’.’ is used to discern. I.e ’key1.key2.key3’
