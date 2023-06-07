@@ -37,7 +37,7 @@ In that case, if your machine is equipped with NVIDIA drivers, you should first 
 
 For example, a possible working environment involves the following (you may refer to any Google Colab notebook):
 
-```sh
+```
 Nvidia drivers: 525.85.12
 Cuda: 11.8.89
 Python: 3.10.11
@@ -110,13 +110,13 @@ Depending on where you are running Ducho, you might need to first clone this rep
 
 If you are running Ducho on your local machine or Google Colab, you first need to clone this repository:
 
-```
+```sh
 git clone https://github.com/sisinflab/Ducho.git
 ```
 
 Then, install the needed dependencies through pip:
 
-```
+```sh
 pip install -r requirements.txt # Local
 pip install -r requirements_colab.txt # Google Colab
 ```
