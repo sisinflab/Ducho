@@ -1,5 +1,7 @@
 # Configuration file
 
+## The YAML schema
+
 Here we report a schematic representation of a generic YAML file for the configuration of any multimodal feature extraction.
 
 ```yaml
