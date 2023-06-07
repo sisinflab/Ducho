@@ -31,7 +31,7 @@ visual|textual|audio:
         
         [clear_text]: <whether_to_clear_input_text>, # OPTIONAL, a boolean for textual modality
         
-        [framework]: <backend_for_pretrained_model>, # OPTIONAL, the backend to use for the pretrained model [5]
+        [backend]: <backend_for_pretrained_model>, # OPTIONAL, the backend to use for the pretrained model [5]
         
         [task]: <pretrained_model_task>, # OPTIONAL, only for textual modality
       }
