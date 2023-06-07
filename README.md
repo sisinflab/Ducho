@@ -138,3 +138,12 @@ To ease the usage of Ducho, here we provide three demos spanning different multi
 Once you have familiarized with Ducho, you can use it for your own datasets and custom multimodal feature extractions! Please refer to the official [documentation](https://ducho.readthedocs.io/en/latest/) where all modules, classes, and methods are explained in detail.
 
 You may also consider to take a look at this [guideline](config/README.md) to better understand how to fill in your custom configuration files.
+
+### How write the Configuration
+### How change the Configuration
+the argv
+is used to overwrite a config dictionary, it is a list of tuples key
+value where each entry is a String that needs to be write in this
+way: ’key=value’. As the config dictionary is built of other nested
+dictionaries, the key is used also to describe the path within to
+follow, to do so the ’.’ is used as a discerning. I.e ’key1.key2.key3’
