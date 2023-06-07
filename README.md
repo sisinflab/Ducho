@@ -139,7 +139,7 @@ Once you have familiarized with Ducho, you can use it for your own datasets and 
 
 You may also consider to take a look at this [guideline](config/README.md) to better understand how to fill in your custom configuration files.
 
-### How write the Configuration
-### How change the Configuration
-To change an entry in the dictionary of Configuration, you need to write the changes in a list of String in a way that later will be explained, such list then will be given to the Runner with the key argv.
-It is a list of tuples key-value where each entry is a String that needs to be write in this way: ’key=value’. As the config dictionary is built of other nested dictionaries, the key is used also to describe the path within to follow, to do so the ’.’ is used as a discerning. I.e ’key1.key2.key3’
+
+### Overwrite Configuration trought command
+To change an entry in the Configuration dict, you need to write the changes in a list that will be given to the Runner with the key argv.
+This list is composed of tuples key-value where each entry is a String that needs to be write in this way: ’key=value’. As the config dictionary is built of other nested dictionaries, the key is used also to describe the path within to follow, to do so the ’.’ is used to discern. I.e ’key1.key2.key3’
