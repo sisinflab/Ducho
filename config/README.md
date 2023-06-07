@@ -32,7 +32,6 @@ visual|textual|audio:
         [framework]: <backend_for_pretrained_model>, # OPTIONAL, the backend to use for the pretrained model [3]
         
         [task]: <pretrained_model_task>, # OPTIONAL, only for textual modality
-      ...
       }
     ]
   ... 
