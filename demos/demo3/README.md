@@ -12,7 +12,7 @@ Please note that the original dataset has been sampled for the sake of this demo
 
 Assuming the virtual environment has been correctly created and activated, this is the command to run:
 
-```
+```sh
 PYTHONPATH=. python3 demos/demo3/run.py
 ```
 
@@ -20,7 +20,7 @@ PYTHONPATH=. python3 demos/demo3/run.py
 
 This is the command to run:
 
-```
+```sh
 docker compose run demo3
 ```
 
