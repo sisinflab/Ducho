@@ -29,8 +29,8 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
         extractor = extractor_class(gpu=gpu)
 
         # set framework
-        extractor.set_framework(model['framework'])
-        dataset.set_framework(model['framework'])
+        extractor.set_framework(model['backend'])
+        dataset.set_framework(model['backend'])
 
         # set model
         # extractor.set_model(model['name'])

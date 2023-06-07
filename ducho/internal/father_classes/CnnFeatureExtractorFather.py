@@ -5,7 +5,7 @@ import numpy as np
 
 class CnnFeatureExtractorFather:
     def __init__(self, gpu='-1'):
-        self._framework_list = None
+        self._backend_libraries_list = None
         self._model = None
         self._output_layer = None
         self._model_name = None
@@ -19,12 +19,13 @@ class CnnFeatureExtractorFather:
     def set_output_layer(self, output_layer):
         self._output_layer = output_layer
 
-    def set_framework(self, framework_list):
+    def set_framework(self, backend_libraries_list):
         """
         It set the framework to use as e.g: 'torch', 'tensorflow', 'transformers', 'torchaudio'
-        :param framework_list: the list of String of the framework. It's acceptable to have only one item in the list
+        :param backend_libraries_list: the list of String of the framework. It's acceptable to have only one item in the list
+
         """
-        self._framework_list = framework_list
+        self._backend_libraries_list = backend_libraries_list
 
     def set_model(self, model_name):
         pass

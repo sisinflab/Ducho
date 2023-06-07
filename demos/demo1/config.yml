@@ -6,8 +6,8 @@ visual:
         input_path: images
         output_path: visual_embeddings
         model: [
-            { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], framework: torch},
-            { name: Xception, output_layers: avg_pool, reshape: [299, 299], framework: tensorflow},
+            { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch},
+            { name: Xception, output_layers: avg_pool, reshape: [299, 299], backend: tensorflow},
         ]
 
 textual:
@@ -15,5 +15,5 @@ textual:
         input_path: descriptions.tsv
         output_path: textual_embeddings
         model: [
-              { name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: True, framework: sentence_transformers}
+              { name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: True, backend: sentence_transformers}
           ]

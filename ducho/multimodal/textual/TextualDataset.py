@@ -154,7 +154,7 @@ class TextualDataset(DatasetFather):
         output_file_name = input_file_name + '.npy'
 
         # generate output path
-        framework = self._framework_list[0]
+        framework = self._backend_libraries_list[0]
         output_path = os.path.join(self._output_directory_path, framework)
         output_path = os.path.join(output_path, self._model_name)
         output_path = os.path.join(output_path, str(model_layer))

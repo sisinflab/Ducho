@@ -6,7 +6,7 @@ audio:
             input_path: songs
             output_path: audio_embeddings
             model: [
-                      { name: 'HDEMUCS_HIGH_MUSDB',  output_layers: 1, framework: 'torch' }
+                      { name: 'HDEMUCS_HIGH_MUSDB',  output_layers: 1, backend: 'torch' }
             ]
 
 textual:
@@ -14,5 +14,5 @@ textual:
         input_path: genres.tsv
         output_path: textual_embeddings
         model: [
-              { name: sentence-transformers/all-MiniLM-L12-v2,  output_layers: 1, clear_text: True, framework: sentence_transformers}
+              { name: sentence-transformers/all-MiniLM-L12-v2,  output_layers: 1, clear_text: True, backend: sentence_transformers}
           ]

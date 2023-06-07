@@ -28,9 +28,9 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
         tensorflow_keras_list = list(tensorflow.keras.applications.__dict__)
 
         self._model_name = model_name
-        if self._model_name in tensorflow_keras_list and 'tensorflow' in self._framework_list:
+        if self._model_name in tensorflow_keras_list and 'tensorflow' in self._backend_libraries_list:
             self._model = getattr(tensorflow.keras.applications, self._model_name)()
-        elif self._model_name.lower() in torchvision_list and 'torch' in self._framework_list:
+        elif self._model_name.lower() in torchvision_list and 'torch' in self._backend_libraries_list:
             self._model = getattr(torchvision.models, self._model_name.lower())(weights='DEFAULT')
             self._model.to(self._device)
             self._model.eval()
@@ -45,7 +45,7 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
         :return: a numpy array that will be put in a .npy file calling the right Dataset Class' method
         """
         torchvision_list = list(torchvision.models.__dict__)
-        if self._model_name.lower() in torchvision_list and 'torch' in self._framework_list:
+        if self._model_name.lower() in torchvision_list and 'torch' in self._backend_libraries_list:
             _, eval_nodes = get_graph_node_names(self._model)
             return_nodes = {}
             output_layer = 'layer0'
@@ -60,12 +60,12 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
                 image[None, ...].to(self._device)
             )[output_layer].data.cpu().numpy())
             # update the framework list
-            self._framework_list = ['torch']
+            self._backend_libraries_list = ['torch']
         else:
             # tensorflow
             input_model = self._model.input
             output_layer = self._model.get_layer(self._output_layer).output
             output = tf.keras.Model(input_model, output_layer)(image, training=False)
             # update the framework list
-            self._framework_list = ['tensorflow']
+            self._backend_libraries_list = ['tensorflow']
         return output

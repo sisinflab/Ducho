@@ -47,7 +47,7 @@ class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
         """
         audio = sample_input[0]
         sample_rate = sample_input[1]
-        if 'torch' in self._framework_list or 'torchaudio' in self._framework_list:
+        if 'torch' in self._backend_libraries_list or 'torchaudio' in self._backend_libraries_list:
             # extraction
             # num_layer is the number of layers to go through
             try:

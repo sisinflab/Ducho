@@ -7,7 +7,7 @@ textual:
         output_path: textual_descriptions
         item_column: DESCRIPTION
         model: [
-              { name: sentence-transformers/all-mpnet-base-v2, output_layers: out, clear_text: True, framework: sentence_transformers}
+              { name: sentence-transformers/all-mpnet-base-v2, output_layers: out, clear_text: True, backend: sentence_transformers}
           ]
 
     interactions:
@@ -15,5 +15,5 @@ textual:
         output_path: textual_reviews
         interaction_column: REVIEW
         model: [
-          { name: nlptown/bert-base-multilingual-uncased-sentiment, output_layers: 3, task: sentiment-analysis, clear_text: True, framework: transformers }
+          { name: nlptown/bert-base-multilingual-uncased-sentiment, output_layers: 3, task: sentiment-analysis, clear_text: True, backend: transformers }
         ]

@@ -7,7 +7,7 @@ import logging
 
 class DatasetFather:
     def __init__(self, input_directory_path, output_directory_path, model_name):
-        self._framework_list = None
+        self._backend_libraries_list = None
         self._model_name = model_name
         self._input_directory_path = input_directory_path
         self._output_directory_path = output_directory_path
@@ -58,8 +58,8 @@ class DatasetFather:
         output_file_name = input_file_name + '.npy'
 
         # generate output path
-        framework = self._framework_list[0]
-        output_path = os.path.join(self._output_directory_path, framework)
+        backend_library = self._backend_libraries_list[0]
+        output_path = os.path.join(self._output_directory_path, backend_library)
         output_path = os.path.join(output_path, self._model_name)
         output_path = os.path.join(output_path, str(model_layer))
         if not os.path.exists(output_path):
@@ -81,5 +81,5 @@ class DatasetFather:
     def set_preprocessing_flag(self, preprocessing_flag):
         pass
 
-    def set_framework(self, framework_list):
-        self._framework_list = framework_list
+    def set_framework(self, backend_libraries_list):
+        self._backend_libraries_list = backend_libraries_list
