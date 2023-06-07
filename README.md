@@ -56,7 +56,7 @@ Quite conveniently, you can find several CUDA-equipped images on Docker Hub. You
 
 To test if everything worked smoothly, pull and run a container from the following docker image through this command:
 
-```
+```sh
 docker run --rm --gpus all nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 nvidia-smi
 ```
 
