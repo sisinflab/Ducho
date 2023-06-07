@@ -17,6 +17,8 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
 
 ## What is Ducho
 
+![ducho pipeline](ducho.png)
+
 Ducho is a Python framework for the extraction of multimodal features for recommendation. It provides a unified interface to most of the common libraries for deep learning (e.g., TensorFlow, PyTorch, Transformers) to extract high-level features from items (e.g., product images/descriptions) and user-item interactions (e.g., users reviews). It is highly configurable through a YAML-based configuration file (which may be override by input arguments from the command line in case). Users can indicate the source from which to extract the multimodal features (i.e., items/interactions), the modalities (i.e., visual/textual/audio), and the list of models along with output layers and preprocessing steps to extract the features.
 
 ## How can I run Ducho
