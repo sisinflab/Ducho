@@ -13,39 +13,8 @@
 [Ss]cripts
 pyvenv.cfg
 .venv
-/venv/
 pip-selfcheck.json
 
-.idea
 # End of https://www.toptal.com/developers/gitignore/api/venv
 
-/results/
-/data/*
-/share/
-**/__pycache__/**
-*.log
-/local_sample_main.py
-
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-docs/source/_build
-docs/source/_static
-docs/source/_templates
-docs/_build
-
-!local/
+./local/*
