@@ -47,4 +47,6 @@ visual|textual|audio:
 ```
 
 ## Notes
+Please refer to the \[*\] reported in the YAML schema from above.
+
 \[1\]
