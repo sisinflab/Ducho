@@ -141,6 +141,7 @@ You may also consider to take a look at this [guideline](config/README.md) to be
 
 ### How write the Configuration
 ### How change the Configuration
+To change an entry in the dictionary of Configuration, you need to write the changes in a list of String in a way that is going to be expained, such list then will be given to the Runner with the key argv.
 the argv
 is used to overwrite a config dictionary, it is a list of tuples key
 value where each entry is a String that needs to be write in this
