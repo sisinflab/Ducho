@@ -158,4 +158,4 @@ As the configuration dictionary derived from the configuration file is built on 
 ```sh
 python3 run.py --config=<path_to_config_file> --textual.interactions.input_path=<path_to_input>
 ```
-this will override the same entry in the configuration file you provided. We do recommend to use this command line overriding just for simple configuration parameters, as in the reported example, since the framework is currently not tested to override, for example, model paramters (which are stored in complex list of dictionary structures).
+this will override the same entry in the configuration file you provided. We do recommend to use this command line overriding just for simple configuration parameters (as in the reported example) since the framework is currently not tested to override, for example, model paramters (which are stored in complex list of dictionary structures).
