@@ -18,10 +18,11 @@ from ducho.multimodal.audio.AudioCnnFeatureExtractor import AudioCnnFeatureExtra
 def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
     """
     Takes in input the class of Dataset and Extractor, then for every model, for every layer of the model,
-    :param models: dicts of data (see Config.get_models)
-    :param extractor_class: class Extractor
-    :param gpu: gpu list
-    :param dataset: class Dataset
+    Args:
+        models: dicts of data (see Config.get_models)
+        extractor_class: class Extractor
+        gpu: gpu list
+        dataset: class Dataset
     """
     for model in models:
         logging.info(f'Extraction model: {model["name"]}')
@@ -71,7 +72,8 @@ class MultimodalFeatureExtractor:
     def __init__(self, config_file_path='./config/config.yml', argv=None):
         """
         It instantiates the framework. Note the config file is a yml file
-        :param config_file_path: As a String, it could be the absolute path, or the path to the folder of the confg file
+        Args:
+             config_file_path: As a String, it could be the absolute path, or the path to the folder of the confg file
         """
         if not os.path.exists('./local/logs/'):
             os.makedirs('./local/logs/')
