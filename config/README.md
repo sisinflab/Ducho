@@ -91,5 +91,5 @@ Please refer to the \[*\] reported in the YAML schema from above.
 
 **\[5\]** We provide a modality/backend table for this:
 
-**\[6\]** The list of available tasks is [here](https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline.task)
+**\[6\]** The list of available tasks is [here](https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline.task).
 
