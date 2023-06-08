@@ -32,7 +32,8 @@ extensions = [
     'rinoh.frontend.sphinx',
     'sphinx_rtd_theme',
     'sphinx.ext.autosummary',
-    'sphinx.ext.autosectionlabel'
+    'sphinx.ext.autosectionlabel',
+    'linuxdoc.rstFlatTable'
 ]
 
 autodoc_mock_imports = ["pandas", "pyecharts"]

@@ -1,11 +1,11 @@
 ducho.internal.father\_classes package
-====================================
+===========================================
 
 Submodules
 ----------
 
 ducho.internal.father\_classes.CnnFeatureExtractorFather module
--------------------------------------------------------------
+-----------------------------------------------------------------
 
 .. automodule:: ducho.internal.father_classes.CnnFeatureExtractorFather
    :members:
@@ -13,7 +13,7 @@ ducho.internal.father\_classes.CnnFeatureExtractorFather module
    :show-inheritance:
 
 ducho.internal.father\_classes.DatasetFather module
--------------------------------------------------
+-----------------------------------------------------
 
 .. automodule:: ducho.internal.father_classes.DatasetFather
    :members:

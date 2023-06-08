@@ -1,11 +1,11 @@
 ducho.config package
-==================
+======================
 
 Submodules
 ----------
 
 ducho.config.Config module
-------------------------
+---------------------------
 
 .. automodule:: ducho.config.Config
    :members:

@@ -1,11 +1,11 @@
 ducho.multimodal.audio package
-============================
+==================================
 
 Submodules
 ----------
 
 ducho.multimodal.audio.AudioCnnFeatureExtractor module
-----------------------------------------------------
+---------------------------------------------------------
 
 .. automodule:: ducho.multimodal.audio.AudioCnnFeatureExtractor
    :members:
@@ -13,7 +13,7 @@ ducho.multimodal.audio.AudioCnnFeatureExtractor module
    :show-inheritance:
 
 ducho.multimodal.audio.AudioDataset module
-----------------------------------------
+--------------------------------------------
 
 .. automodule:: ducho.multimodal.audio.AudioDataset
    :members:
