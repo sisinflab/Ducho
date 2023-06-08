@@ -49,7 +49,12 @@ visual|textual|audio:
 ## Notes
 Please refer to the \[*\] reported in the YAML schema from above.
 
-**\[1\]** If no ```item_column``` is provided, Ducho takes the last column of the tsv file as item column by default.
+**\[1\]** In case of textual/item, the tsv input file is supposed to be formatted in the following manner:
+```
+<ITEM_ID_COLUMN>\t<ITEM_DESCRIPTION>
+...
+```
+where <ITEM_ID_COLUMN> and <ITEM_DESCRIPTION> are customizable. Note that if no ```item_column``` is provided in the configuration file, Ducho takes the last column (i.e., <ITEM_DESCRIPTION>) of the tsv file as item column by default.
 
 **\[2\]** If not ```interaction_column``` is provided, Ducho takes the last column of the tsv file as interaction column by default.
 
