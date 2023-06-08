@@ -1,5 +1,5 @@
 ducho.internal package
-====================
+=======================
 
 Subpackages
 -----------

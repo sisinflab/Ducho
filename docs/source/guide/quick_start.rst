@@ -8,7 +8,7 @@ You may choose among three options:
 - On Google Colab (`link <https://colab.research.google.com/drive/1ouKkdxOObOL0BI00r0c157oNRqwxqTgt>`_).
 
 Prerequisites
-^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 Local
 ^^^^^^^^^
@@ -48,7 +48,7 @@ Once the docker image has been downloaded from the hub, you should be able to se
 meaning that the installation is ok and you are finally ready to pull ducho's image (which is actually built from this CUDA image)!
 
 Google Colab
-^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 You just need a Google Drive account!
 

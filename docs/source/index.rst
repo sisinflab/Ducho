@@ -9,7 +9,51 @@ Welcome to Ducho's documentation!
 What is Ducho
 -------------
 
-Ducho is a Python framework for the extraction of multimodal features for recommendation. It provides a unified interface to most of the common libraries for deep learning (e.g., TensorFlow, PyTorch, Transformers) to extract high-level features from items (e.g., product images/descriptions) and user-item interactions (e.g., users reviews). It is highly configurable through a YAML-based configuration file (which may be override by input arguments from the command line in case). Users can indicate the source from which to extract the multimodal features (i.e., items/interactions), the modalities (i.e., visual/textual/audio), and the list of models along with output layers and preprocessing steps to extract the features.
+Ducho is a Python framework for the extraction of multimodal features for recommendation. It provides a unified
+interface to most of the common libraries for deep learning (e.g., TensorFlow, PyTorch, Transformers) to extract
+high-level features from items (e.g., product images/descriptions) and user-item interactions (e.g., users reviews).
+It is highly configurable through a YAML-based configuration file (which may be override by input arguments from the
+command line in case). Users can indicate the source from which to extract the multimodal features
+(i.e., items/interactions), the modalities (i.e., visual/textual/audio), and the list of models along with output
+layers and preprocessing steps to extract the features.
+
+.. figure:: ./img/ducho_img.png
+   :alt: system schema
+
+   system schema
+
+
+.. flat-table:: Characteristics of the BLE badge
+   :header-rows: 2
+
+   * -
+     - :cspan:`1` Sources
+     - :cspan:`2` Backends
+   * - Modalities
+     - Items
+     - Interactions
+     - TF
+     - PT
+     - Trans
+   * - Audio
+     -
+     -
+     -
+     -
+     -
+   * - Visual
+     -
+     -
+     -
+     -
+     -
+   * - Text
+     -
+     -
+     -
+     -
+     -
+
 
 .. toctree::
    :maxdepth: 1

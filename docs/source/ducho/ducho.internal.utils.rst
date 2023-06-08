@@ -1,11 +1,11 @@
 ducho.internal.utils package
-==========================
+==============================
 
 Submodules
 ----------
 
 ducho.internal.utils.TextualFileManager module
---------------------------------------------
+-------------------------------------------------
 
 .. automodule:: ducho.internal.utils.TextualFileManager
    :members:
@@ -13,7 +13,7 @@ ducho.internal.utils.TextualFileManager module
    :show-inheritance:
 
 ducho.internal.utils.YamlFileManager module
------------------------------------------
+----------------------------------------------
 
 .. automodule:: ducho.internal.utils.YamlFileManager
    :members:
@@ -21,7 +21,7 @@ ducho.internal.utils.YamlFileManager module
    :show-inheritance:
 
 ducho.internal.utils.human\_sorting module
-----------------------------------------
+----------------------------------------------
 
 .. automodule:: ducho.internal.utils.human_sorting
    :members:
@@ -29,7 +29,7 @@ ducho.internal.utils.human\_sorting module
    :show-inheritance:
 
 ducho.internal.utils.model\_map module
-------------------------------------
+-----------------------------------------
 
 .. automodule:: ducho.internal.utils.model_map
    :members:
