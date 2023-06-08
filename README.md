@@ -19,6 +19,61 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
 
 ![ducho pipeline](ducho.png)
 
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-baqh{text-align:center;vertical-align:top}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-amwm{font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-7btt{border-color:inherit;font-weight:bold;text-align:center;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-baqh"></th>
+    <th class="tg-amwm" colspan="2">Sources</th>
+    <th class="tg-amwm" colspan="3">Backends</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-7btt">Modalities</td>
+    <td class="tg-baqh">Items</td>
+    <td class="tg-baqh">Interactions</td>
+    <td class="tg-c3ow">TensorFlow</td>
+    <td class="tg-c3ow">PyTorch</td>
+    <td class="tg-c3ow">Transformers</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">Audio</td>
+    <td class="tg-baqh"></td>
+    <td class="tg-baqh"></td>
+    <td class="tg-c3ow"></td>
+    <td class="tg-c3ow">Torchaudio</td>
+    <td class="tg-c3ow"></td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">Visual</td>
+    <td class="tg-baqh"></td>
+    <td class="tg-baqh"></td>
+    <td class="tg-c3ow"></td>
+    <td class="tg-c3ow">Torchvision</td>
+    <td class="tg-c3ow"></td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">Textual</td>
+    <td class="tg-baqh"></td>
+    <td class="tg-baqh"></td>
+    <td class="tg-c3ow"></td>
+    <td class="tg-c3ow"></td>
+    <td class="tg-c3ow">SentenceTransformers</td>
+  </tr>
+</tbody>
+</table>
+
 Ducho is a Python framework for the extraction of multimodal features for recommendation. It provides a unified interface to most of the common libraries for deep learning (e.g., TensorFlow, PyTorch, Transformers) to extract high-level features from items (e.g., product images/descriptions) and user-item interactions (e.g., users reviews). It is highly configurable through a YAML-based configuration file (which may be override by input arguments from the command line in case). Users can indicate the source from which to extract the multimodal features (i.e., items/interactions), the modalities (i.e., visual/textual/audio), and the list of models along with output layers and preprocessing steps to extract the features.
 
 ## How can I run Ducho
