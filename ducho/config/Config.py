@@ -189,16 +189,16 @@ class Config:
 
     def get_models_list(self, origin_of_elaboration, type_of_extraction):
         """
-
         Args:
             origin_of_elaboration: 'items' or 'interactions'
             type_of_extraction: 'textual', 'visual' or 'audio'
 
-        Returns: a list of the models, every model is a dict with
-        'name': the name of the model, in same cases as transformers is repo/model name,
-        'output_layers': the layers of extraction,
-        'framework': framework to work with tensorflow/torch/transformers
-         and a custom flag to manage the preprocessing of the data
+        Returns:
+            a list of the models, every model is a dict with
+            'name': the name of the model, in same cases as transformers is repo/model name,
+            'output_layers': the layers of extraction,
+            'framework': framework to work with tensorflow/torch/transformers
+            and a custom flag to manage the preprocessing of the data
         """
 
         models = self._data_dict[type_of_extraction][origin_of_elaboration]['model']
