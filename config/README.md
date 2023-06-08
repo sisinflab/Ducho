@@ -103,7 +103,39 @@ where <USER_ID_COLUMN_NAME>, <ITEM_ID_COLUMN_NAME>, and <REVIEW_COLUMN_NAME> are
 </table>
 
 
-**\[4\]** We provide a modality/backend table for this:
+**\[4\]** Depending on the backend you are using:
+- TensorFlow: use the **exact** same naming scheme obtained by calling the method ```summary()``` on the instantiated model object. For example:
+```python
+import tensorflow
+resnet50 = getattr(tensorflow.keras.applications, 'ResNet50')()
+print(resnet50.summary())
+
+"""
+here is the final part of the console output:
+
+conv5_block3_add (Add)         (None, 7, 7, 2048)   0           ['conv5_block2_out[0][0]',       
+                                                                  'conv5_block3_3_bn[0][0]']      
+                                                                                                  
+ conv5_block3_out (Activation)  (None, 7, 7, 2048)   0           ['conv5_block3_add[0][0]']       
+                                                                                                  
+ avg_pool (GlobalAveragePooling  (None, 2048)        0           ['conv5_block3_out[0][0]']       
+ 2D)                                                                                              
+                                                                                                  
+ predictions (Dense)            (None, 1000)         2049000     ['avg_pool[0][0]']               
+                                                                                                  
+==================================================================================================
+Total params: 25,636,712
+Trainable params: 25,583,592
+Non-trainable params: 53,120
+__________________________________________________________________________________________________
+
+in this case, for example, 'avg_pool' is what we are looking for.
+
+"""
+
+```
+- PyTorch: 
+- Transformers: 
 
 **\[5\]** The list of available tasks is [here](https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline.task).
 
