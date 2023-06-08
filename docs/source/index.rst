@@ -53,7 +53,8 @@ layers and preprocessing steps to extract the features.
      - .. image:: ./img/checkbox-mark.png
           :align: center
      -
-     - `Torchaudio <https://pytorch.org/audio/stable/index.html>`_
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
      - .. image:: ./img/checkbox-mark.png
           :align: center
    * - Visual
@@ -63,7 +64,8 @@ layers and preprocessing steps to extract the features.
           :align: center
      - .. image:: ./img/checkbox-mark.png
           :align: center
-     - `Torchvision <https://pytorch.org/vision/stable/index.html>`_
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
      -
    * - Text
      - .. image:: ./img/checkbox-mark.png
@@ -72,7 +74,8 @@ layers and preprocessing steps to extract the features.
           :align: center
      -
      -
-     - `SentenceTransformers <https://www.sbert.net/>`_
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
 
 
 .. toctree::
