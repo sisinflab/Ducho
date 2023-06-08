@@ -175,6 +175,8 @@ in this case, for example, 'classifier.3' is what you are looking for.
 """
 ```
 
+**PyTorch+Audio:** depending on the pre-trained model, you may be asked to indicate the layer **number** in ascending (i.e., \[0, L-1\]) or descending order (i.e., \[L-1, 0\]). Once again, just instantiate the model and see its structure to find it out.
+
 - Transformers: 
 
 **\[5\]** The list of available tasks is [here](https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline.task).
