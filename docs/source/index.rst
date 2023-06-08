@@ -29,7 +29,7 @@ layers and preprocessing steps to extract the features.
    * -
      - :cspan:`1` Sources
      - :cspan:`2` Backends
-   * - Modalities
+   * -
      - Items
      - Interactions
      - .. image:: https://www.gstatic.com/devrel-devsite/prod/v37463d4834445c1e880de1e91d2f8fc2c6a0e86fca4aa6a7bdbb270b040181dc/tensorflow/images/lockup.svg
