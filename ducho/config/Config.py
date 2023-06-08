@@ -139,7 +139,8 @@ class Config:
 
     def has_config(self, origin_of_elaboration, type_of_extraction):
         """
-        Search the config in the data dicts then check that this config have values in it
+        Search the config in the data dicts then check that this config have values in it.
+
         Args:
             origin_of_elaboration: 'items' or 'interactions'
             type_of_extraction: 'textual', 'visual' or 'audio'

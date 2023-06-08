@@ -26,6 +26,7 @@ class TextualFileManager:
     def set_file_path(self, file_path):
         """
         It sets the absolute path of the textual input file that later will be open.
+
         Args:
             file_path: absolute path as a string
         """
@@ -35,6 +36,7 @@ class TextualFileManager:
         """
         It builds the name of the output file of a single sentence processed. This will later be used to build the
         complete path of the single output file
+
         Args:
             id_: the row id as an int, here it used only to build the name
         Returns:
@@ -49,6 +51,7 @@ class TextualFileManager:
     def initiate_element_list_and_get_len(self):
         """
         Reads the file, instantiate the internal list of what it contains and returns the len of sentences to elaborate
+
         Returns:
             len of object to elaborate
         """
@@ -66,6 +69,7 @@ class TextualFileManager:
         It gives the sentence to elaborate for a specific row of the file. If the origin of elaboration is from
         interactions, it searches the sentence in the 'comment' column, otherwise if the origin is from item description
         it searches the sentence in the 'description' column
+
         Args:
             idx: the row from which retrieve the sentence.
         Returns:
