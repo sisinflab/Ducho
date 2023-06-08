@@ -84,20 +84,20 @@ where <USER_ID_COLUMN_NAME>, <ITEM_ID_COLUMN_NAME>, and <REVIEW_COLUMN_NAME> are
   <tr>
     <td>Tensorflow</td>
     <td></td>
-    <td>Visual models</td>
+    <td> <a href="https://www.tensorflow.org/api_docs/python/tf/keras/applications#modules_2">link</a> </td>
     <td></td>
   </tr>
   <tr>
     <td>PyTorch</td>
-    <td>TorchAudio</td>
-    <td>TorchVideo</td>
+    <td> <a href="https://pytorch.org/audio/stable/pipelines.html#module-torchaudio.pipelines">link</a> </td>
+    <td> <a href="https://pytorch.org/vision/stable/models.html">link</a> </td>
     <td></td>
   </tr>
   <tr>
     <td>Transformers</td>
-    <td>Transformers</td>
+    <td> <a href="https://huggingface.co/docs/transformers/model_doc/wav2vec2#transformers.Wav2Vec2Model">link</a> </td>
     <td></td>
-    <td>Transformers & Sentence</td>
+    <td>Transformers: <a href="https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline">link</a> Sentence: <a href="https://www.sbert.net/docs/pretrained_models.html#model-overview">link</a></td>
   </tr>
 </tbody>
 </table>
