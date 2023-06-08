@@ -49,7 +49,7 @@ visual|textual|audio:
 ## Notes
 Please refer to the \[*\] reported in the YAML schema from above.
 
-**\[1\]** In case of textual/item, the tsv input file is supposed to be formatted in the following manner:
+**\[1\]** In case of textual/items, the tsv input file is supposed to be formatted in the following manner:
 ```
 <ITEM_ID_COLUMN_NAME>\t<ITEM_DESCRIPTION_COLUMN_NAME>
 [first_item_id]\t[first_item_description]
@@ -58,7 +58,14 @@ Please refer to the \[*\] reported in the YAML schema from above.
 ```
 where <ITEM_ID_COLUMN_NAME> and <ITEM_DESCRIPTION_COLUMN_NAME> are customizable. Note that if no ```item_column``` is provided in the configuration file, Ducho takes the last column (i.e., <ITEM_DESCRIPTION_COLUMN_NAME>) of the tsv file as item column by default.
 
-**\[2\]** If not ```interaction_column``` is provided, Ducho takes the last column of the tsv file as interaction column by default.
+**\[2\]** In case of textual/interactions, the tsv input file is supposed to be formatted in the following manner:
+```
+<USER_ID_COLUMN_NAME>\t<ITEM_ID_COLUMN_NAME>\t<REVIEW_COLUMN_NAME>
+[first_user_id]\t[first_item_id]\t[first_review]
+...
+[last_user_id]\t[last_item_id]\t[last_review]
+```
+where <USER_ID_COLUMN_NAME>, <ITEM_ID_COLUMN_NAME>, and <REVIEW_COLUMN_NAME> are customizable. Note that if no ```interaction_column``` is provided in the configuration file, Ducho takes the last column (i.e., <REVIEW_COLUMN_NAME>) of the tsv file as interaction column by default.
 
 **\[3\]** We provide a modality/backend table for this:
 
