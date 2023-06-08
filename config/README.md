@@ -31,9 +31,9 @@ visual|textual|audio:
         
         [clear_text]: <whether_to_clear_input_text>, # OPTIONAL, a boolean for textual modality
         
-        [backend]: <backend_for_pretrained_model>, # OPTIONAL, the backend to use for the pretrained model [5]
+        [backend]: <backend_for_pretrained_model>, # OPTIONAL, the backend to use for the pretrained model [3]
         
-        [task]: <pretrained_model_task>, # OPTIONAL, only for textual modality [6]
+        [task]: <pretrained_model_task>, # OPTIONAL, only for textual modality [5]
       }
     
       ...
@@ -103,7 +103,5 @@ where <USER_ID_COLUMN_NAME>, <ITEM_ID_COLUMN_NAME>, and <REVIEW_COLUMN_NAME> are
 
 **\[4\]** We provide a modality/backend table for this:
 
-**\[5\]** We provide a modality/backend table for this:
-
-**\[6\]** The list of available tasks is [here](https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline.task).
+**\[5\]** The list of available tasks is [here](https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline.task).
 
