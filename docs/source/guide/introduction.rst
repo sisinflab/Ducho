@@ -9,6 +9,6 @@ For all other details about Ducho please refer to our `paper <https://google.it>
 
 
 .. [Ducho]
-    Daniele Malitesta and Gisueppe Gassi and Claudio Pomo and Tommaso Di Noia
+    Daniele Malitesta and Giuseppe Gassi and Claudio Pomo and Tommaso Di Noia
 
     Ducho: A Unified Framework for the Extraction of Multimodal Features in Recommendation
