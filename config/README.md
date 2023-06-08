@@ -33,7 +33,7 @@ visual|textual|audio:
         
         [backend]: <backend_for_pretrained_model>, # OPTIONAL, the backend to use for the pretrained model [5]
         
-        [task]: <pretrained_model_task>, # OPTIONAL, only for textual modality
+        [task]: <pretrained_model_task>, # OPTIONAL, only for textual modality [6]
       }
     
       ...
@@ -56,3 +56,8 @@ Please refer to the \[*\] reported in the YAML schema from above.
 **\[3\]** We provide a modality/backend table for this:
 
 **\[4\]** We provide a modality/backend table for this:
+
+**\[5\]** We provide a modality/backend table for this:
+
+**\[6\]** The list of tasks available is available [here](https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline.task)
+
