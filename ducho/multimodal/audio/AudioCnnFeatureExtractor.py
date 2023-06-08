@@ -20,9 +20,9 @@ class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
     def set_model(self, model):
         """
         Args:
-            model_name: is the name of the model to use.
+            model: It is the dict which contains all the data relative to a model and the specific extraction to make
+            with it
         Returns: nothing but it initializes the protected model, later used for extraction
-        :param model:
         """
         model_name = model['name']
         self._model_name = model_name
@@ -43,7 +43,6 @@ class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
             sample_input: the sample preprocessed within the dataset class
 
         Returns: a numpy array that will be put in a .npy file calling the right Dataset Class' method
-
         """
         audio = sample_input[0]
         sample_rate = sample_input[1]

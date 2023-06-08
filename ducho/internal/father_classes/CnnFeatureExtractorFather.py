@@ -22,7 +22,8 @@ class CnnFeatureExtractorFather:
     def set_framework(self, backend_libraries_list):
         """
         It set the framework to use as e.g: 'torch', 'tensorflow', 'transformers', 'torchaudio'
-        :param backend_libraries_list: the list of String of the framework. It's acceptable to have only one item in the list
+        Args:
+            backend_libraries_list: the list of String of the framework. It's acceptable to have only one item in the list
 
         """
         self._backend_libraries_list = backend_libraries_list

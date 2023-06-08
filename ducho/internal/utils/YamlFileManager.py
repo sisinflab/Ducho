@@ -7,7 +7,8 @@ class YamlFileManager:
         """
         It manages a general Yaml file, it is created with the scope to only read this kind of file
 
-        :param yaml_file_path: the path of the file as a String. It is preferred to be the absolute path.
+        Args:
+            yaml_file_path: the path of the file as a String. It is preferred to be the absolute path.
 
         """
         self._default_yaml_file_path = './config/config.yml'

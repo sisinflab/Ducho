@@ -18,15 +18,16 @@ class TextualFileManager:
         """
         Set type  of extraction which is the source of the input: from user interaction or from items. Here it is needed
         to across correctly the file and for build the name of the output file at the end of the extraction
-
-        :param type_of_extraction: 'interactions' or 'items'
+        Args:
+            type_of_extraction: 'interactions' or 'items'
         """
         self._type_of_extraction = type_of_extraction
 
     def set_file_path(self, file_path):
         """
         It sets the absolute path of the textual input file that later will be open.
-        :param file_path: absolute path as a string
+        Args:
+            file_path: absolute path as a string
         """
         self._file_path = file_path
 
@@ -34,9 +35,11 @@ class TextualFileManager:
         """
         It builds the name of the output file of a single sentence processed. This will later be used to build the
         complete path of the single output file
-        :param id_: the row id as an int, here it used only to build the name
-        :return: the output name file as a string. It is not the complete path, nor the complete name of the file (it
-        misses the extension)
+        Args:
+            id_: the row id as an int, here it used only to build the name
+        Returns:
+            the output name file as a string. It is not the complete path, nor the complete name of the file (it
+            misses the extension)
         """
         if self._type_of_extraction == 'interactions':
             return f'{id_[0]}__{id_[1]}'
@@ -46,7 +49,8 @@ class TextualFileManager:
     def initiate_element_list_and_get_len(self):
         """
         Reads the file, instantiate the internal list of what it contains and returns the len of sentences to elaborate
-        :return: len of object to elaborate
+        Returns:
+            len of object to elaborate
         """
         df = pd.read_csv(self._file_path, sep='\t')
         num_columns = len(df.columns)
@@ -62,8 +66,10 @@ class TextualFileManager:
         It gives the sentence to elaborate for a specific row of the file. If the origin of elaboration is from
         interactions, it searches the sentence in the 'comment' column, otherwise if the origin is from item description
         it searches the sentence in the 'description' column
-        :param idx: the row from which retrieve the sentence.
-        :return:  the sentence as a string, preprocessing is needed
+        Args:
+            idx: the row from which retrieve the sentence.
+        Returns:
+            the sentence as a string, preprocessing is needed
         """
         if self._type_of_extraction == 'items':
             row = self._internal_list[self._internal_list[self._id_column] == idx].to_dict('records')[0]
