@@ -134,7 +134,7 @@ in this case, for example, 'avg_pool' is what we are looking for.
 """
 
 ```
-- PyTorch: indicate the minimum path to reach the output layer (using the **exact** same names obtained by instantiating the model object and separated by '.'). For example:
+- **PyTorch+Textual:** indicate the minimum path to reach the output layer (using the **exact** same names obtained by instantiating the model object and separated by '.'). For example:
 
 ```python
 import torchvision
