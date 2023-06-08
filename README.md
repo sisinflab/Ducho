@@ -111,7 +111,7 @@ You just need a Google Drive account!
 
 Depending on where you are running Ducho, you might need to first clone this repo and install the necessary packages.
 
-### Local & Google Colab
+### Local and Google Colab
 
 If you are running Ducho on your local machine or Google Colab, you first need to clone this repository:
 
