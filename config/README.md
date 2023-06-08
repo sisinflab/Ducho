@@ -51,10 +51,12 @@ Please refer to the \[*\] reported in the YAML schema from above.
 
 **\[1\]** In case of textual/item, the tsv input file is supposed to be formatted in the following manner:
 ```
-<ITEM_ID_COLUMN>\t<ITEM_DESCRIPTION>
+<ITEM_ID_COLUMN_NAME>\t<ITEM_DESCRIPTION_COLUMN_NAME>
+[first_item_id]\t[first_item_description]
 ...
+[last_item_id]\t[last_item_description]
 ```
-where <ITEM_ID_COLUMN> and <ITEM_DESCRIPTION> are customizable. Note that if no ```item_column``` is provided in the configuration file, Ducho takes the last column (i.e., <ITEM_DESCRIPTION>) of the tsv file as item column by default.
+where <ITEM_ID_COLUMN_NAME> and <ITEM_DESCRIPTION_COLUMN_NAME> are customizable. Note that if no ```item_column``` is provided in the configuration file, Ducho takes the last column (i.e., <ITEM_DESCRIPTION_COLUMN_NAME>) of the tsv file as item column by default.
 
 **\[2\]** If not ```interaction_column``` is provided, Ducho takes the last column of the tsv file as interaction column by default.
 
