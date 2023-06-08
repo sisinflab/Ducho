@@ -143,7 +143,19 @@ Once you have familiarized with Ducho, you can use it for your own datasets and 
 
 You may also consider to take a look at this [guideline](config/README.md) to better understand how to fill in your custom configuration files.
 
+Independently on where you are using Ducho, here are the basic instructions to run a custom multimodal extraction pipeline.
 
-### Overwrite Configuration trought command
-To change an entry in the Configuration dict, you need to write the changes in a list that will be given to the Runner with the key argv.
-This list is composed of tuples key-value where each entry is a String that needs to be write in this way: ’key=value’. As the config dictionary is built of other nested dictionaries, the key is used also to describe the path within to follow, to do so the ’.’ is used to discern. I.e ’key1.key2.key3’
+Assuming all input data has been placed in the correct folder, and the configuration file has been filled in, you can use our convenient ```run.sh``` script:
+
+```sh
+python3 run.py --config=<path_to_config_file> [--additional_argument_1=additional_value_1, --additional_argument_2=additional_value_2, ...]
+```
+
+where the path to your custom configuration file is needed to override the existing default one (which does no specific actions), while the additional argument/value pairs are optional to override some of the condiguration parameters from the command line. 
+
+As the configuration dictionary derived from the configuration file is built on nested dictionaries, the argument may come in the form of ```key1.key2.key3...keyn```. For example, if you want to override the input path of the textual interaction data, you should write:
+
+```sh
+python3 run.py --config=<path_to_config_file> --textual.interactions.input_path=<path_to_input>
+```
+this will override the same entry in the configuration file you provided. We do recommend to use this command line overriding just for simple configuration parameters, as in the reported example, since the framework is currently not tested to override, for example, model paramters (which are stored in complex list of dictionary structures).
