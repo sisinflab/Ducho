@@ -175,7 +175,7 @@ in this case, for example, 'classifier.3' is what you are looking for.
 """
 ```
 
-**PyTorch+Audio:** depending on the pre-trained model, you may be asked to indicate the layer **number** in ascending (i.e., \[0, L-1\]) or descending order (i.e., \[L-1, 0\]). Once again, just instantiate the model and see its structure to find it out.
+- **PyTorch+Audio:** depending on the pre-trained model, you may be asked to indicate the layer **number** in ascending (i.e., \[0, L-1\]) or descending order (i.e., \[L-1, 0\]). Once again, just instantiate the model and see its structure to find it out.
 
 - **Transformers+Textual:** you are asked to indicate the layer **number** in descending order (i.e., \[L-1, 0\]). In the case of SentenceTransformers, you don't really need to indicate any output layer (the backend already comes with its own extraction which is fixed).
 
