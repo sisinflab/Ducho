@@ -115,6 +115,9 @@ class MultimodalFeatureExtractor:
         self.do_interaction_audio_extractions()
 
     def do_item_visual_extractions(self):
+        """
+        Executes only the item/visual extraction
+        """
         if self._config.has_config('items', 'visual'):
             logging.info('Extraction on items for visual modality')
 
@@ -132,6 +135,9 @@ class MultimodalFeatureExtractor:
             logging.info(f'Extraction is complete!')
 
     def do_item_textual_extractions(self):
+        """
+        Executes only the item/textual extraction
+        """
         if self._config.has_config('items', 'textual'):
             logging.info('Extraction on items for textual modality')
 
@@ -152,6 +158,9 @@ class MultimodalFeatureExtractor:
             logging.info('Extraction is complete!')
 
     def do_item_audio_extractions(self):
+        """
+        Executes only the item/audio extraction
+        """
         if self._config.has_config('items', 'audio'):
             logging.info('Extraction on items for audio modality')
 
@@ -169,6 +178,9 @@ class MultimodalFeatureExtractor:
             logging.info('Extraction is complete!')
 
     def do_interaction_visual_extractions(self):
+        """
+        Executes only the interaction/visual extraction
+        """
         if self._config.has_config('interactions', 'visual'):
             logging.info('Extraction on interactions for visual modality')
 
@@ -186,6 +198,9 @@ class MultimodalFeatureExtractor:
             logging.info('Extraction is complete!')
 
     def do_interaction_textual_extractions(self):
+        """
+        Executes only the interaction/textual extraction
+        """
         if self._config.has_config('interactions', 'textual'):
             logging.info('Extraction on interactions for textual modality')
 
@@ -206,6 +221,9 @@ class MultimodalFeatureExtractor:
             logging.info('Extraction is complete!')
 
     def do_interaction_audio_extractions(self):
+        """
+        Executes only the interaction/audio extraction
+        """
         if self._config.has_config('items', 'audio'):
             logging.info('Extraction on items for audio modality')
 
