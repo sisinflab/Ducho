@@ -50,7 +50,8 @@ visual|textual|audio:
 Please refer to the \[*\] reported in the YAML schema from above.
 
 **\[1\]** In case of textual/items, the tsv input file is supposed to be formatted in the following manner:
-```
+
+```tsv
 <ITEM_ID_COLUMN_NAME>\t<ITEM_DESCRIPTION_COLUMN_NAME>
 [first_item_id]\t[first_item_description]
 ...
