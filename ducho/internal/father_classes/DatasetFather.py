@@ -48,8 +48,9 @@ class DatasetFather:
             extracted_data: blob of data to put in the npy
             model_layer: the name of the layer
 
-        Returns: it returns nothing to the program, but it creates a file as follows
-                 datasetFolder/framework/modelName/modelLayer/fileName.npy
+        Returns:
+            it returns nothing to the program, but it creates a file as follows :
+            datasetFolder/framework/modelName/modelLayer/fileName.npy
 
         """
 

@@ -12,16 +12,18 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
         """
         It does Image Extraction. It is needed also to give the model name, the framework and the output_layer. You can
         later change one of them as needed.
-        :param gpu:
+        Args:
+             gpu:
         """
         super().__init__(gpu)
 
     def set_model(self, model):
         """
         Args:
-            model_name: is the name of the model to use.
-        Returns: nothing but it initializes the protected model attribute, later used for extraction
-        :param model:
+            model: is the model to use.
+        Returns:
+            nothing but it initializes the protected model attribute, later used for extraction
+
         """
         model_name = model['name']
         torchvision_list = list(torchvision.models.__dict__)
@@ -41,8 +43,10 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
         """
         It does extract the feature from the input. Framework, model and layer HAVE TO be already set with their set
         methods.
-        :param image: the data of the image preprocessed
-        :return: a numpy array that will be put in a .npy file calling the right Dataset Class' method
+        Args:
+            image: the data of the image preprocessed
+        Returns:
+             a numpy array that will be put in a .npy file calling the right Dataset Class' method
         """
         torchvision_list = list(torchvision.models.__dict__)
         if self._model_name.lower() in torchvision_list and 'torch' in self._backend_libraries_list:

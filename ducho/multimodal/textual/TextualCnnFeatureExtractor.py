@@ -28,7 +28,8 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         """
         It does Textual extraction. It is needed also to give the model name, the framework and the output_layer. You can
         later change one of them as needed.
-        :param gpu: gpu: String on which is explained which gpu to use. '-1' -> cpu
+        Args:
+             gpu: String on which is explained which gpu to use. '-1' -> cpu
         """
         self._pipeline = None
         self._tokenizer = None
@@ -37,11 +38,8 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
     def set_model(self, model):
         """
         Args:
-            model_name: is the name of the model to use as a String.
-                        NOTE: in this case we are using transformers so the model name have to be in its list.
-                        Since we are using transformers here, it is needed also to point the repo so: 'repo/model'
+            model: is the dictionary of the configuration for the model
         Returns: nothing but it initializes the protected model and tokenizer attributes, later used for extraction
-        :param model:
         """
         model_name = model['name']
         if 'task' in model.keys():
@@ -57,8 +55,10 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         """
         It does extract the feature from the input. Framework, model and layer HAVE TO be already set with their set
         methods.
-        :param sample_input: the String in input to process
-        :return: a numpy array that will be put in a .npy file calling the right Dataset Class' method
+        Args:
+            sample_input: the String in input to process
+        Returns:
+             a numpy array that will be put in a .npy file calling the right Dataset Class' method
         """
         if 'transformers' in self._backend_libraries_list:
             model_input = self._tokenizer.encode_plus(sample_input, truncation=True, return_tensors="pt")

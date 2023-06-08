@@ -62,8 +62,10 @@ class TextualDataset(DatasetFather):
     def _pre_processing(self, sample):
         """
         It cleans the String
-        :param sample: String to clean
-        :return: Cleaned String
+        Args:
+            sample: String to clean
+        Returns:
+             Cleaned String
         """
         # the following code is inspired by:
         # https://github.com/JarenceSJ/ReviewGraph/blob/main/nlp_util.py#L123
@@ -136,7 +138,8 @@ class TextualDataset(DatasetFather):
     def set_type_of_extraction(self, type_of_extraction):
         """
         It set the origin of the data, from item or users interactions, it is needed later to read correctly the tsv
-        :param type_of_extraction: 'items' or 'interactions'
+        Args:
+             type_of_extraction: 'items' or 'interactions'
         """
         self._textual_file_manager.set_type_of_extraction(type_of_extraction)
 
@@ -144,9 +147,10 @@ class TextualDataset(DatasetFather):
         """
         Overwrites the method of the Father class because all the Strings come from the same file, and it only changes
         the row
-        :param index: it indicates the row of the String
-        :param extracted_data: the output to put in the file
-        :param model_layer: the layer used, it is a String, it will be shown on the final name
+        Args:
+            index: it indicates the row of the String
+            extracted_data: the output to put in the file
+            model_layer: the layer used, it is a String, it will be shown on the final name
         """
         # generate file name
         input_file_name = self._filenames[0].split('.')[0] + self._textual_file_manager.build_path_from_id(

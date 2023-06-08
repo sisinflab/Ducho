@@ -14,8 +14,9 @@ class AudioDataset(DatasetFather):
         """
         Manage the Audio Dataset (folder of input and folder of output).
         It will Manage data of input (and their preprocessing), and data of output
-        :param input_directory_path: folder of the input data to elaborate as String
-        :param output_directory_path: folder of where put Output as String, it will be created if does not exist
+        Args:
+            input_directory_path: folder of the input data to elaborate as String
+            output_directory_path: folder of where put Output as String, it will be created if does not exist
         """
         super().__init__(input_directory_path, output_directory_path, model_name=None)
         self._model_for_preprocessing = None
@@ -23,8 +24,10 @@ class AudioDataset(DatasetFather):
     def __getitem__(self, index):
         """
         It retrieves a sample preprocessed given its id (the id refers to the sorted filenames)
-        :param index: Integer, indicates the number associated to the file o elaborate
-        :return: the audio resembled (preprocessed) and its sample rate. [audio, rate]
+        Args:
+            index: Integer, indicates the number associated to the file o elaborate
+        Returns:
+             the audio resembled (preprocessed) and its sample rate. [audio, rate]
         """
         audio_path = os.path.join(self._input_directory_path, self._filenames[index])
 
@@ -44,15 +47,18 @@ class AudioDataset(DatasetFather):
         NOTE ON MODELS:
         here it is accepted torchaudio and transformers (by huggingface) models. When using transformers you have to
         indicate in the String also the repo as 'repo/model_name'
-        :param model: the model name as a String
+        Args:
+             model: the model name as a String
         """
         self._model_name = model
 
     def _pre_processing(self, pre_process_input):
         """
         It resample the audio to a rate that is the same to the one with the models where trained
-        :param pre_process_input: blob of data (audio wave and audio rate )
-        :return: [preprocessed audio, new sample rate]
+        Args:
+            pre_process_input: blob of data (audio wave and audio rate )
+        Returns:
+            [preprocessed audio, new sample rate]
         """
         audio = pre_process_input[0]
         rate = pre_process_input[1]
