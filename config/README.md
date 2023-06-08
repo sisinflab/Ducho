@@ -112,7 +112,7 @@ print(resnet50.summary())
 
 """
 here is the final part of the console output:
-
+...
 conv5_block3_add (Add)         (None, 7, 7, 2048)   0           ['conv5_block2_out[0][0]',       
                                                                   'conv5_block3_3_bn[0][0]']      
                                                                                                   
