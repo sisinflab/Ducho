@@ -8,13 +8,12 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
 ## Table of contents
 
 - [What is Ducho](#what-is-ducho)
-- [How can I run Ducho](#how-can-i-run-ducho)
 - [Prerequisites](#prerequisites)
   - [Local](#local)
   - [Docker](#docker)
   - [Google Colab](#google-colab)
 - [Installation](#installation)
-  - [Local & Google Colab](#local-&-google-colab)
+  - [Local and Google Colab](#local-and-google-colab)
   - [Docker](#docker)
 - [Try Ducho](#try-ducho)
 - [Use Ducho](#use-ducho)
@@ -25,9 +24,7 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
 
 Ducho is a Python framework for the extraction of multimodal features for recommendation. It provides a unified interface to most of the common libraries for deep learning (e.g., TensorFlow, PyTorch, Transformers) to extract high-level features from items (e.g., product images/descriptions) and user-item interactions (e.g., users reviews). It is highly configurable through a YAML-based configuration file (which may be override by input arguments from the command line in case). Users can indicate the source from which to extract the multimodal features (i.e., items/interactions), the modalities (i.e., visual/textual/audio), and the list of models along with output layers and preprocessing steps to extract the features.
 
-## How can I run Ducho
-
-You may choose among three options:
+You may choose among three options to run Ducho:
 
 - Locally by cloning this GitHub repo.
 - By pulling our docker image on Docker Hub ([link](https://hub.docker.com/repository/docker/sisinflabpoliba/ducho/general)).
