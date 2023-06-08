@@ -36,8 +36,9 @@ class Config:
         Manage the configuration within the config yaml file. This configuration are later needed to understand what
         to do
 
-        Args: config_file_path: it is a string, it can be both absolute path to the file, or relative to the inside
-        of the Multimodal-Feature-Extractor folder
+        Args:
+            config_file_path: it is a string, it can be both absolute path to the file, or relative to the inside
+            of the Multimodal-Feature-Extractor folder
         """
         # both absolute and relative path are fine
         self._yaml_manager = YamlFileManager(config_file_path)
@@ -114,7 +115,8 @@ class Config:
     def get_gpu(self):
         """
 
-        Returns: the gpu list as a string
+        Returns:
+            the gpu list as a string
 
         """
         # if there is not a gpu config then "-1" (use cpu only)
@@ -142,7 +144,8 @@ class Config:
             origin_of_elaboration: 'items' or 'interactions'
             type_of_extraction: 'textual', 'visual' or 'audio'
 
-        Returns: Bool True/False if contains the configuration
+        Returns:
+            Bool True/False if contains the configuration
 
         """
         if type_of_extraction in self._data_dict and origin_of_elaboration in self._data_dict[type_of_extraction]:
@@ -176,7 +179,8 @@ class Config:
             origin_of_elaboration: 'items' or 'interactions'
             type_of_extraction: 'textual', 'visual' or 'audio'
 
-        Returns: a dict as { 'input_path': input path, 'output_path': output_path }
+        Returns:
+            a dict as { 'input_path': input path, 'output_path': output_path }
 
         """
         # {'input_path': ///, 'output_path': ///}
@@ -195,10 +199,10 @@ class Config:
 
         Returns:
             a list of the models, every model is a dict with
-            'name': the name of the model, in same cases as transformers is repo/model name,
-            'output_layers': the layers of extraction,
-            'framework': framework to work with tensorflow/torch/transformers
-            and a custom flag to manage the preprocessing of the data
+            - 'name': the name of the model, in same cases as transformers is repo/model name,
+            - 'output_layers': the layers of extraction,
+            - 'framework': framework to work with tensorflow/torch/transformers
+            - and a custom flag to manage the preprocessing of the data
         """
 
         models = self._data_dict[type_of_extraction][origin_of_elaboration]['model']
