@@ -104,7 +104,7 @@ where <USER_ID_COLUMN_NAME>, <ITEM_ID_COLUMN_NAME>, and <REVIEW_COLUMN_NAME> are
 
 
 **\[4\]** Depending on the backend you are using:
-- TensorFlow: use the **exact** same naming scheme obtained by calling the method ```summary()``` on the instantiated model object. For example:
+- **TensorFlow**: use the **exact** same naming scheme obtained by calling the method ```summary()``` on the instantiated model object. For example:
 ```python
 import tensorflow
 resnet50 = getattr(tensorflow.keras.applications, 'ResNet50')()
