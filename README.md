@@ -32,7 +32,7 @@ Features in Recommendation_", under review at ACM Multimedia 2023 in the Open So
     <td class="tg-7btt">Modalities</td>
     <td class="tg-baqh">Items</td>
     <td class="tg-baqh">Interactions</td>
-    <td class="tg-c3ow">TensorFlow<br> <img src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Tensorflow_logo.svg" alt="Image" width="20" height="21"></td>
+    <td class="tg-c3ow"><img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/TensorFlow_logo.svg" alt="Image" width="20" height="21"></td>
     <td class="tg-c3ow">PyTorch</td>
     <td class="tg-c3ow">Transformers</td>
   </tr>
