@@ -55,6 +55,38 @@ Please refer to the \[*\] reported in the YAML schema from above.
 
 **\[3\]** We provide a modality/backend table for this:
 
+<table>
+<thead>
+  <tr>
+    <th></th>
+    <th>Audio<br></th>
+    <th>Video</th>
+    <th>Textual</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Tensorflow</td>
+    <td></td>
+    <td>Visual models</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>TorchAudio</td>
+    <td>TorchVideo</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Transformers</td>
+    <td>Transformers</td>
+    <td></td>
+    <td>Transformers & Sentence</td>
+  </tr>
+</tbody>
+</table>
+
+
 **\[4\]** We provide a modality/backend table for this:
 
 **\[5\]** We provide a modality/backend table for this:
