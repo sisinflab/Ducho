@@ -32,27 +32,47 @@ layers and preprocessing steps to extract the features.
    * - Modalities
      - Items
      - Interactions
-     - TF
-     - PT
-     - Trans
+     - .. image:: https://www.gstatic.com/devrel-devsite/prod/v37463d4834445c1e880de1e91d2f8fc2c6a0e86fca4aa6a7bdbb270b040181dc/tensorflow/images/lockup.svg
+          :height: 20 px
+          :width: 90 px
+          :alt: tensorflow
+          :align: center
+     - .. image:: https://upload.wikimedia.org/wikipedia/commons/9/96/Pytorch_logo.png
+          :height: 15 px
+          :width: 62 px
+          :alt: Pytorch_logo
+          :align: center
+     - .. image:: https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/transformers_logo_name.png
+          :height: 16 px
+          :width: 99 px
+          :alt: huggingface
+          :align: center
    * - Audio
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
      -
-     -
-     -
-     -
-     -
+     - `Torchaudio <https://pytorch.org/audio/stable/index.html>`_
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
    * - Visual
-     -
-     -
-     -
-     -
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
+     - `Torchvision <https://pytorch.org/vision/stable/index.html>`_
      -
    * - Text
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
      -
      -
-     -
-     -
-     -
+     - `SentenceTransformers <https://www.sbert.net/>`_
 
 
 .. toctree::

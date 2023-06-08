@@ -49,3 +49,4 @@ docs/source/_templates
 docs/_build/_doctrees
 
 # End of https://www.toptal.com/developers/gitignore/api/venv
+/docs/_build/
