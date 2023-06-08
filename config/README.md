@@ -97,7 +97,7 @@ where <USER_ID_COLUMN_NAME>, <ITEM_ID_COLUMN_NAME>, and <REVIEW_COLUMN_NAME> are
     <td>Transformers</td>
     <td> <a href="https://huggingface.co/docs/transformers/model_doc/wav2vec2#transformers.Wav2Vec2Model">link</a> </td>
     <td></td>
-    <td>Transformers: <a href="https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline">link</a> Sentence: <a href="https://www.sbert.net/docs/pretrained_models.html#model-overview">link</a></td>
+    <td>Transformers: <a href="https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline">link</a><br>SentenceTransformers: <a href="https://www.sbert.net/docs/pretrained_models.html#model-overview">link</a></td>
   </tr>
 </tbody>
 </table>
