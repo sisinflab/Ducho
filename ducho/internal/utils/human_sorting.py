@@ -16,8 +16,10 @@ def human_sort(unsorted_list):
     """
     It sorts a list of string both alphabetically and numerically. This means that the order follow the alphabet order
     but also the cardinal one. E.g: ['10','2','1','8'] -> ['1','2','8','10']
-    :param unsorted_list: the list of string to sort
-    :return: the sorted list of string
+    Args:
+        unsorted_list: the list of string to sort
+    Returns:
+        the sorted list of string
     """
     unsorted_list.sort(key=_natural_keys)
     return unsorted_list
