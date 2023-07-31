@@ -3,7 +3,7 @@
 <img src="https://raw.githubusercontent.com/sisinflab/Ducho/main/docs/source/img/ducho_img.png"  width="600">
 
 This is the official GitHub repo for the paper "_Ducho: A Unified Framework for the Extraction of Multimodal
-Features in Recommendation_", under review at ACM Multimedia 2023 in the Open Source track.
+Features in Recommendation_", accepted at ACM Multimedia 2023 in the Open Source track.
 
 ## Table of contents
 
