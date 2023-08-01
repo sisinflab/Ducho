@@ -17,6 +17,7 @@ Features in Recommendation_", accepted at ACM Multimedia 2023 in the Open Source
   - [Docker](#docker)
 - [Try Ducho](#try-ducho)
 - [Use Ducho](#use-ducho)
+- [The team](#the-team)
 
 ## What is Ducho
 
@@ -171,3 +172,10 @@ As the configuration dictionary derived from the configuration file is built on 
 python3 run.py --config=<path_to_config_file> --textual.interactions.input_path=<path_to_input>
 ```
 this will override the same entry in the configuration file you provided. We do recommend to use this command line overriding just for simple configuration parameters (as in the reported example) since the framework is currently not tested to override, for example, model paramters (which are stored in complex list of dictionary structures).
+
+## The team
+Currently, Ducho is maintained by:
+- Daniele Malitesta (daniele.malitesta@poliba.it)
+- Giuseppe Gassi (g.gassi@studenti.poliba.it)
+- Claudio Pomo (claudio.pomo@poliba.it)
+- Tommaso Di Noia (tommaso.dinoia@poliba.it)
