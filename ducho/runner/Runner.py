@@ -132,7 +132,7 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=VisualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=visual_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️!')
+            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_item_textual_extractions(self):
         """
@@ -155,7 +155,7 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=TextualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=textual_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️!')
+            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_item_audio_extractions(self):
         """
@@ -175,7 +175,7 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=AudioCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=audio_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️!')
+            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_interaction_visual_extractions(self):
         """
@@ -195,7 +195,7 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=VisualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=visual_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️!')
+            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_interaction_textual_extractions(self):
         """
@@ -218,7 +218,7 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=TextualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=textual_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️!')
+            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_interaction_audio_extractions(self):
         """
@@ -238,4 +238,4 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=AudioCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=audio_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️!')
+            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
