@@ -1,4 +1,4 @@
-# Ducho
+# Ducho 2
 
 <img src="https://raw.githubusercontent.com/sisinflab/Ducho/main/docs/source/img/ducho_img.png"  width="600">
 
