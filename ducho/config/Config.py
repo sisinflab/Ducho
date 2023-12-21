@@ -1,7 +1,9 @@
 import os
-import logging
+#import logging #TODO refactor
+from loguru import logger as logging #TODO refactor
 import json
 from ducho.internal.utils.YamlFileManager import YamlFileManager
+from ducho.internal.utils.json2dotnotation import parse_and_print
 
 
 def _clean_preprocessing_flag_of_models(model, type_of_extraction):
@@ -48,7 +50,7 @@ class Config:
         self._data_dict.update(custom_data_dict)
 
         if config_file_path != './config/config.yml':
-            logging.info(f'Custom configuration file {config_file_path} provided. Will override the default one')
+            logging.warning(f'Custom configuration file {config_file_path} provided. Will override the default one')
         else:
             logging.info('No custom configuration file provided. Will use the default one')
 
@@ -58,7 +60,7 @@ class Config:
 
         self._data_dict = self.__clean_dict(self._data_dict)
 
-        logging.info(f'Loaded configuration:\n{json.dumps(self._data_dict, indent=1)}\n')
+        logging.info(f'Loaded configuration:\n\n{parse_and_print(self._data_dict)}\n')
 
     def __update_dict(self, keys_as_string, value):
         def sub_of_update_dict(lists_of_keys, last_value, sub_dict):

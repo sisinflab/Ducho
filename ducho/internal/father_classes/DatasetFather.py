@@ -2,7 +2,8 @@ from abc import abstractmethod
 from ducho.internal.utils.human_sorting import human_sort
 import os
 import numpy
-import logging
+#import logging #TODO refactor
+from loguru import logger as logging #TODO refactor
 
 
 class DatasetFather:

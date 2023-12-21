@@ -25,3 +25,4 @@ torchtext
 torchvision
 tqdm
 transformers
+loguru

@@ -1,5 +1,6 @@
 import os
-import logging
+#import logging #TODO refactor
+from loguru import logger as logging #TODO refactor
 from tqdm import tqdm
 from art import *
 import torch
@@ -14,6 +15,11 @@ from ducho.multimodal.textual.TextualCnnFeatureExtractor import TextualCnnFeatur
 from ducho.multimodal.audio.AudioDataset import AudioDataset
 from ducho.multimodal.audio.AudioCnnFeatureExtractor import AudioCnnFeatureExtractor
 
+
+# Configure custom loguru levels #TODO refactor this
+logging.configure(
+levels=[dict(name="NEW", no=13, icon="¤", color=""), dict(name="WELCOME", no=25, color="<green>", icon="!!!")],
+)
 
 def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
     """
@@ -62,9 +68,9 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                     # update the progress bar
                     t.update()
 
-            logging.info(f'Extraction with layer: {model["name"]}.{model_layer} is complete')
+            logging.success(f'Extraction with layer: {model["name"]}.{model_layer} is complete')
 
-        logging.info(f'Extraction with model: {model["name"]} is complete')
+        logging.success(f'Extraction with model: {model["name"]} is complete')
 
 
 class MultimodalFeatureExtractor:
@@ -79,30 +85,46 @@ class MultimodalFeatureExtractor:
             os.makedirs('./local/logs/')
 
         log_file = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s [%(levelname)s] %(message)s",
-            datefmt='%Y-%m-%d-%H:%M:%S',
-            handlers=[
-                logging.FileHandler(filename=f'./local/logs/{log_file}.log'),
-                logging.StreamHandler()
-            ]
-        )
+        # logging.basicConfig(
+        #     level=logging.INFO,
+        #     format="%(asctime)s [%(levelname)s] %(message)s",
+        #     datefmt='%Y-%m-%d-%H:%M:%S',
+        #     handlers=[
+        #         logging.FileHandler(filename=f'./local/logs/{log_file}.log'),
+        #         logging.StreamHandler()
+        #     ]
+        # )
 
-        framework = text2art("Ducho")
+        logging.add(f"./local/logs/{log_file}.log", level="INFO",
+                   format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {message}")
+        #logging.add(lambda msg: print(msg, end=""), level="INFO")  # Stream handler for console output
+
+
+        #framework = text2art("Ducho")
+        framework = '''
+        ██████╗  ██╗   ██╗  ██████╗ ██╗  ██╗  ██████╗ 
+        ██╔══██╗ ██║   ██║ ██╔════╝ ██║  ██║ ██╔═══██╗
+        ██║  ██║ ██║   ██║ ██║      ███████║ ██║   ██║
+        ██║  ██║ ██║   ██║ ██║      ██╔══██║ ██║   ██║
+        ██████╔╝ ╚██████╔╝ ╚██████╗ ██║  ██║ ╚██████╔╝
+        ╚═════╝   ╚═════╝   ╚═════╝ ╚═╝  ╚═╝  ╚═════╝ 
+        '''
+
         logging.info('\n' + framework)
-        logging.info('*** DUCHO: A Unified Framework for the Extraction of Multimodal Features in Recommendation ***')
-        logging.info('*** Brought to you by: SisInfLab, Politecnico di Bari, Italy (https://sisinflab.poliba.it) ***\n')
+        logging.log("WELCOME",'*** DUCHO: A Unified Framework for the Extraction of Multimodal Features in Recommendation ***')
+        logging.log("WELCOME",'*** Brought to you by: SisInfLab, Politecnico di Bari, Italy (https://sisinflab.poliba.it) ***\n')
         self._config = Config(config_file_path, argv)
         # set gpu to use
         os.environ['CUDA_VISIBLE_DEVICES'] = self._config.get_gpu()
         logging.info('Checking if CUDA version is compatible with TensorFlow and PyTorch...')
-        logging.info(f'TENSORFLOW: Your tf version ({tf.__version__}) is compatible with you CUDA version!'
-                     if len(tf.config.list_physical_devices("GPU")) > 0
-                     else f'TENSORFLOW: Your tf version ({tf.__version__}) is not compatible with you CUDA version!')
-        logging.info(f'PYTORCH: Your torch version ({torch.__version__}) is compatible with you CUDA version!'
-                     if torch.cuda.is_available()
-                     else f'TENSORFLOW: Your torch version ({torch.__version__}) is not compatible with you CUDA version!')
+        if len(tf.config.list_physical_devices("GPU")) > 0:
+            logging.info(f'TENSORFLOW: Your tf version ({tf.__version__}) is compatible with you CUDA version!')
+        else:
+            logging.error(f'TENSORFLOW: Your tf version ({tf.__version__}) is not compatible with you CUDA version!')
+        if torch.cuda.is_available():
+            logging.info(f'PYTORCH: Your torch version ({torch.__version__}) is compatible with you CUDA version!')
+        else:
+            logging.error(f'TENSORFLOW: Your torch version ({torch.__version__}) is not compatible with you CUDA version!')
 
     def execute_extractions(self):
         """
@@ -132,7 +154,7 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=VisualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=visual_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
+            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_item_textual_extractions(self):
         """
@@ -155,7 +177,7 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=TextualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=textual_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
+            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_item_audio_extractions(self):
         """
@@ -175,7 +197,7 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=AudioCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=audio_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
+            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_interaction_visual_extractions(self):
         """
@@ -195,7 +217,7 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=VisualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=visual_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
+            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_interaction_textual_extractions(self):
         """
@@ -218,7 +240,7 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=TextualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=textual_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
+            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_interaction_audio_extractions(self):
         """
@@ -238,4 +260,4 @@ class MultimodalFeatureExtractor:
                                                  extractor_class=AudioCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=audio_dataset)
-            logging.info(f'Extraction is complete, it\'s coffee break! ☕️')
+            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
