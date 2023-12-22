@@ -1,6 +1,6 @@
 import os
-#import logging #TODO refactor
-from loguru import logger as logging #TODO refactor
+#import logging  # deprecated
+from loguru import logger
 from tqdm import tqdm
 from art import *
 import torch
@@ -14,12 +14,8 @@ from ducho.multimodal.visual.VisualCnnFeatureExtractor import VisualCnnFeatureEx
 from ducho.multimodal.textual.TextualCnnFeatureExtractor import TextualCnnFeatureExtractor
 from ducho.multimodal.audio.AudioDataset import AudioDataset
 from ducho.multimodal.audio.AudioCnnFeatureExtractor import AudioCnnFeatureExtractor
+from ducho.internal.utils.json2dotnotation import banner
 
-
-# Configure custom loguru levels #TODO refactor this
-logging.configure(
-levels=[dict(name="NEW", no=13, icon="¤", color=""), dict(name="WELCOME", no=25, color="<green>", icon="!!!")],
-)
 
 def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
     """
@@ -31,7 +27,7 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
         dataset: class Dataset
     """
     for model in models:
-        logging.info(f'Extraction model: {model["name"]}')
+        logger.info(f'Extraction model: {model["name"]}')
 
         extractor = extractor_class(gpu=gpu)
 
@@ -51,7 +47,7 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
         # execute extractions
         for model_layer in model['output_layers']:
 
-            logging.info(f'Extraction layer: {model["name"]}.{model_layer}')
+            logger.info(f'Extraction layer: {model["name"]}.{model_layer}')
 
             # set output layer
             extractor.set_output_layer(model_layer)
@@ -68,9 +64,9 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                     # update the progress bar
                     t.update()
 
-            logging.success(f'Extraction with layer: {model["name"]}.{model_layer} is complete')
+            logger.success(f'Extraction with layer: {model["name"]}.{model_layer} is complete')
 
-        logging.success(f'Extraction with model: {model["name"]} is complete')
+        logger.success(f'Extraction with model: {model["name"]} is complete')
 
 
 class MultimodalFeatureExtractor:
@@ -95,36 +91,26 @@ class MultimodalFeatureExtractor:
         #     ]
         # )
 
-        logging.add(f"./local/logs/{log_file}.log", level="INFO",
+        logger.add(f"./local/logs/{log_file}.log", level="INFO",
                    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {message}")
         #logging.add(lambda msg: print(msg, end=""), level="INFO")  # Stream handler for console output
 
 
-        #framework = text2art("Ducho")
-        framework = '''
-        ██████╗  ██╗   ██╗  ██████╗ ██╗  ██╗  ██████╗ 
-        ██╔══██╗ ██║   ██║ ██╔════╝ ██║  ██║ ██╔═══██╗
-        ██║  ██║ ██║   ██║ ██║      ███████║ ██║   ██║
-        ██║  ██║ ██║   ██║ ██║      ██╔══██║ ██║   ██║
-        ██████╔╝ ╚██████╔╝ ╚██████╗ ██║  ██║ ╚██████╔╝
-        ╚═════╝   ╚═════╝   ╚═════╝ ╚═╝  ╚═╝  ╚═════╝ 
-        '''
-
-        logging.info('\n' + framework)
-        logging.log("WELCOME",'*** DUCHO: A Unified Framework for the Extraction of Multimodal Features in Recommendation ***')
-        logging.log("WELCOME",'*** Brought to you by: SisInfLab, Politecnico di Bari, Italy (https://sisinflab.poliba.it) ***\n')
+        logger.info('\n' + banner)
+        logger.log("WELCOME",'*** DUCHO: A Unified Framework for the Extraction of Multimodal Features in Recommendation ***')
+        logger.log("WELCOME",'*** Brought to you by: SisInfLab, Politecnico di Bari, Italy (https://sisinflab.poliba.it) ***\n')
         self._config = Config(config_file_path, argv)
         # set gpu to use
         os.environ['CUDA_VISIBLE_DEVICES'] = self._config.get_gpu()
-        logging.info('Checking if CUDA version is compatible with TensorFlow and PyTorch...')
+        logger.info('Checking if CUDA version is compatible with TensorFlow and PyTorch...')
         if len(tf.config.list_physical_devices("GPU")) > 0:
-            logging.info(f'TENSORFLOW: Your tf version ({tf.__version__}) is compatible with you CUDA version!')
+            logger.info(f'TENSORFLOW: Your tf version ({tf.__version__}) is compatible with you CUDA version!')
         else:
-            logging.error(f'TENSORFLOW: Your tf version ({tf.__version__}) is not compatible with you CUDA version!')
+            logger.error(f'TENSORFLOW: Your tf version ({tf.__version__}) is not compatible with you CUDA version!')
         if torch.cuda.is_available():
-            logging.info(f'PYTORCH: Your torch version ({torch.__version__}) is compatible with you CUDA version!')
+            logger.info(f'PYTORCH: Your torch version ({torch.__version__}) is compatible with you CUDA version!')
         else:
-            logging.error(f'TENSORFLOW: Your torch version ({torch.__version__}) is not compatible with you CUDA version!')
+            logger.error(f'TENSORFLOW: Your torch version ({torch.__version__}) is not compatible with you CUDA version!')
 
     def execute_extractions(self):
         """
@@ -141,7 +127,7 @@ class MultimodalFeatureExtractor:
         Executes only the item/visual extraction
         """
         if self._config.has_config('items', 'visual'):
-            logging.info('Extraction on items for visual modality')
+            logger.info('Extraction on items for visual modality')
 
             # get paths and models
             working_paths = self._config.paths_for_extraction('items', 'visual')
@@ -149,19 +135,19 @@ class MultimodalFeatureExtractor:
             # generate dataset and extractor
             visual_dataset = VisualDataset(working_paths['input_path'], working_paths['output_path'])
 
-            logging.info('Extraction is starting...')
+            logger.info('Extraction is starting...')
             _execute_extraction_from_models_list(models=models,
                                                  extractor_class=VisualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=visual_dataset)
-            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
+            logger.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_item_textual_extractions(self):
         """
         Executes only the item/textual extraction
         """
         if self._config.has_config('items', 'textual'):
-            logging.info('Extraction on items for textual modality')
+            logger.info('Extraction on items for textual modality')
 
             # get paths and models
             working_paths = self._config.paths_for_extraction('items', 'textual')
@@ -172,19 +158,19 @@ class MultimodalFeatureExtractor:
                                              column=self._config.get_item_column())
             textual_dataset.set_type_of_extraction('items')
 
-            logging.info('Extraction is starting...')
+            logger.info('Extraction is starting...')
             _execute_extraction_from_models_list(models=models,
                                                  extractor_class=TextualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=textual_dataset)
-            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
+            logger.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_item_audio_extractions(self):
         """
         Executes only the item/audio extraction
         """
         if self._config.has_config('items', 'audio'):
-            logging.info('Extraction on items for audio modality')
+            logger.info('Extraction on items for audio modality')
 
             # get paths and models
             working_paths = self._config.paths_for_extraction('items', 'audio')
@@ -192,19 +178,19 @@ class MultimodalFeatureExtractor:
             # generate dataset and extractor
             audio_dataset = AudioDataset(working_paths['input_path'], working_paths['output_path'])
 
-            logging.info('Extraction is starting...')
+            logger.info('Extraction is starting...')
             _execute_extraction_from_models_list(models=models,
                                                  extractor_class=AudioCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=audio_dataset)
-            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
+            logger.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_interaction_visual_extractions(self):
         """
         Executes only the interaction/visual extraction
         """
         if self._config.has_config('interactions', 'visual'):
-            logging.info('Extraction on interactions for visual modality')
+            logger.info('Extraction on interactions for visual modality')
 
             # get paths and models
             working_paths = self._config.paths_for_extraction('interactions', 'visual')
@@ -212,19 +198,19 @@ class MultimodalFeatureExtractor:
             # generate dataset and extractor
             visual_dataset = VisualDataset(working_paths['input_path'], working_paths['output_path'])
 
-            logging.info('Extraction is starting...')
+            logger.info('Extraction is starting...')
             _execute_extraction_from_models_list(models=models,
                                                  extractor_class=VisualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=visual_dataset)
-            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
+            logger.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_interaction_textual_extractions(self):
         """
         Executes only the interaction/textual extraction
         """
         if self._config.has_config('interactions', 'textual'):
-            logging.info('Extraction on interactions for textual modality')
+            logger.info('Extraction on interactions for textual modality')
 
             # get paths and models
             working_paths = self._config.paths_for_extraction('interactions', 'textual')
@@ -234,20 +220,20 @@ class MultimodalFeatureExtractor:
                                              working_paths['output_path'],
                                              column=self._config.get_interaction_column())
 
-            logging.info('Extraction is starting...')
+            logger.info('Extraction is starting...')
             textual_dataset.set_type_of_extraction('interactions')
             _execute_extraction_from_models_list(models=models,
                                                  extractor_class=TextualCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=textual_dataset)
-            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
+            logger.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_interaction_audio_extractions(self):
         """
         Executes only the interaction/audio extraction
         """
         if self._config.has_config('items', 'audio'):
-            logging.info('Extraction on items for audio modality')
+            logger.info('Extraction on items for audio modality')
 
             # get paths and models
             working_paths = self._config.paths_for_extraction('items', 'audio')
@@ -255,9 +241,9 @@ class MultimodalFeatureExtractor:
             # generate dataset and extractor
             audio_dataset = AudioDataset(working_paths['input_path'], working_paths['output_path'])
 
-            logging.info('Extraction is starting...')
+            logger.info('Extraction is starting...')
             _execute_extraction_from_models_list(models=models,
                                                  extractor_class=AudioCnnFeatureExtractor,
                                                  gpu=self._config.get_gpu(),
                                                  dataset=audio_dataset)
-            logging.success(f'Extraction is complete, it\'s coffee break! ☕️')
+            logger.success(f'Extraction is complete, it\'s coffee break! ☕️')

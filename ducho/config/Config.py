@@ -1,6 +1,5 @@
 import os
-#import logging #TODO refactor
-from loguru import logger as logging #TODO refactor
+from loguru import logger
 import json
 from ducho.internal.utils.YamlFileManager import YamlFileManager
 from ducho.internal.utils.json2dotnotation import parse_and_print
@@ -50,9 +49,9 @@ class Config:
         self._data_dict.update(custom_data_dict)
 
         if config_file_path != './config/config.yml':
-            logging.warning(f'Custom configuration file {config_file_path} provided. Will override the default one')
+            logger.warning(f'Custom configuration file {config_file_path} provided. Will override the default one')
         else:
-            logging.info('No custom configuration file provided. Will use the default one')
+            logger.info('No custom configuration file provided. Will use the default one')
 
         if argv:
             for kv in argv:
@@ -60,7 +59,7 @@ class Config:
 
         self._data_dict = self.__clean_dict(self._data_dict)
 
-        logging.info(f'Loaded configuration:\n\n{parse_and_print(self._data_dict)}\n')
+        logger.info(f'Loaded configuration:\n\n{parse_and_print(self._data_dict)}\n')
 
     def __update_dict(self, keys_as_string, value):
         def sub_of_update_dict(lists_of_keys, last_value, sub_dict):
@@ -283,3 +282,8 @@ class Config:
                     model.update({library_key: ['torch', 'transformers']})
 
         return models
+
+# Configure custom loguru levels
+logger.configure(
+levels=[dict(name="NEW", no=13, icon="¤", color=""), dict(name="WELCOME", no=25, color="<green>", icon="!!!")],
+)
