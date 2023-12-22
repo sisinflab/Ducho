@@ -4,7 +4,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
 #import logging  # Deprecated
 from loguru import logger
 from tqdm import tqdm
-from art import *
+from alive_progress import alive_bar
+#from art import *  # Deprecated
 import torch
 import tensorflow as tf
 import datetime
@@ -54,7 +55,7 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
             # set output layer
             extractor.set_output_layer(model_layer)
 
-            with tqdm(total=dataset.__len__()) as t:
+            with alive_bar(total=dataset.__len__()) as t:
                 # for evey item do the extraction
                 for index in range(dataset.__len__()):
                     # retrieve the item (preprocessed) from dataset
@@ -64,7 +65,7 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                     # create the npy file with the extraction output
                     dataset.create_output_file((current_id if current_id else index), extractor_output, model_layer)
                     # update the progress bar
-                    t.update()
+                    t()
 
             logger.success(f'Extraction with layer: {model["name"]}.{model_layer} is complete')
 

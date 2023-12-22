@@ -1,4 +1,4 @@
-art
+#art Deprecated
 babel
 charset-normalizer
 config
@@ -23,6 +23,7 @@ tensorflow
 torchaudio
 torchtext
 torchvision
-tqdm
+#tqdm Deprecated
 transformers
 loguru
+alive-progress
