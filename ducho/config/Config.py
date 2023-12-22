@@ -3,6 +3,7 @@ from loguru import logger
 import json
 from ducho.internal.utils.YamlFileManager import YamlFileManager
 from ducho.internal.utils.json2dotnotation import parse_and_print
+import warnings
 
 
 def _clean_preprocessing_flag_of_models(model, type_of_extraction):
@@ -287,3 +288,6 @@ class Config:
 logger.configure(
 levels=[dict(name="NEW", no=13, icon="¤", color=""), dict(name="WELCOME", no=25, color="<green>", icon="!!!")],
 )
+
+# Hide Torch warnings
+warnings.filterwarnings("ignore")

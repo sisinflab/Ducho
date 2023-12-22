@@ -1,5 +1,7 @@
 import os
-#import logging  # deprecated
+# Hide TensorFlow warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
+#import logging  # Deprecated
 from loguru import logger
 from tqdm import tqdm
 from art import *

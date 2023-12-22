@@ -3,7 +3,6 @@ import numpy as np
 import torchvision
 import tensorflow
 from torchvision.models.feature_extraction import get_graph_node_names, create_feature_extractor
-
 from ducho.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
 
 
