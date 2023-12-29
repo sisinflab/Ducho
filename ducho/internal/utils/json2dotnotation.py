@@ -1,5 +1,5 @@
 # Json leaves to be formatted as list in output
-leaves = ("reshape", "output_layers")
+leaves = ("reshape", "output_layers", "mean", "std")
 
 # This function can be used to parse a .json file
 # def parse_json_to_dot_notation(json_file_path):
