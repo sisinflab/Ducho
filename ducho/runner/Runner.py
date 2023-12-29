@@ -50,7 +50,8 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
 
         dataset.set_preprocessing_flag(model['preprocessing_flag'])
         if isinstance(dataset, VisualDataset):
-            if 'preprceossing' in model.keys(): # preprocessing
+            if 'preprocessing' in model.keys(): # preprocessing
+                print('castagna')
                 if not model['preprocessing'] in ['zscore', 'minmax', None]:
                     raise ValueError("Normalization must be 'minmax', 'zscore' or 'None'")
                 dataset.set_preprocessing_type(model['preprocessing'])
@@ -63,9 +64,9 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                                             )
                         change_mean_std = True
                     else:
-                        raise ValueError("Mean and std values can be setted only for zscore normalization!")
+                        raise ValueError("Mean and std values can be set only for zscore normalization!")
                 else:
-                    raise ValueError("Mean and std values can be setted only for zscore normalization but by the default normalization is None. Please, specify if you want zscore normalization!")
+                    raise ValueError("Mean and std values can be set only for zscore normalization but by the default normalization is None. Please, specify if you want zscore normalization!")
 
         # execute extractions
         for model_layer in model['output_layers']:
