@@ -22,7 +22,7 @@ def main():
                           f'{file["productDisplayName"]}'
             img.save(f'./local/data/demo1/images/{file["id"]}.jpg')
             f.write(f'{file["id"]}\t{description}\n')
-    extractor_obj = MultimodalFeatureExtractor(config_file_path='./demos/demo1/config.yml')
+    extractor_obj = MultimodalFeatureExtractor(config_file_path='./demos/demo1/config_test.yml')
     extractor_obj.execute_extractions()
 
 

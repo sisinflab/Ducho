@@ -6,6 +6,18 @@ from torchvision import transforms
 import tensorflow
 import numpy as np
 import os
+import torch
+
+
+class MinMaxNormalize(object):
+    def __call__(self, img):
+
+        min_value = img.min()
+        max_value = img.max()
+
+        normalized_img = (img - min_value) / (max_value - min_value)
+
+        return normalized_img
 
 
 class VisualDataset(DatasetFather, ABC):
@@ -22,6 +34,9 @@ class VisualDataset(DatasetFather, ABC):
         """
         super().__init__(input_directory_path, output_directory_path, model_name)
         self._reshape = reshape
+        self._preprocessing_type = None
+        self._mean = [0.485, 0.456, 0.406]
+        self._std = [0.229, 0.224, 0.225]
 
     # def set_model_map(self, model_map_path):
     # print(model_map_path)
@@ -74,14 +89,26 @@ class VisualDataset(DatasetFather, ABC):
             self._backend_libraries_list= ['tensorflow']
         else:
             # if the model is a torch model, the normalization is the same for everyone
-            transform = transforms.Compose([transforms.ToTensor(),
-                                            transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                                                 std=[0.229, 0.224, 0.225])
-                                            ])
+            # print(self._preprocessing_type)
+            if self._preprocessing_type is not None:
+                if self._preprocessing_type == 'zscore':
+                    transform = transforms.Compose([transforms.ToTensor(),
+                                                    transforms.Normalize(mean=self._mean,
+                                                                         std=self._std)
+                                                    ])
+                else:
+                    
+                    transform = transforms.Compose([transforms.ToTensor(),
+                                                    MinMaxNormalize()
+                                                    ])
+            else:
+                transform = transforms.ToTensor()
+            
             norm_sample = transform(res_sample)
+
             # update the framework list
             self._backend_libraries_list = ['torch']
-
+        
         return norm_sample
 
     def set_reshape(self, reshape):
@@ -94,3 +121,34 @@ class VisualDataset(DatasetFather, ABC):
 
     def set_preprocessing_flag(self, preprocessing_flag):
         self._reshape = preprocessing_flag
+
+    def set_preprocessing_type(self, 
+                               preprocessing_type: str
+                               ) -> None:
+        """
+        Set the desired pre-processing type between minmax and z-score
+        Args:
+             mean: torch.Tensor containing the desired mean along the three channels
+             std: torch.Tensor containing the desired standard deviation along the three channels
+        """
+        self._preprocessing_type = preprocessing_type
+
+    def set_mean_std(self, 
+                     mean: torch.Tensor, 
+                     std: torch.Tensor
+                     ) -> None:
+        """
+        Set custom values of mean and std for z-score normalization
+        Args:
+             mean: torch.Tensor containing the desired mean along the three channels
+             std: torch.Tensor containing the desired standard deviation along the three channels
+        """
+        self._mean = mean
+        self._std = std
+
+    def _reset_mean_std(self) -> None:
+        """
+        Reset mean and std values to ImageNet ones
+        """
+        self._mean = [0.485, 0.456, 0.406]
+        self._std = [0.229, 0.224, 0.225]
