@@ -2,8 +2,7 @@ from abc import abstractmethod
 from ducho.internal.utils.human_sorting import human_sort
 import os
 import numpy
-#import logging #TODO refactor
-from loguru import logger as logging #TODO refactor
+from loguru import logger
 
 
 class DatasetFather:
@@ -17,13 +16,13 @@ class DatasetFather:
         if not os.path.exists(self._input_directory_path):
             raise FileExistsError('input folder does not exists')
 
-        logging.info(f'Reading files from: {os.path.abspath(self._input_directory_path)}')
+        logger.info(f'Reading files from: {os.path.abspath(self._input_directory_path)}')
         # the output path can not exist but in this case it must be created
         if not os.path.exists(self._output_directory_path):
-            logging.info(f'Output directory does not exist. Will create it in: {os.path.abspath(self._output_directory_path)}')
+            logger.info(f'Output directory does not exist. Will create it in: {os.path.abspath(self._output_directory_path)}')
             os.makedirs(self._output_directory_path)
         else:
-            logging.warning('The output directory already exists. This extraction could overwrite existing files!')
+            logger.warning('The output directory already exists. This extraction could overwrite existing files!')
 
         # generate and order filenames
         # if the path is not a directory but a file, the filenames become the name of that single file
