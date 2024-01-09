@@ -11,6 +11,8 @@ def main():
     dataset = np.array(dataset['train'])[np.random.choice(len(dataset['train']), 100, replace=False)].tolist()
     if not os.path.exists('./local/data/demo1/images/'):
         os.makedirs('./local/data/demo1/images/')
+    if os.path.exists('./local/data/demo1/descriptions.tsv'):
+        os.remove('./local/data/demo1/descriptions.tsv')
     with open(f'./local/data/demo1/descriptions.tsv', 'a') as f:
         f.write('PRODUCT_ID\tdescription\n')
         for file in dataset:

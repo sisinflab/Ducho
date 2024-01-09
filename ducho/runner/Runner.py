@@ -9,7 +9,7 @@ from alive_progress import alive_bar
 import torch
 import tensorflow as tf
 import datetime
-
+import multiprocessing
 from ducho.config.Config import Config
 from ducho.multimodal.visual.VisualDataset import VisualDataset
 from ducho.multimodal.textual.TextualDataset import TextualDataset
@@ -51,7 +51,6 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
         dataset.set_preprocessing_flag(model['preprocessing_flag'])
         if isinstance(dataset, VisualDataset):
             if 'preprocessing' in model.keys(): # preprocessing
-                print('castagna')
                 if not model['preprocessing'] in ['zscore', 'minmax', None]:
                     raise ValueError("Normalization must be 'minmax', 'zscore' or 'None'")
                 dataset.set_preprocessing_type(model['preprocessing'])
@@ -76,19 +75,37 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
             # set output layer
             extractor.set_output_layer(model_layer)
 
-            with alive_bar(total=dataset.__len__()) as t:
-                # for evey item do the extraction
-                for index in range(dataset.__len__()):
-                    # retrieve the item (preprocessed) from dataset
-                    preprocessed_item, current_id = dataset.__getitem__(index)
-                    # print(torch.max(preprocessed_item))
-                    # print(torch.min(preprocessed_item))
-                    # do the extraction
-                    extractor_output = extractor.extract_feature(preprocessed_item)
-                    # create the npy file with the extraction output
-                    dataset.create_output_file((current_id if current_id else index), extractor_output, model_layer)
-                    # update the progress bar
-                    t()
+            if 'tensorflow' not in model['backend']:
+                dataloader = torch.utils.data.DataLoader(dataset,
+                                                         batch_size=1,
+                                                         shuffle=False,
+                                                         sampler=None,
+                                                         num_workers=multiprocessing.cpu_count(),
+                                                         pin_memory=True
+                                                         )
+                with alive_bar(len(dataloader)) as t:
+                    # for evey item do the extraction
+                    for index in range(dataset.__len__()):
+                        # retrieve the item (preprocessed) from dataset
+                        preprocessed_item = dataset.__getitem__(index)
+                        # do the extraction
+                        extractor_output = extractor.extract_feature(preprocessed_item)
+                        # create the npy file with the extraction output
+                        dataset.create_output_file((index), extractor_output, model_layer)
+                        # update the progress bar
+                        t()
+            else:
+                with alive_bar(total=dataset.__len__()) as t:
+                    # for evey item do the extraction
+                    for index in range(dataset.__len__()):
+                        # retrieve the item (preprocessed) from dataset
+                        preprocessed_item = dataset.__getitem__(index)
+                        # do the extraction
+                        extractor_output = extractor.extract_feature(preprocessed_item)
+                        # create the npy file with the extraction output
+                        dataset.create_output_file((index), extractor_output, model_layer)
+                        # update the progress bar
+                        t()
 
             if change_mean_std:
                 dataset._reset_mean_std()

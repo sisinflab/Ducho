@@ -38,9 +38,6 @@ class VisualDataset(DatasetFather, ABC):
         self._mean = [0.485, 0.456, 0.406]
         self._std = [0.229, 0.224, 0.225]
 
-    # def set_model_map(self, model_map_path):
-    # print(model_map_path)
-
     def __getitem__(self, idx):
         """
         It retrieves a sample preprocessed given its id (the id refers to the sorted filenames)
@@ -59,10 +56,10 @@ class VisualDataset(DatasetFather, ABC):
 
         if 'tensorflow' in self._backend_libraries_list:
             # np for tensorflow
-            return np.expand_dims(norm_sample, axis=0), None
+            return np.expand_dims(norm_sample, axis=0)
         else:
             # torch
-            return norm_sample, None
+            return norm_sample
 
     def _pre_processing(self, sample):
         """
