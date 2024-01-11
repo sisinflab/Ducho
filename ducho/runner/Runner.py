@@ -33,7 +33,7 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
     change_mean_std = False
 
     for model in models:
-        logger.info(f'Extraction model: {model["name"]}')
+        logger.info(f'Extraction model: {model["model_name"]}')
 
         extractor = extractor_class(gpu=gpu)
 
@@ -44,7 +44,7 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
         # set model
         # extractor.set_model(model['name'])
         extractor.set_model(model)
-        dataset.set_model(model['name'])
+        dataset.set_model(model['model_name'])
 
         # set preprocessing flag
 
@@ -70,7 +70,7 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
         # execute extractions
         for model_layer in model['output_layers']:
 
-            logger.info(f'Extraction layer: {model["name"]}.{model_layer}')
+            logger.info(f'Extraction layer: {model["model_name"]}.{model_layer}')
 
             # set output layer
             extractor.set_output_layer(model_layer)
@@ -111,9 +111,9 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                 dataset._reset_mean_std()
                 change_mean_std = False
 
-            logger.success(f'Extraction with layer: {model["name"]}.{model_layer} is complete')
+            logger.success(f'Extraction with layer: {model["model_name"]}.{model_layer} is complete')
 
-        logger.success(f'Extraction with model: {model["name"]} is complete')
+        logger.success(f'Extraction with model: {model["model_name"]} is complete')
 
 
 class MultimodalFeatureExtractor:
