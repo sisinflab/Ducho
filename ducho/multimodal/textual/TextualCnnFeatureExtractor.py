@@ -41,11 +41,12 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
             model: is the dictionary of the configuration for the model
         Returns: nothing but it initializes the protected model and tokenizer attributes, later used for extraction
         """
-        model_name = model['name']
+        model_name = model['model_name']
+        tokenizer_name = model['tokenizer_name']
         if 'task' in model.keys():
             model_task = model['task']
         if 'transformers' in self._backend_libraries_list:
-            built_pipeline = pipeline(task=model_task, model=model_name, framework='pt', device=torch.device('cuda'))
+            built_pipeline = pipeline(task='feature-extraction', model=model_name, tokenizer=tokenizer_name, framework='pt', device=self._device)
             self._model = built_pipeline.model
             self._tokenizer = built_pipeline.tokenizer
         elif 'sentence_transformers' in self._backend_libraries_list:
@@ -62,10 +63,8 @@ def extract_feature(self, sample_input):
     """
     if 'transformers' in self._backend_libraries_list:
         model_input = self._tokenizer.encode_plus(sample_input, return_tensors="pt", padding=False)
-        # TODO: warning if tokenizer is None due to wrong task assignment by the user and set self._hidden_states
-        model_output = self._model(**model_input, output_hidden_states=True).hidden_states[-self._output_layer]
-        # model_output = list(self._model.children())[-self._output_layer](**model_input, output_hidden_states=True).pooler_output
-        return model_output.detach().numpy()
+        model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
+        model_output = self._model(**model_input)['pooler_output']
+        return model_output.detach().cpu().numpy()
     elif 'sentence_transformers' in self._backend_libraries_list:
         return self._model.encode(sentences=sample_input)
-

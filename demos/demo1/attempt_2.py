@@ -4,17 +4,18 @@ from transformers import AlignProcessor, AlignModel
 from PIL import Image
 import requests
 
-model_name = 'kakaobrain/align-base'
+# model_name = 'kakaobrain/align-base'
 # model_name = 'openai/clip-vit-base-patch32'
 #model_name = 'google/owlvit-base-patch32'
 #model_name = 'uclanlp/visualbert-vqa-coco-pre'
 # model_name = 'facebook/deit-tiny-patch16-224'
 # model_name = 'facebook/deit-base-distilled-patch16-224'
+model_name = 'microsoft/resnet-50'
 
 pipe = pipeline(task='feature-extraction',
                 model=model_name,
                 image_processor=model_name,
-                tokenizer=model_name
+                #tokenizer=model_name
                 # feature_extractor=model_name
                 )
 
@@ -27,23 +28,26 @@ model = pipe.model
 image_processor = pipe.image_processor
 tokenizer = pipe.tokenizer
 
-a = tokenizer(candidate_labels)
+#a = tokenizer(candidate_labels)
 b = image_processor(image)
 # print(b.keys())
 
-a = {k: torch.tensor(v) for k, v in a.items()}
+#a = {k: torch.tensor(v) for k, v in a.items()}
 b = {k: torch.tensor(v) for k, v in b.items()}
 
-a.update(b)
+#a.update(b)
 
-outputs = model(**a)
+#outputs = model(**a)
+outputs = model(**b)
 print(outputs.keys())
 # print(outputs['text_embeds'].shape)
 # print(outputs['image_embeds'].shape)
+print(outputs['pooler_output'].shape)
+print("siamo qui AAAAA")
 ############################
 
-image_feature_pipe = outputs['image_embeds']
-text_feature_pipe = outputs['text_embeds']
+# image_feature_pipe = outputs['image_embeds']
+# text_feature_pipe = outputs['text_embeds']
 
 
 # feature_extractor = DeiTFeatureExtractor.from_pretrained(model_name)

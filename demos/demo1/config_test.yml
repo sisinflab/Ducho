@@ -10,7 +10,9 @@ visual:
             # { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, preprocessing: biscotto, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
 #            { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
 #            { name: VGG19,  output_layers: classifier.4, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.1, 0.1, 0.1], std: [0.2, 0.2, 0.2]},
-#            { name: ResNet50,  output_layers: avgpool, reshape: [224, 224], backend: torch, preprocessing: zscore},
+            #{ name: ResNet50,  output_layers: avgpool, reshape: [224, 224], backend: torch, preprocessing: zscore},
+            #{ model_name: 'microsoft/resnet-50', image_processor: 'microsoft/resnet-50', output_layers: 1, backend: transformers, reshape: [365, 365]},
+            { model_name: 'google/vit-base-patch16-224', image_processor: 'google/vit-base-patch16-224', output_layers: 1, reshape: [365, 365], backend: transformers},
 #            { name: Xception, output_layers: avg_pool, reshape: [299, 299], backend: tensorflow, preprocessing: zscore},
 #            { name: vit_b_16,  output_layers: ln, reshape: [224, 224], backend: torch, preprocessing: minmax},
         ]
@@ -20,6 +22,7 @@ textual:
         input_path: descriptions.tsv
         output_path: textual_embeddings
         model: [
-#              { name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: True, backend: sentence_transformers}
-              { name: gpt2,  output_layers: 1, clear_text: True, backend: transformers, task: 'feature-extraction'}
+##              { name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: True, backend: sentence_transformers}
+#              #{ name: gpt2,  output_layers: 1, clear_text: True, backend: transformers, task: 'feature-extraction'},
+              { model_name: 'bert-base-uncased', tokenizer_name: 'bert-base-uncased', output_layers: 1, clear_text: True, backend: transformers}
           ]

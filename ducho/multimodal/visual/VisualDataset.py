@@ -58,7 +58,7 @@ class VisualDataset(DatasetFather, ABC):
             # np for tensorflow
             return np.expand_dims(norm_sample, axis=0)
         else:
-            # torch
+            # torch and transformers
             return norm_sample
 
     def _pre_processing(self, sample):
@@ -84,7 +84,7 @@ class VisualDataset(DatasetFather, ABC):
             norm_sample = command.preprocess_input(np.array(res_sample))
             # update the framework list
             self._backend_libraries_list= ['tensorflow']
-        else:
+        elif 'torch' in self._backend_libraries_list:
             # if the model is a torch model, the normalization is the same for everyone
             # print(self._preprocessing_type)
             if self._preprocessing_type is not None:
@@ -105,7 +105,8 @@ class VisualDataset(DatasetFather, ABC):
 
             # update the framework list
             self._backend_libraries_list = ['torch']
-        
+        elif 'transformers' in self._backend_libraries_list:
+            norm_sample = sample
         return norm_sample
 
     def set_reshape(self, reshape):
