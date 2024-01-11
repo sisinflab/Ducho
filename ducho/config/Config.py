@@ -15,7 +15,11 @@ def _clean_preprocessing_flag_of_models(model, type_of_extraction):
     if type_of_extraction == 'textual':
         data_flag = model.pop('clear_text')
     elif type_of_extraction == 'visual':
-        data_flag = model.pop('reshape')
+        if 'reshape' in model.keys():
+            data_flag = model.pop('reshape')
+            if 'transformers' in model['backend']:
+                logger.warning(f"Custom reshape may be overridden by predefined HuggingFace transformers preprocessing module's configurations")
+
     elif type_of_extraction == 'audio':
         # Right now there is no preprocessing flag but one is needed for code clearance
         data_flag = None
