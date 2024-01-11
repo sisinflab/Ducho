@@ -52,19 +52,19 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         elif 'sentence_transformers' in self._backend_libraries_list:
             self._model = SentenceTransformer(model_name)
 
-def extract_feature(self, sample_input):
-    """
-    It does extract the feature from the input. Framework, model and layer HAVE TO be already set with their set
-    methods.
-    Args:
-        sample_input: the String in input to process
-    Returns:
-         a numpy array that will be put in a .npy file calling the right Dataset Class' method
-    """
-    if 'transformers' in self._backend_libraries_list:
-        model_input = self._tokenizer.encode_plus(sample_input, return_tensors="pt", padding=False)
-        model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
-        model_output = self._model(**model_input)['pooler_output']
-        return model_output.detach().cpu().numpy()
-    elif 'sentence_transformers' in self._backend_libraries_list:
-        return self._model.encode(sentences=sample_input)
+    def extract_feature(self, sample_input):
+        """
+        It does extract the feature from the input. Framework, model and layer HAVE TO be already set with their set
+        methods.
+        Args:
+            sample_input: the String in input to process
+        Returns:
+             a numpy array that will be put in a .npy file calling the right Dataset Class' method
+        """
+        if 'transformers' in self._backend_libraries_list:
+            model_input = self._tokenizer.encode_plus(sample_input[0], return_tensors="pt", padding=False)
+            model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
+            model_output = self._model(**model_input)['pooler_output']
+            return model_output.detach().cpu().numpy()
+        elif 'sentence_transformers' in self._backend_libraries_list:
+            return self._model.encode(sentences=sample_input[0])

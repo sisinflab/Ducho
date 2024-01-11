@@ -154,7 +154,7 @@ class TextualDataset(DatasetFather):
         """
         # generate file name
         input_file_name = self._filenames[0].split('.')[0] + self._textual_file_manager.build_path_from_id(
-            index)
+            self._ids[index])
         output_file_name = input_file_name + '.npy'
 
         # generate output path
