@@ -13,8 +13,10 @@ import multiprocessing
 from ducho.config.Config import Config
 from ducho.multimodal.visual.VisualDataset import VisualDataset
 from ducho.multimodal.textual.TextualDataset import TextualDataset
+from ducho.multimodal.multiple.visual_textual.VisualTextualDataset import VisualTextualDataset
 from ducho.multimodal.visual.VisualCnnFeatureExtractor import VisualCnnFeatureExtractor
 from ducho.multimodal.textual.TextualCnnFeatureExtractor import TextualCnnFeatureExtractor
+from ducho.multimodal.multiple.visual_textual.VisualTextualFeatureExtractor import VisualTextualFeatureExtractor
 from ducho.multimodal.audio.AudioDataset import AudioDataset
 from ducho.multimodal.audio.AudioCnnFeatureExtractor import AudioCnnFeatureExtractor
 from ducho.internal.utils.json2dotnotation import banner
@@ -85,11 +87,9 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                                                          )
                 with alive_bar(len(dataloader)) as t:
                     # for evey item do the extraction
-                    for index in range(dataset.__len__()):
-                        # retrieve the item (preprocessed) from dataset
-                        preprocessed_item = dataset.__getitem__(index)
+                    for index, batch in enumerate(dataloader):
                         # do the extraction
-                        extractor_output = extractor.extract_feature(preprocessed_item)
+                        extractor_output = extractor.extract_feature(batch)
                         # create the npy file with the extraction output
                         dataset.create_output_file((index), extractor_output, model_layer)
                         # update the progress bar
@@ -151,13 +151,13 @@ class MultimodalFeatureExtractor:
         os.environ['CUDA_VISIBLE_DEVICES'] = self._config.get_gpu()
         logger.info('Checking if CUDA version is compatible with TensorFlow and PyTorch...')
         if len(tf.config.list_physical_devices("GPU")) > 0:
-            logger.info(f'TENSORFLOW: Your tf version ({tf.__version__}) is compatible with you CUDA version!')
+            logger.info(f'TENSORFLOW: Your tf version ({tf.__version__}) is compatible with your CUDA version!')
         else:
-            logger.error(f'TENSORFLOW: Your tf version ({tf.__version__}) is not compatible with you CUDA version!')
+            logger.error(f'TENSORFLOW: Your tf version ({tf.__version__}) is not compatible with your CUDA version!')
         if torch.cuda.is_available():
-            logger.info(f'PYTORCH: Your torch version ({torch.__version__}) is compatible with you CUDA version!')
+            logger.info(f'PYTORCH: Your torch version ({torch.__version__}) is compatible with your CUDA version!')
         else:
-            logger.error(f'TENSORFLOW: Your torch version ({torch.__version__}) is not compatible with you CUDA version!')
+            logger.error(f'PYTORCH: Your torch version ({torch.__version__}) is not compatible with your CUDA version!')
 
     def execute_extractions(self):
         """
@@ -168,6 +168,30 @@ class MultimodalFeatureExtractor:
         self.do_item_textual_extractions()
         self.do_interaction_textual_extractions()
         self.do_interaction_audio_extractions()
+        self.do_item_visual_textual_extractions()
+
+    def do_item_visual_textual_extractions(self):
+        """
+        Executes only the visual-textual items extraction
+        """
+        if self._config.has_config('items', 'visual_textual'):
+            logger.info('Extraction on items for visual_textual modality')
+
+            # get paths and models
+            working_paths = self._config.paths_for_multiple_extraction('items', 'visual_textual')
+            models = self._config.get_models_list('items', 'visual_textual')
+            # generate dataset and extractor
+            visual_textual_dataset = VisualTextualDataset(working_paths['input_path'],
+                                                          working_paths['output_path'],
+                                                          column=self._config.get_item_column())
+            visual_textual_dataset._textual_dataset.set_type_of_extraction('items')
+
+            logger.info('Extraction is starting...')
+            _execute_extraction_from_models_list(models=models,
+                                                 extractor_class=VisualTextualFeatureExtractor,
+                                                 gpu=self._config.get_gpu(),
+                                                 dataset=visual_textual_dataset)
+            logger.success(f'Extraction is complete, it\'s coffee break! ☕️')
 
     def do_item_visual_extractions(self):
         """

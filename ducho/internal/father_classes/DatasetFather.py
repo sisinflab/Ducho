@@ -26,13 +26,24 @@ class DatasetFather:
 
         # generate and order filenames
         # if the path is not a directory but a file, the filenames become the name of that single file
-        if os.path.isfile(self._input_directory_path):
-            self._filenames = ['']
-            self._num_samples = 1
+        if type(self._input_directory_path) == dict:
+            self._filenames, self._num_samples = dict(), dict()
+            for k, v in self._input_directory_path.items():
+                if os.path.isfile(v):
+                    self._filenames[k] = ['']
+                    self._num_samples[k] = 1
+                else:
+                    current_filenames = os.listdir(v)
+                    self._filenames[k] = human_sort(current_filenames)
+                    self._num_samples[k] = len(self._filenames[k])
         else:
-            self._filenames = os.listdir(self._input_directory_path)
-            self._filenames = human_sort(self._filenames)
-            self._num_samples = len(self._filenames)
+            if os.path.isfile(self._input_directory_path):
+                self._filenames = ['']
+                self._num_samples = 1
+            else:
+                self._filenames = os.listdir(self._input_directory_path)
+                self._filenames = human_sort(self._filenames)
+                self._num_samples = len(self._filenames)
 
     def __len__(self):
         return self._num_samples

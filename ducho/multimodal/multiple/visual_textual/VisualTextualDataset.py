@@ -1,99 +1,75 @@
-from abc import ABC
-
-from PIL import Image
-from ducho.internal.father_classes.DatasetFather import DatasetFather
-from torchvision import transforms
-import tensorflow
-import numpy as np
-import os
-import torch
+from ducho.multimodal.visual.VisualDataset import VisualDataset
+from ducho.multimodal.textual.TextualDataset import TextualDataset
+import numpy, os
 
 
-class VisualDataset(DatasetFather, ABC):
+class VisualTextualDataset:
 
-    def __init__(self, input_directory_path, output_directory_path, model_name='VGG19', reshape=(224, 224)):
-        """
-        Manage the Image Dataset (folder of input and folder of output).
-        It will Manage data of input (and their preprocessing), and data of output
-        Args:
-            input_directory_path: folder of the input data to elaborate as String
-            output_directory_path: folder of where put Output as String, it will be created if does not exist
-            model_name: String of the model to use, it can be reset later
-            reshape: Tuple (int, int), is width and height for the resize, it can be reset later
-        """
-        super().__init__(input_directory_path, output_directory_path, model_name)
+    def __init__(self,
+                 input_directory_path,
+                 output_directory_path,
+                 column=None,
+                 model_name='openai/clip-vit-base-patch32',
+                 reshape=(224, 224)):
+        self._backend_libraries_list = None
+        self._model_name = model_name
         self._reshape = reshape
-        self.image_path, self.text_path = self._input_directory_path['visual'], self._input_directory_path['textual']
+        self.input_image_path, self.input_text_path = input_directory_path['visual'], input_directory_path['textual']
+        self.output_image_path, self.output_text_path = output_directory_path['visual'], output_directory_path['textual']
+        self._visual_dataset = VisualDataset(self.input_image_path, self.output_image_path, model_name)
+        self._textual_dataset = TextualDataset(self.input_text_path, self.output_text_path, column)
+        self.set_framework = self._visual_dataset.set_framework
+        self.set_model = self._visual_dataset.set_model
+        self.set_preprocessing_flag = self._visual_dataset.set_preprocessing_flag
+
+    def __len__(self):
+        return min(self._visual_dataset._num_samples, self._textual_dataset._num_samples)
 
     def __getitem__(self, idx):
+        visual_input = self._visual_dataset.__getitem__(idx)
+        textual_input, _ = self._textual_dataset.__getitem__(idx)
+        return visual_input, textual_input
+
+    def create_output_file(self, index, extracted_data, model_layer):
         """
-        It retrieves a sample preprocessed given its id (the id refers to the sorted filenames)
+
         Args:
-            idx: Integer, indicates the number associated to the file o elaborate
+            index: (int) is the index to the filenames list
+            extracted_data: blob of data to put in the npy
+            model_layer: the name of the layer
+
         Returns:
-             the image blob data preprocessed
+            it returns nothing to the program, but it creates a file as follows :
+            datasetFolder/framework/modelName/modelLayer/fileName.npy
+
         """
-        image_path = os.path.join(self._input_directory_path, self._filenames[idx])
-        sample = Image.open(image_path)
 
-        if sample.mode != 'RGB':
-            sample = sample.convert(mode='RGB')
+        # generate file name
+        input_file_name = self._visual_dataset._filenames[index].split('.')[0]
+        output_file_name = input_file_name + '.npy'
 
-        norm_sample = self._pre_processing(sample)
+        # generate output path
+        backend_library = self._visual_dataset._backend_libraries_list[0]
 
-        if 'tensorflow' in self._backend_libraries_list:
-            # np for tensorflow
-            return np.expand_dims(norm_sample, axis=0)
-        else:
-            # torch
-            return norm_sample
+        # visual
+        output_image_path = os.path.join(self.output_image_path, backend_library)
+        output_image_path = os.path.join(output_image_path, self._model_name)
+        output_image_path = os.path.join(output_image_path, str(model_layer))
+        if not os.path.exists(output_image_path):
+            os.makedirs(output_image_path)
+        # create file
+        path = os.path.join(output_image_path, output_file_name)
+        numpy.save(path, extracted_data)
 
-    def _pre_processing(self, sample):
-        """
-        It prepares the data to the feature extraction
-        Args:
-            sample: the image just read
-        Returns:
-             the image resized and normalized
-        """
-        # resize
-        if self._reshape:
-            res_sample = sample.resize(self._reshape, resample=Image.BICUBIC)
-        else:
-            res_sample = sample
-
-        # normalize
-        tensorflow_keras_list = list(tensorflow.keras.applications.__dict__)
-        if self._model_name.lower() in tensorflow_keras_list and 'tensorflow' in self._backend_libraries_list:
-            # if the model is a tensorflow model, each one execute a different command (retrieved from the model map)
-            # command_two = tensorflow_models_for_normalization[self._model_name]
-            command = getattr(tensorflow.keras.applications, self._model_name.lower())
-            norm_sample = command.preprocess_input(np.array(res_sample))
-            # update the framework list
-            self._backend_libraries_list= ['tensorflow']
-        else:
-            # if the model is a torch model, the normalization is the same for everyone
-            # print(self._preprocessing_type)
-            if self._preprocessing_type is not None:
-                if self._preprocessing_type == 'zscore':
-                    transform = transforms.Compose([transforms.ToTensor(),
-                                                    transforms.Normalize(mean=self._mean,
-                                                                         std=self._std)
-                                                    ])
-                else:
-                    
-                    transform = transforms.Compose([transforms.ToTensor(),
-                                                    MinMaxNormalize()
-                                                    ])
-            else:
-                transform = transforms.ToTensor()
-            
-            norm_sample = transform(res_sample)
-
-            # update the framework list
-            self._backend_libraries_list = ['torch']
-        
-        return norm_sample
+        # textual
+        output_text_path = os.path.join(self.output_text_path, backend_library)
+        output_text_path = os.path.join(output_text_path, self._model_name)
+        output_text_path = os.path.join(output_text_path, str(model_layer))
+        if not os.path.exists(output_text_path):
+            os.makedirs(output_text_path)
+        # create file
+        path = os.path.join(output_text_path, output_file_name)
+        numpy.save(path, extracted_data)
 
     def set_reshape(self, reshape):
         """
@@ -102,4 +78,3 @@ class VisualDataset(DatasetFather, ABC):
              reshape: Tuple (int, int), is width and height
         """
         self._reshape = reshape
-

@@ -23,9 +23,9 @@ class VisualTextualFeatureExtractor(CnnFeatureExtractorFather):
             model: is the dictionary of the configuration for the model
         Returns: nothing but it initializes the protected model and tokenizer attributes, later used for extraction
         """
-        model_name = model['model_name']
-        tokenizer_name = model['tokenizer']
-        image_processor_name = model['image_processor']
+        model_name = model['name']
+        tokenizer_name = model['tokenizer'] if model['tokenizer'] else model['name']
+        image_processor_name = model['image_processor'] if model['image_processor'] else model['name']
 
         if 'transformers' in self._backend_libraries_list:
             built_pipeline = pipeline(
@@ -42,28 +42,28 @@ class VisualTextualFeatureExtractor(CnnFeatureExtractorFather):
         else:
             raise NotImplemented('This feature extractor has not been added yet!')
 
-def extract_feature(self, sample_input):
-    """
-    It does extract the feature from the input. Framework, model and layer HAVE TO be already set with their set
-    methods.
-    Args:
-        sample_input: a tuple containing the image and the text to preprocess
-    Returns:
-         two numpy arrays that will be put in two .npy file calling the right Dataset Class' method
-    """
+    def extract_feature(self, sample_input):
+        """
+        It does extract the feature from the input. Framework, model and layer HAVE TO be already set with their set
+        methods.
+        Args:
+            sample_input: a tuple containing the image and the text to preprocess
+        Returns:
+             two numpy arrays that will be put in two .npy file calling the right Dataset Class' method
+        """
 
-    image, text = sample_input
-    preprocessed_text = self._tokenizer(text, return_tensor=True, device=self._device)
-    preprocessed_image = self._image_processor(image, return_tensor=True, device=self._device)
+        image, text = sample_input
+        preprocessed_text = self._tokenizer(text[0])
+        preprocessed_image = self._image_processor(image)
 
-    preprocessed_text = {k: torch.tensor(v) for k, v in preprocessed_text.items()}
-    preprocessed_image = {k: torch.tensor(v) for k, v in preprocessed_image.items()}
+        preprocessed_text = {k: torch.tensor(v).unsqueeze(dim=0) for k, v in preprocessed_text.items()}
+        preprocessed_image = {k: torch.tensor(v) for k, v in preprocessed_image.items()}
 
-    preprocessed_text.update(preprocessed_image)
+        preprocessed_text.update(preprocessed_image)
 
-    outputs = self._model(**preprocessed_text)
+        outputs = self._model(**preprocessed_text)
 
-    return outputs['image_embeds'].detach().numpy().cpu(), outputs['text_embeds'].detach().numpy().cpu()
+        return outputs['image_embeds'].detach().numpy(), outputs['text_embeds'].detach().numpy()
 
 
 

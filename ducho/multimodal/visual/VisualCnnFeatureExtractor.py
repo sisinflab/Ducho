@@ -72,7 +72,7 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
             feature_model = create_feature_extractor(self._model, return_nodes)
             feature_model.eval()
             output = np.squeeze(feature_model(
-                image[None, ...].to(self._device)
+                image.to(self._device)
             )[output_layer].data.cpu().numpy())
             # update the framework list
             self._backend_libraries_list = ['torch']

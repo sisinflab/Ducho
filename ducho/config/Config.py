@@ -170,11 +170,14 @@ class Config:
     def get_item_column(self):
         if 'textual' in self._data_dict.keys() and 'item_column' in self._data_dict['textual']['items'].keys():
             return self._data_dict['textual']['items']['item_column']
+        elif 'visual_textual' in self._data_dict.keys() and 'item_column' in self._data_dict['visual_textual']['items'].keys():
+            return self._data_dict['visual_textual']['items']['item_column']
         else:
             return None
 
     def get_interaction_column(self):
-        if 'textual' in self._data_dict.keys() and 'interaction_column' in self._data_dict['textual']['interactions'].keys():
+        if 'textual' in self._data_dict.keys() and 'interaction_column' in self._data_dict['textual'][
+            'interactions'].keys():
             return self._data_dict['textual']['interactions']['interaction_column']
         else:
             return None
@@ -197,6 +200,27 @@ class Config:
         return {
             'input_path': os.path.join(self._data_dict['dataset_path'], relative_input_path),
             'output_path': os.path.join(self._data_dict['dataset_path'], relative_output_path)}
+
+    def paths_for_multiple_extraction(self, origin_of_elaboration, type_of_extraction):
+        """
+        Gives the working environments
+        Args:
+            origin_of_elaboration: 'items' or 'interactions'
+            type_of_extraction: 'textual', 'visual' or 'audio'
+
+        Returns:
+            a dict as { 'input_path': input path, 'output_path': output_path }
+
+        """
+        # {'input_path': ///, 'output_path': ///}
+        relative_input_path = self._data_dict[type_of_extraction][origin_of_elaboration]['input_path']
+        relative_output_path = self._data_dict[type_of_extraction][origin_of_elaboration]['output_path']
+
+        return {
+            'input_path': {k: os.path.join(self._data_dict['dataset_path'], relative_input_path[k])
+                            for k, _ in relative_input_path.items()},
+            'output_path': {k: os.path.join(self._data_dict['dataset_path'], relative_output_path[k])
+                            for k, _ in relative_input_path.items()}}
 
     def get_models_list(self, origin_of_elaboration, type_of_extraction):
         """
@@ -291,9 +315,10 @@ class Config:
 
         return models
 
+
 # Configure custom loguru levels
 logger.configure(
-levels=[dict(name="NEW", no=13, icon="¤", color=""), dict(name="WELCOME", no=25, color="<green>", icon="!!!")],
+    levels=[dict(name="NEW", no=13, icon="¤", color=""), dict(name="WELCOME", no=25, color="<green>", icon="!!!")],
 )
 
 # Hide Torch warnings
