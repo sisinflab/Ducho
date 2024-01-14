@@ -28,6 +28,7 @@ visual_textual:
     items:
         input_path: {visual: images, textual: descriptions.tsv}
         output_path: {visual: visual_embeddings, textual: textual_embeddings}
+        fusion: sum
         model: [
             { name: openai/clip-vit-base-patch32, backend: transformers, output_layers: 1, tokenizer: '', image_processor: '', resize: [224, 224]}
         ]

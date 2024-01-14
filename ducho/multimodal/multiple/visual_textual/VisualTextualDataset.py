@@ -1,3 +1,6 @@
+import torch
+from loguru import logger
+
 from ducho.multimodal.visual.VisualDataset import VisualDataset
 from ducho.multimodal.textual.TextualDataset import TextualDataset
 import numpy, os
@@ -10,10 +13,12 @@ class VisualTextualDataset:
                  output_directory_path,
                  column=None,
                  model_name='openai/clip-vit-base-patch32',
+                 fusion=None,
                  reshape=(224, 224)):
         self._backend_libraries_list = None
         self._model_name = model_name
         self._reshape = reshape
+        self._fusion = fusion
         self.input_image_path, self.input_text_path = input_directory_path['visual'], input_directory_path['textual']
         self.output_image_path, self.output_text_path = output_directory_path['visual'], output_directory_path['textual']
         self._visual_dataset = VisualDataset(self.input_image_path, self.output_image_path, model_name)
@@ -51,25 +56,50 @@ class VisualTextualDataset:
         # generate output path
         backend_library = self._visual_dataset._backend_libraries_list[0]
 
-        # visual
-        output_image_path = os.path.join(self.output_image_path, backend_library)
-        output_image_path = os.path.join(output_image_path, self._model_name)
-        output_image_path = os.path.join(output_image_path, str(model_layer))
-        if not os.path.exists(output_image_path):
-            os.makedirs(output_image_path)
-        # create file
-        path = os.path.join(output_image_path, output_file_name)
-        numpy.save(path, extracted_data)
+        if not self._fusion:
+            # visual
+            output_image_path = os.path.join(self.output_image_path, backend_library)
+            output_image_path = os.path.join(output_image_path, self._model_name)
+            output_image_path = os.path.join(output_image_path, str(model_layer))
+            if not os.path.exists(output_image_path):
+                os.makedirs(output_image_path)
+            # create file
+            path = os.path.join(output_image_path, output_file_name)
+            numpy.save(path, extracted_data[0])
 
-        # textual
-        output_text_path = os.path.join(self.output_text_path, backend_library)
-        output_text_path = os.path.join(output_text_path, self._model_name)
-        output_text_path = os.path.join(output_text_path, str(model_layer))
-        if not os.path.exists(output_text_path):
-            os.makedirs(output_text_path)
-        # create file
-        path = os.path.join(output_text_path, output_file_name)
-        numpy.save(path, extracted_data)
+            # textual
+            output_text_path = os.path.join(self.output_text_path, backend_library)
+            output_text_path = os.path.join(output_text_path, self._model_name)
+            output_text_path = os.path.join(output_text_path, str(model_layer))
+            if not os.path.exists(output_text_path):
+                os.makedirs(output_text_path)
+            # create file
+            path = os.path.join(output_text_path, output_file_name)
+            numpy.save(path, extracted_data[1])
+        else:
+            last_image_path = os.path.basename(os.path.normpath(self.output_image_path))
+            last_text_path = os.path.basename(os.path.normpath(self.output_text_path))
+            first_path = self.output_image_path.replace(last_image_path, '')
+            output_path = f'{last_image_path}_{last_text_path}_{self._fusion}'
+            output_path = os.path.join(first_path, output_path, backend_library)
+            output_path = os.path.join(output_path, self._model_name)
+            output_path = os.path.join(output_path, str(model_layer))
+            if not os.path.exists(output_path):
+                os.makedirs(output_path)
+            # create file
+            path = os.path.join(output_path, output_file_name)
+
+            # fusion
+            if self._fusion == 'concat':
+                extracted_data = numpy.concatenate(extracted_data, axis=1)
+            elif self._fusion == 'sum':
+                extracted_data = numpy.add(extracted_data[0], extracted_data[1])
+            elif self._fusion == 'mul':
+                extracted_data = numpy.multiply(extracted_data[0], extracted_data[1])
+            elif self._fusion == 'mean':
+                extracted_data = numpy.mean(extracted_data, axis=0)
+
+            numpy.save(path, extracted_data)
 
     def set_reshape(self, reshape):
         """
