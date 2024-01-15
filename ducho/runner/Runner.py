@@ -121,6 +121,8 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
             logger.success(f'Extraction with layer: {model["model_name"]}.{model_layer} is complete')
 
         logger.success(f'Extraction with model: {model["model_name"]} is complete')
+        del extractor
+        torch.cuda.empty_cache()
 
 
 class MultimodalFeatureExtractor:

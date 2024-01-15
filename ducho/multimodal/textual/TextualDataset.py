@@ -143,7 +143,7 @@ class TextualDataset(DatasetFather):
         """
         self._textual_file_manager.set_type_of_extraction(type_of_extraction)
 
-    def create_output_file(self, index, extracted_data, model_layer):
+    def create_output_file(self, index, extracted_data, model_layer, fusion=None):
         """
         Overwrites the method of the Father class because all the Strings come from the same file, and it only changes
         the row

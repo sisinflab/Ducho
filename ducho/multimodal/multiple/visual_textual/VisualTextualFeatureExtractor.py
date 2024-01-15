@@ -54,16 +54,16 @@ class VisualTextualFeatureExtractor(CnnFeatureExtractorFather):
 
         image, text = sample_input
         preprocessed_text = self._tokenizer(text[0])
-        preprocessed_image = self._image_processor(image)
+        preprocessed_image = self._image_processor(image, do_rescale=False)
 
-        preprocessed_text = {k: torch.tensor(v).unsqueeze(dim=0) for k, v in preprocessed_text.items()}
-        preprocessed_image = {k: torch.tensor(v) for k, v in preprocessed_image.items()}
+        preprocessed_text = {k: torch.tensor(v).unsqueeze(dim=0).to(self._device) for k, v in preprocessed_text.items()}
+        preprocessed_image = {k: torch.tensor(v).to(self._device) for k, v in preprocessed_image.items()}
 
         preprocessed_text.update(preprocessed_image)
 
         outputs = self._model(**preprocessed_text)
 
-        return outputs['image_embeds'].detach().numpy(), outputs['text_embeds'].detach().numpy()
+        return outputs['image_embeds'].detach().cpu().numpy(), outputs['text_embeds'].detach().cpu().numpy()
 
 
 

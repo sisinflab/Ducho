@@ -1,19 +1,20 @@
 dataset_path: ./local/data/demo4
 gpu list: 0
 #
-visual:
-    items:
-        input_path: images
-        output_path: visual_embeddings
-        model: [
-            # { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
-            # { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, preprocessing: biscotto, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
-#            { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
-#            { name: VGG19,  output_layers: classifier.4, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.1, 0.1, 0.1], std: [0.2, 0.2, 0.2]},
-            { name: ResNet50,  output_layers: avgpool, reshape: [224, 224], backend: torch, preprocessing: zscore},
-#            { name: Xception, output_layers: avg_pool, reshape: [299, 299], backend: tensorflow, preprocessing: zscore},
-#            { name: vit_b_16,  output_layers: ln, reshape: [224, 224], backend: torch, preprocessing: minmax},
-        ]
+#visual:
+#    items:
+#        input_path: images
+#        output_path: visual_embeddings
+#        model: [
+#            # { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
+#            # { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, preprocessing: biscotto, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
+##            { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
+##            { name: VGG19,  output_layers: classifier.4, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.1, 0.1, 0.1], std: [0.2, 0.2, 0.2]},
+#            { name: ResNet50,  output_layers: avgpool, reshape: [224, 224], backend: torch, preprocessing: zscore},
+#            { name: ResNet18,  output_layers: avgpool, reshape: [224, 224], backend: torch, preprocessing: zscore},
+##            { name: Xception, output_layers: avg_pool, reshape: [299, 299], backend: tensorflow, preprocessing: zscore},
+##            { name: vit_b_16,  output_layers: ln, reshape: [224, 224], backend: torch, preprocessing: minmax},
+#        ]
 
 textual:
     items:
