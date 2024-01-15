@@ -61,7 +61,7 @@ class DatasetFather:
         # generate output path
         backend_library = self._backend_libraries_list[0]
         output_path = os.path.join(self._output_directory_path, backend_library)
-        output_path = os.path.join(output_path, self._model_name)
+        output_path = os.path.join(output_path, os.path.splitext(self._model_name)[0])
         output_path = os.path.join(output_path, str(model_layer))
         if not os.path.exists(output_path):
             os.makedirs(output_path)
