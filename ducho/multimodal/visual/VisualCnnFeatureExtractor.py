@@ -41,7 +41,7 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
             self._model.eval()
         elif 'torch' in self._backend_libraries_list:
             # Custom Model Loading
-            self._model = torch.load(model_name, map_location=torch.device(self._device))
+            self._model = torch.load(model_name, map_location=self._device)
         elif 'transformers' in self._backend_libraries_list:
             built_pipeline = pipeline(task='feature-extraction', model=model_name, image_processor=image_processor, framework='pt', device=self._device)
             self._model = built_pipeline.model
