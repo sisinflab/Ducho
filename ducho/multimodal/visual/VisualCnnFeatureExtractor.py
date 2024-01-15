@@ -1,7 +1,6 @@
 import tensorflow as tf
 import numpy as np
 import torchvision
-import tensorflow
 import torch
 from torchvision.models.feature_extraction import get_graph_node_names, create_feature_extractor
 from ducho.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
@@ -29,17 +28,20 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
 
         """
         model_name = model['model_name']
-        image_processor = model['image_processor']
+        image_processor = model['image_processor'] if 'image_processor' in model else None
         torchvision_list = list(torchvision.models.__dict__)
-        tensorflow_keras_list = list(tensorflow.keras.applications.__dict__)
+        tensorflow_keras_list = list(tf.keras.applications.__dict__)
 
         self._model_name = model_name
         if self._model_name in tensorflow_keras_list and 'tensorflow' in self._backend_libraries_list:
-            self._model = getattr(tensorflow.keras.applications, self._model_name)()
+            self._model = getattr(tf.keras.applications, self._model_name)()
         elif self._model_name.lower() in torchvision_list and 'torch' in self._backend_libraries_list:
             self._model = getattr(torchvision.models, self._model_name.lower())(weights='DEFAULT')
             self._model.to(self._device)
             self._model.eval()
+        elif 'torch' in self._backend_libraries_list:
+            # Custom Model Loading
+            self._model = torch.load(model_name, map_location=torch.device(self._device))
         elif 'transformers' in self._backend_libraries_list:
             built_pipeline = pipeline(task='feature-extraction', model=model_name, image_processor=image_processor, framework='pt', device=self._device)
             self._model = built_pipeline.model
@@ -57,8 +59,8 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
              a numpy array that will be put in a .npy file calling the right Dataset Class' method
         """
         torchvision_list = list(torchvision.models.__dict__)
-        tensorflow_keras_list = list(tensorflow.keras.applications.__dict__)
-        if self._model_name.lower() in torchvision_list and 'torch' in self._backend_libraries_list:
+        tensorflow_keras_list = list(tf.keras.applications.__dict__)
+        if 'torch' in self._backend_libraries_list: #and self._model_name.lower() in torchvision_list:
             _, eval_nodes = get_graph_node_names(self._model)
             return_nodes = {}
             output_layer = 'layer0'

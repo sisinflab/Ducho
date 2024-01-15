@@ -216,6 +216,9 @@ class Config:
 
         for model in models:
 
+            if 'torch' in model['backend'] and isinstance(model['output_layers'], int):
+                raise ValueError('Please specify the output layer name and not its index.')
+
             # output_layers has to be a list
             if not isinstance(model['output_layers'], list):
                 model.update({'output_layers': [model['output_layers']]})
