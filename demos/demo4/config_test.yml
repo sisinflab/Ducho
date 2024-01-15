@@ -1,34 +1,33 @@
 dataset_path: ./local/data/demo4
 gpu list: 0
 #
-#visual:
-#    items:
-#        input_path: images
-#        output_path: visual_embeddings
-#        model: [
-#            # { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
-#            # { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, preprocessing: biscotto, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
-##            { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
-##            { name: VGG19,  output_layers: classifier.4, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.1, 0.1, 0.1], std: [0.2, 0.2, 0.2]},
-#            { name: ResNet50,  output_layers: avgpool, reshape: [224, 224], backend: torch, preprocessing: zscore},
-##            { name: Xception, output_layers: avg_pool, reshape: [299, 299], backend: tensorflow, preprocessing: zscore},
-##            { name: vit_b_16,  output_layers: ln, reshape: [224, 224], backend: torch, preprocessing: minmax},
-#        ]
-#
-#textual:
-#    items:
-#        input_path: descriptions.tsv
-#        output_path: textual_embeddings
-#        model: [
-#              { name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: True, backend: sentence_transformers}
-##               { name: gpt2,  output_layers: 1, clear_text: True, backend: transformers, task: 'feature-extraction'}
-#          ]
+visual:
+    items:
+        input_path: images
+        output_path: visual_embeddings
+        model: [
+            # { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
+            # { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, preprocessing: biscotto, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
+#            { name: VGG19,  output_layers: classifier.3, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.51, 0.51, 0.51], std: [0.12, 0.12, 0.12]},
+#            { name: VGG19,  output_layers: classifier.4, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.1, 0.1, 0.1], std: [0.2, 0.2, 0.2]},
+            { name: ResNet50,  output_layers: avgpool, reshape: [224, 224], backend: torch, preprocessing: zscore},
+#            { name: Xception, output_layers: avg_pool, reshape: [299, 299], backend: tensorflow, preprocessing: zscore},
+#            { name: vit_b_16,  output_layers: ln, reshape: [224, 224], backend: torch, preprocessing: minmax},
+        ]
+
+textual:
+    items:
+        input_path: descriptions.tsv
+        output_path: textual_embeddings
+        model: [
+              { name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: True, backend: sentence_transformers}
+#               { name: gpt2,  output_layers: 1, clear_text: True, backend: transformers, task: 'feature-extraction'}
+          ]
 
 visual_textual:
     items:
         input_path: {visual: images, textual: descriptions.tsv}
         output_path: {visual: visual_embeddings, textual: textual_embeddings}
-        fusion: sum
         model: [
-            { name: openai/clip-vit-base-patch32, backend: transformers, output_layers: 1, tokenizer: '', image_processor: '', resize: [224, 224]}
+            { name: openai/clip-vit-base-patch32, fusion: sum, backend: transformers, output_layers: 1, tokenizer: '', image_processor: '', resize: [224, 224]}
         ]

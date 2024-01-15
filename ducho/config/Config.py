@@ -175,18 +175,6 @@ class Config:
         else:
             return None
 
-    def get_item_fusion(self):
-        if 'visual_textual' in self._data_dict.keys() and 'fusion' in self._data_dict['visual_textual']['items'].keys():
-            return self._data_dict['visual_textual']['items']['fusion']
-        else:
-            return None
-
-    def get_interaction_fusion(self):
-        if 'visual_textual' in self._data_dict.keys() and 'fusion' in self._data_dict['visual_textual']['interactions'].keys():
-            return self._data_dict['visual_textual']['interactions']['fusion']
-        else:
-            return None
-
     def get_interaction_column(self):
         if 'textual' in self._data_dict.keys() and 'interaction_column' in self._data_dict['textual'][
             'interactions'].keys():

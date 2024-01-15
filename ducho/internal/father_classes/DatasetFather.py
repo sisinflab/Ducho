@@ -51,13 +51,14 @@ class DatasetFather:
     def set_model(self, model):
         self._model_name = model
 
-    def create_output_file(self, index, extracted_data, model_layer):
+    def create_output_file(self, index, extracted_data, model_layer, fusion=None):
         """
 
         Args:
             index: (int) is the index to the filenames list
             extracted_data: blob of data to put in the npy
             model_layer: the name of the layer
+            fusion: type of fusion (for multimodal models)
 
         Returns:
             it returns nothing to the program, but it creates a file as follows :

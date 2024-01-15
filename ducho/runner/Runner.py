@@ -7,6 +7,7 @@ from tqdm import tqdm
 from alive_progress import alive_bar
 #from art import *  # Deprecated
 import torch
+import platform
 import tensorflow as tf
 import datetime
 import multiprocessing
@@ -36,6 +37,12 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
 
     for model in models:
         logger.info(f'Extraction model: {model["model_name"]}')
+
+        if 'fusion' in model.keys():
+            if type(model['fusion']) == list:
+                raise ValueError(f'Fusion field cannot be a list!')
+            if model['fusion'] not in ['sum', 'concat', 'mul', 'mean']:
+                raise NotImplementedError(f'Fusion {model["fusion"]} is not implemented yet! Please select among: ["sum", "concat", "mul", "mean"]')
 
         extractor = extractor_class(gpu=gpu)
 
@@ -91,7 +98,7 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                         # do the extraction
                         extractor_output = extractor.extract_feature(batch)
                         # create the npy file with the extraction output
-                        dataset.create_output_file((index), extractor_output, model_layer)
+                        dataset.create_output_file((index), extractor_output, model_layer, fusion=model['fusion'] if 'fusion' in model.keys() else None)
                         # update the progress bar
                         t()
             else:
@@ -147,17 +154,25 @@ class MultimodalFeatureExtractor:
         logger.log("WELCOME",'*** DUCHO: A Unified Framework for the Extraction of Multimodal Features in Recommendation ***')
         logger.log("WELCOME",'*** Brought to you by: SisInfLab, Politecnico di Bari, Italy (https://sisinflab.poliba.it) ***\n')
         self._config = Config(config_file_path, argv)
+        # Get the operating system name
+        os_name = platform.system()
         # set gpu to use
         os.environ['CUDA_VISIBLE_DEVICES'] = self._config.get_gpu()
-        logger.info('Checking if CUDA version is compatible with TensorFlow and PyTorch...')
-        if len(tf.config.list_physical_devices("GPU")) > 0:
-            logger.info(f'TENSORFLOW: Your tf version ({tf.__version__}) is compatible with your CUDA version!')
+        if os_name == 'Darwin':
+            if torch.backends.mps.is_available():
+                logger.info(f'PYTORCH: Your torch version ({torch.__version__}) and system are compatible with MPS acceleration!')
+            else:
+                logger.warning(f'PYTORCH: Your torch version ({torch.__version__}) and/or system may not be compatible with MPS acceleration!')
         else:
-            logger.error(f'TENSORFLOW: Your tf version ({tf.__version__}) is not compatible with your CUDA version!')
-        if torch.cuda.is_available():
-            logger.info(f'PYTORCH: Your torch version ({torch.__version__}) is compatible with your CUDA version!')
-        else:
-            logger.error(f'PYTORCH: Your torch version ({torch.__version__}) is not compatible with your CUDA version!')
+            logger.info('Checking if CUDA version is compatible with TensorFlow and PyTorch...')
+            if len(tf.config.list_physical_devices("GPU")) > 0:
+                logger.info(f'TENSORFLOW: Your tf version ({tf.__version__}) is compatible with your CUDA version!')
+            else:
+                logger.error(f'TENSORFLOW: Your tf version ({tf.__version__}) is not compatible with your CUDA version!')
+            if torch.cuda.is_available():
+                logger.info(f'PYTORCH: Your torch version ({torch.__version__}) is compatible with your CUDA version!')
+            else:
+                logger.error(f'PYTORCH: Your torch version ({torch.__version__}) is not compatible with your CUDA version!')
 
     def execute_extractions(self):
         """
@@ -183,8 +198,7 @@ class MultimodalFeatureExtractor:
             # generate dataset and extractor
             visual_textual_dataset = VisualTextualDataset(working_paths['input_path'],
                                                           working_paths['output_path'],
-                                                          column=self._config.get_item_column(),
-                                                          fusion=self._config.get_item_fusion())
+                                                          column=self._config.get_item_column())
             visual_textual_dataset._textual_dataset.set_type_of_extraction('items')
 
             logger.info('Extraction is starting...')
