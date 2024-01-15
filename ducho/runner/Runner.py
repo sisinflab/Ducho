@@ -56,6 +56,12 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
             if model['fusion'] not in ['sum', 'concat', 'mul', 'mean']:
                 raise NotImplementedError(f'Fusion {model["fusion"]} is not implemented yet! Please select among: ["sum", "concat", "mul", "mean"]')
 
+        if 'fusion' in model.keys():
+            if type(model['fusion']) == list:
+                raise ValueError(f'Fusion field cannot be a list!')
+            if model['fusion'] not in ['sum', 'concat', 'mul', 'mean']:
+                raise NotImplementedError(f'Fusion {model["fusion"]} is not implemented yet! Please select among: ["sum", "concat", "mul", "mean"]')
+
         extractor = extractor_class(gpu=gpu)
 
         # set framework
