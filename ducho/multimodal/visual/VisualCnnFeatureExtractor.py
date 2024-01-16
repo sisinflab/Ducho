@@ -86,7 +86,7 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
             self._backend_libraries_list = ['tensorflow']
             return output
         elif 'transformers' in self._backend_libraries_list:
-            model_input = self._image_processor(image, return_tensors="pt")
+            model_input = self._image_processor(image, return_tensors="pt", do_rescale=False)
             model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
             model_output = self._model(**model_input)['pooler_output']
             return model_output.detach().cpu().numpy()

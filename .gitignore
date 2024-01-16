@@ -52,3 +52,8 @@ docs/_build/_doctrees
 /docs/_build/
 
 .vscode
+
+*.pt
+*.pth
+*.hdf5
+*.safetensors

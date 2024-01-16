@@ -42,9 +42,7 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         Returns: nothing but it initializes the protected model and tokenizer attributes, later used for extraction
         """
         model_name = model['model_name']
-        tokenizer_name = model['tokenizer_name']
-        if 'task' in model.keys():
-            model_task = model['task']
+
         if 'transformers' in self._backend_libraries_list:
             tokenizer_name = model['tokenizer_name']
             built_pipeline = pipeline(task='feature-extraction', model=model_name, tokenizer=tokenizer_name, framework='pt', device=self._device)
@@ -63,7 +61,7 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
              a numpy array that will be put in a .npy file calling the right Dataset Class' method
         """
         if 'transformers' in self._backend_libraries_list:
-            model_input = self._tokenizer.encode_plus(sample_input[0], return_tensors="pt", padding=False)
+            model_input = self._tokenizer.encode_plus(sample_input[0][0], return_tensors="pt", padding=False)
             model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
             model_output = self._model(**model_input)['pooler_output']
             return model_output.detach().cpu().numpy()

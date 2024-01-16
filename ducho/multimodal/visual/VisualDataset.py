@@ -11,7 +11,6 @@ import torch
 
 class MinMaxNormalize(object):
     def __call__(self, img):
-
         min_value = img.min()
         max_value = img.max()
 
@@ -58,7 +57,7 @@ class VisualDataset(DatasetFather, ABC):
             # np for tensorflow
             return np.expand_dims(norm_sample, axis=0)
         else:
-            # torch and transformers
+            # torch
             return norm_sample
 
     def _pre_processing(self, sample):
@@ -83,7 +82,7 @@ class VisualDataset(DatasetFather, ABC):
             command = getattr(tensorflow.keras.applications, self._model_name.lower())
             norm_sample = command.preprocess_input(np.array(res_sample))
             # update the framework list
-            self._backend_libraries_list= ['tensorflow']
+            self._backend_libraries_list = ['tensorflow']
         elif 'torch' in self._backend_libraries_list:
             # if the model is a torch model, the normalization is the same for everyone
             # print(self._preprocessing_type)
@@ -94,19 +93,23 @@ class VisualDataset(DatasetFather, ABC):
                                                                          std=self._std)
                                                     ])
                 else:
-                    
+
                     transform = transforms.Compose([transforms.ToTensor(),
                                                     MinMaxNormalize()
                                                     ])
             else:
                 transform = transforms.ToTensor()
-            
+
+            norm_sample = transform(res_sample)
+            self._backend_libraries_list = ['torch']
+
+        elif 'transformers' in self._backend_libraries_list:
+            transform = transforms.ToTensor()
             norm_sample = transform(res_sample)
 
             # update the framework list
-            self._backend_libraries_list = ['torch']
-        elif 'transformers' in self._backend_libraries_list:
-            norm_sample = sample
+            self._backend_libraries_list = ['transformers']
+
         return norm_sample
 
     def set_reshape(self, reshape):
@@ -120,7 +123,7 @@ class VisualDataset(DatasetFather, ABC):
     def set_preprocessing_flag(self, preprocessing_flag):
         self._reshape = preprocessing_flag
 
-    def set_preprocessing_type(self, 
+    def set_preprocessing_type(self,
                                preprocessing_type: str
                                ) -> None:
         """
@@ -131,8 +134,8 @@ class VisualDataset(DatasetFather, ABC):
         """
         self._preprocessing_type = preprocessing_type
 
-    def set_mean_std(self, 
-                     mean: torch.Tensor, 
+    def set_mean_std(self,
+                     mean: torch.Tensor,
                      std: torch.Tensor
                      ) -> None:
         """
