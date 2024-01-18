@@ -63,7 +63,8 @@ class VisualTextualFeatureExtractor(CnnFeatureExtractorFather):
 
         outputs = self._model(**preprocessed_text)
 
-        return outputs['image_embeds'].detach().cpu().numpy(), outputs['text_embeds'].detach().cpu().numpy()
+        return (outputs.vision_model_output.pooler_output.detach().cpu().numpy(),
+                outputs.text_model_output.pooler_output.detach().cpu().numpy())
 
 
 

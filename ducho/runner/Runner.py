@@ -1,6 +1,7 @@
 import os
 # Hide TensorFlow warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 #import logging  # Deprecated
 from loguru import logger
 from tqdm import tqdm

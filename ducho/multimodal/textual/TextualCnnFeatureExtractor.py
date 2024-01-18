@@ -33,6 +33,7 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         """
         self._pipeline = None
         self._tokenizer = None
+        self.output_layer = None
         super().__init__(gpu)
 
     def set_model(self, model):
@@ -48,6 +49,7 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
             built_pipeline = pipeline(task='feature-extraction', model=model_name, tokenizer=tokenizer_name, framework='pt', device=self._device)
             self._model = built_pipeline.model
             self._tokenizer = built_pipeline.tokenizer
+            self.output_layer = model['output_layers'][0] if 'output_layers' in model.keys() else 'pooler_output'
         elif 'sentence_transformers' in self._backend_libraries_list:
             self._model = SentenceTransformer(model_name)
 
@@ -63,7 +65,7 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         if 'transformers' in self._backend_libraries_list:
             model_input = self._tokenizer.encode_plus(sample_input[0][0], return_tensors="pt", padding=False)
             model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
-            model_output = self._model(**model_input)['pooler_output']
+            model_output = getattr(self._model(**model_input), self.output_layer)
             return model_output.detach().cpu().numpy()
         elif 'sentence_transformers' in self._backend_libraries_list:
             return self._model.encode(sentences=sample_input[0])
