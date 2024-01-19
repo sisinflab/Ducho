@@ -12,7 +12,7 @@ visual:
             { model_name: VGG19,  output_layers: classifier.4, reshape: [224, 224], backend: torch, preprocessing: zscore, mean: [0.1, 0.1, 0.1], std: [0.2, 0.2, 0.2]},
             { model_name: ResNet50,  output_layers: avgpool, reshape: [224, 224], backend: torch, preprocessing: zscore},
             { model_name: ResNet18,  output_layers: avgpool, reshape: [224, 224], backend: torch, preprocessing: zscore},
-            { model_name: "google/vit-base-patch16-224-in21k",  output_layers: 1, backend: transformers, preprocessing: zscore},
+            { model_name: "google/vit-base-patch16-224-in21k",  output_layers: 'pooler_output', backend: transformers, preprocessing: zscore},
             { model_name: Xception, output_layers: avg_pool, reshape: [299, 299], backend: tensorflow, preprocessing: minmax},
             { model_name: './demos/demo4/myModel.pt',  output_layers: avgpool, reshape: [28, 28], backend: torch, preprocessing: minmax},
             { model_name: vit_b_16,  output_layers: encoder.ln, reshape: [224, 224], backend: torch, preprocessing: minmax},
