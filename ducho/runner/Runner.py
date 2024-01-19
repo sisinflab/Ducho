@@ -45,24 +45,6 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
             if model['fusion'] not in ['sum', 'concat', 'mul', 'mean']:
                 raise NotImplementedError(f'Fusion {model["fusion"]} is not implemented yet! Please select among: ["sum", "concat", "mul", "mean"]')
 
-        if 'fusion' in model.keys():
-            if type(model['fusion']) == list:
-                raise ValueError(f'Fusion field cannot be a list!')
-            if model['fusion'] not in ['sum', 'concat', 'mul', 'mean']:
-                raise NotImplementedError(f'Fusion {model["fusion"]} is not implemented yet! Please select among: ["sum", "concat", "mul", "mean"]')
-
-        if 'fusion' in model.keys():
-            if type(model['fusion']) == list:
-                raise ValueError(f'Fusion field cannot be a list!')
-            if model['fusion'] not in ['sum', 'concat', 'mul', 'mean']:
-                raise NotImplementedError(f'Fusion {model["fusion"]} is not implemented yet! Please select among: ["sum", "concat", "mul", "mean"]')
-
-        if 'fusion' in model.keys():
-            if type(model['fusion']) == list:
-                raise ValueError(f'Fusion field cannot be a list!')
-            if model['fusion'] not in ['sum', 'concat', 'mul', 'mean']:
-                raise NotImplementedError(f'Fusion {model["fusion"]} is not implemented yet! Please select among: ["sum", "concat", "mul", "mean"]')
-
         extractor = extractor_class(gpu=gpu)
 
         # set framework
@@ -222,8 +204,7 @@ class MultimodalFeatureExtractor:
             # generate dataset and extractor
             visual_textual_dataset = VisualTextualDataset(working_paths['input_path'],
                                                           working_paths['output_path'],
-                                                          column=self._config.get_item_column(),
-                                                          model_name=models[0]['model_name'])
+                                                          column=self._config.get_item_column())
             visual_textual_dataset._textual_dataset.set_type_of_extraction('items')
 
             logger.info('Extraction is starting...')
