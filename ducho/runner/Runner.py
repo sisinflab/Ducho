@@ -222,7 +222,8 @@ class MultimodalFeatureExtractor:
             # generate dataset and extractor
             visual_textual_dataset = VisualTextualDataset(working_paths['input_path'],
                                                           working_paths['output_path'],
-                                                          column=self._config.get_item_column())
+                                                          column=self._config.get_item_column()
+                                                          )
             visual_textual_dataset._textual_dataset.set_type_of_extraction('items')
 
             logger.info('Extraction is starting...')
