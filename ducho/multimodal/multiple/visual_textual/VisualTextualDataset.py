@@ -98,3 +98,11 @@ class VisualTextualDataset:
              reshape: Tuple (int, int), is width and height
         """
         self._reshape = reshape
+
+    def set_model_name(self, model_name):
+        """
+        Set the model name for the serialization dir
+        Args:
+             model_name: name of the multimodal model
+        """
+        self._model_name = model_name

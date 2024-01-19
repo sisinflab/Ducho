@@ -95,6 +95,9 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                 else:
                     raise ValueError("Mean and std values can be set only for zscore normalization but by the default normalization is None. Please, specify if you want zscore normalization!")
 
+        if isinstance(dataset, VisualTextualDataset):
+            dataset.set_model_name(model['model_name'])
+
         # execute extractions
         for model_layer in model['output_layers']:
 

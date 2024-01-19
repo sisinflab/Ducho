@@ -2,12 +2,10 @@ from ducho.runner.Runner import MultimodalFeatureExtractor
 from datasets import load_dataset
 import numpy as np
 import os
+from torch import nn
 
 np.random.seed(42)
 
-import torch
-import torch.nn as nn
-import torch.optim as optim
 class SimpleCNN(nn.Module):
     def __init__(self):
         super(SimpleCNN, self).__init__()
