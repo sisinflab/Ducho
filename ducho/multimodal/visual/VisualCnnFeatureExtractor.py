@@ -64,11 +64,15 @@ class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
             _, eval_nodes = get_graph_node_names(self._model)
             return_nodes = {}
             output_layer = 'layer0'
+            found = False
             for idx, e in enumerate(eval_nodes):
                 return_nodes[e] = f'layer{idx}'
                 if e == self._output_layer:
                     output_layer = f'layer{idx}'
+                    found = True
                     break
+            if not found:
+                raise ValueError(f"The specified output layer {self._output_layer} does not exist. Please carefully check its name!")
             feature_model = create_feature_extractor(self._model, return_nodes)
             feature_model.eval()
             output = np.squeeze(feature_model(

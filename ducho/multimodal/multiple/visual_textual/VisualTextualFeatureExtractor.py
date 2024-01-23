@@ -24,8 +24,8 @@ class VisualTextualFeatureExtractor(CnnFeatureExtractorFather):
         Returns: nothing but it initializes the protected model and tokenizer attributes, later used for extraction
         """
         model_name = model['model_name']
-        tokenizer_name = model['tokenizer'] if model['tokenizer'] else model['model_name']
-        image_processor_name = model['image_processor'] if model['image_processor'] else model['model_name']
+        tokenizer_name = model['tokenizer_name'] if 'tokenizer_name' in model.keys() else model['model_name']
+        image_processor_name = model['image_processor_name'] if 'image_processor_name' in model.keys() else model['model_name']
 
         if 'transformers' in self._backend_libraries_list:
             built_pipeline = pipeline(

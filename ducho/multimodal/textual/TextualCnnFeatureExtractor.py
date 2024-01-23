@@ -45,7 +45,7 @@ class TextualCnnFeatureExtractor(CnnFeatureExtractorFather):
         model_name = model['model_name']
 
         if 'transformers' in self._backend_libraries_list:
-            tokenizer_name = model['tokenizer_name']
+            tokenizer_name = model['tokenizer_name'] if 'tokenizer_name' in model.keys() else model['model_name']
             built_pipeline = pipeline(task='feature-extraction', model=model_name, tokenizer=tokenizer_name, framework='pt', device=self._device)
             self._model = built_pipeline.model
             self._tokenizer = built_pipeline.tokenizer
