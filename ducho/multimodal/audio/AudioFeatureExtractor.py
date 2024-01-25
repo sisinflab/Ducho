@@ -1,11 +1,11 @@
 import torchaudio
 import torch
 import numpy as np
-from ducho.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
+from ducho.internal.father_classes.FeatureExtractorFather import FeatureExtractorFather
 from transformers import Wav2Vec2Model
 
 
-class AudioCnnFeatureExtractor(CnnFeatureExtractorFather):
+class AudioFeatureExtractor(FeatureExtractorFather):
     def __init__(self, gpu='-1'):
         """
         It does Audio Extraction. It is needed also to give the model name, the framework and the output_layer. You can

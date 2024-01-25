@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 
 
-class CnnFeatureExtractorFather:
+class FeatureExtractorFather:
     def __init__(self, gpu='-1'):
         self._backend_libraries_list = None
         self._model = None

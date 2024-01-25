@@ -3,11 +3,11 @@ import numpy as np
 import torchvision
 import torch
 from torchvision.models.feature_extraction import get_graph_node_names, create_feature_extractor
-from ducho.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
+from ducho.internal.father_classes.FeatureExtractorFather import FeatureExtractorFather
 from transformers import pipeline
 
 
-class VisualCnnFeatureExtractor(CnnFeatureExtractorFather):
+class VisualFeatureExtractor(FeatureExtractorFather):
     def __init__(self, gpu='-1'):
         """
         It does Image Extraction. It is needed also to give the model name, the framework and the output_layer. You can

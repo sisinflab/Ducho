@@ -4,6 +4,7 @@ import json
 from ducho.internal.utils.YamlFileManager import YamlFileManager
 from ducho.internal.utils.json2dotnotation import parse_and_print
 import warnings
+import copy
 
 
 def _clean_preprocessing_flag_of_models(model, type_of_extraction):
@@ -142,6 +143,10 @@ class Config:
                 raise SyntaxError('the gpu list is written in a incorrect way')
         else:
             return '-1'
+
+    def get_extractions(self):
+        extractions_dict = {key: copy.deepcopy(self._data_dict[key]) for key in ['visual', 'textual', 'visual_textual'] if key in self._data_dict}
+        return extractions_dict
 
     def has_config(self, origin_of_elaboration, type_of_extraction):
         """

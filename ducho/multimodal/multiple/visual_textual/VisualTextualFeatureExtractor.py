@@ -1,9 +1,9 @@
 from transformers import pipeline
 import torch
-from ducho.internal.father_classes.CnnFeatureExtractorFather import CnnFeatureExtractorFather
+from ducho.internal.father_classes.FeatureExtractorFather import FeatureExtractorFather
 
 
-class VisualTextualFeatureExtractor(CnnFeatureExtractorFather):
+class VisualTextualFeatureExtractor(FeatureExtractorFather):
     def __init__(self, gpu='-1'):
         """
         It does Textual extraction. It is needed also to give the model name, the framework and the output_layer. You can
