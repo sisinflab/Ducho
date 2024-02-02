@@ -104,7 +104,7 @@ class VisualDataset(DatasetFather, ABC):
             self._backend_libraries_list = ['torch']
 
         elif 'transformers' in self._backend_libraries_list:
-            transform = transforms.ToTensor()
+            transform = transforms.PILToTensor()
             norm_sample = transform(res_sample)
 
             # update the framework list

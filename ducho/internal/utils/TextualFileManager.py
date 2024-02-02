@@ -2,17 +2,19 @@ import pandas as pd
 
 
 class TextualFileManager:
-    def __init__(self, column):
+    def __init__(self, columns):
         """
         It manages the input textual file and its contents. Note that it is used also to build the names of the outputs
         files of the textual extraction
+        Args:
+            columns: tuple with columns' names
         """
         self._internal_list = None
         self._type_of_extraction = None
         self._file_path = None
         self._id_column = None
-        self._last_column = None
-        self._column = column
+        self._text_column = None
+        self._columns = columns
 
     def set_type_of_extraction(self, type_of_extraction):
         """
@@ -56,12 +58,11 @@ class TextualFileManager:
             len of object to elaborate
         """
         df = pd.read_csv(self._file_path, sep='\t')
-        num_columns = len(df.columns)
-        self._id_column = df.columns[0] if num_columns == 2 else (df.columns[0], df.columns[1])
-        self._last_column = df.columns[-1]
+        self._id_column = self._columns[0]
+        self._text_column = self._columns[1]
         self._internal_list = df
-        ids_list = df[df.columns[0]].tolist() if num_columns == 2 else \
-            list(zip(df[df.columns[0]].tolist(), df[df.columns[1]].tolist()))
+        ids_list = df[self._id_column].tolist() if type(self._id_column) != list else \
+            list(zip(df[self._id_column[0]].tolist(), df[self._id_column[1]].tolist()))
         return len(self._internal_list), ids_list
 
     def get_item_from_id(self, idx):
@@ -76,12 +77,7 @@ class TextualFileManager:
             the sentence as a string, preprocessing is needed
         """
         if self._type_of_extraction == 'items':
-            row = self._internal_list[self._internal_list[self._id_column] == idx].to_dict('records')[0]
+            return self._internal_list[self._internal_list[self._id_column] == idx].to_dict('records')[0][self._text_column]
         else:
-            row = self._internal_list[(self._internal_list[self._id_column[0]] == idx[0]) &
-                                      (self._internal_list[self._id_column[1]] == idx[1])].to_dict('records')[0]
-
-        if self._type_of_extraction == 'interactions':
-            return row[self._column if self._column else self._last_column]
-        elif self._type_of_extraction == 'items':
-            return row[self._column if self._column else self._last_column]
+            return self._internal_list[(self._internal_list[self._id_column[0]] == idx[0]) &
+                                       (self._internal_list[self._id_column[1]] == idx[1])].to_dict('records')[0][self._text_column]

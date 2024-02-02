@@ -44,7 +44,7 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
 
     def extract_feature(self, sample_input):
         """
-        It does extract the feature from the input. Framework, model and layer HAVE TO be already set with their set
+        It performs the feature from the input. Framework, model and layer HAVE TO be already set with their set
         methods.
         Args:
             sample_input: a tuple containing the image and the text to preprocess
@@ -53,8 +53,8 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
         """
 
         image, text = sample_input
-        preprocessed_text = self._tokenizer(text[0])
-        preprocessed_image = self._image_processor(image, do_rescale=False)
+        preprocessed_text = self._tokenizer(text[0], truncation=True)
+        preprocessed_image = self._image_processor(image)
 
         preprocessed_text = {k: torch.tensor(v).unsqueeze(dim=0).to(self._device) for k, v in preprocessed_text.items()}
         preprocessed_image = {k: torch.tensor(v).to(self._device) for k, v in preprocessed_image.items()}
@@ -63,8 +63,8 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
 
         outputs = self._model(**preprocessed_text)
 
-        return (outputs.vision_model_output.pooler_output.detach().cpu().numpy(),
-                outputs.text_model_output.pooler_output.detach().cpu().numpy())
+        return (outputs.image_embeds.detach().cpu().numpy(),
+                outputs.text_embeds.detach().cpu().numpy())
 
 
 

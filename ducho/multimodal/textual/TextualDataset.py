@@ -20,16 +20,17 @@ def complex_spit_of_list_of_string(sample, splitter):
 
 class TextualDataset(DatasetFather):
 
-    def __init__(self, input_directory_path, output_directory_path, column=None):
+    def __init__(self, input_directory_path, output_directory_path, columns=None):
         """
         Manage the Text Dataset (folder of input and folder of output).
         It will Manage data of input (and their preprocessing), and data of output
         :param input_directory_path: folder of the input data to elaborate as String
         :param output_directory_path: folder of where put Output as String, it will be created if does not exist
+        :param columns: columns for the textual modality
         """
         super().__init__(input_directory_path, output_directory_path, model_name=None)
-        self._text_to_be_cleaned = True
-        self._textual_file_manager = TextualFileManager(column=column)
+        self._text_to_be_cleaned = False
+        self._textual_file_manager = TextualFileManager(columns=columns)
         self._ids = None
         # if num_sample is 1, it means it have to be the num of sample in the single file
         # in this case the textual file manager have to behave accordingly
@@ -121,18 +122,8 @@ class TextualDataset(DatasetFather):
 
         return sample
 
-    def set_clean_flag(self, text_to_be_cleaned):
-        """
-        It does set the flag to clean the String before preprocessing, this phase is heavily recommended, therefore the
-        flag by default is set to True
-        Args:
-            text_to_be_cleaned: flag True/False if the text will be preprocessed and cleaned
-
-        Returns: nothing
-        """
-        self._text_to_be_cleaned = text_to_be_cleaned
-
     def set_preprocessing_flag(self, preprocessing_flag):
+        assert type(preprocessing_flag) == bool
         self._text_to_be_cleaned = preprocessing_flag
 
     def set_type_of_extraction(self, type_of_extraction):

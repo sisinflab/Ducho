@@ -52,6 +52,7 @@ docs/_build/_doctrees
 /docs/_build/
 
 .vscode
+.DS_Store
 
 *.pt
 *.pth

@@ -14,7 +14,7 @@ def _clean_preprocessing_flag_of_models(model, type_of_extraction):
     data_flag = ''
 
     if type_of_extraction == 'textual':
-        data_flag = model.pop('clear_text')
+        data_flag = model.pop('clear_text') if 'clear_text' in model.keys() else False
     elif type_of_extraction == 'visual':
         if 'reshape' in model.keys():
             data_flag = model.pop('reshape')
@@ -172,20 +172,28 @@ class Config:
                     return True
         return False
 
-    def get_item_column(self):
-        if 'textual' in self._data_dict.keys() and 'item_column' in self._data_dict['textual']['items'].keys():
-            return self._data_dict['textual']['items']['item_column']
-        elif 'visual_textual' in self._data_dict.keys() and 'item_column' in self._data_dict['visual_textual']['items'].keys():
-            return self._data_dict['visual_textual']['items']['item_column']
-        else:
-            return None
+    def get_columns(self, modality):
+        """
+        Gives the column names in the case of textual and visual_textual modalities
+        Args:
+            modality: 'textual', 'visual', 'audio', or 'visual_textual'
 
-    def get_interaction_column(self):
-        if 'textual' in self._data_dict.keys() and 'interaction_column' in self._data_dict['textual'][
-            'interactions'].keys():
-            return self._data_dict['textual']['interactions']['interaction_column']
-        else:
-            return None
+        Returns:
+            for items: two dicts as { 'item_column': column name for items' ids, 'text_column': column name for items' descriptions }
+            for interactions: two dicts as { 'interaction_columns': column name for items' ids, 'text_column': column name for items' descriptions }
+        """
+        if 'items' in self._data_dict[modality]:
+            if 'item_column' in self._data_dict[modality]['items'] and 'text_column' in self._data_dict[modality]['items']:
+                return self._data_dict[modality]['items']['item_column'], self._data_dict[modality]['items']['text_column']
+            else:
+                raise KeyError('Please, specify both item_column and text_column in the configuration file!')
+        elif 'interactions' in self._data_dict[modality]:
+            if 'interaction_columns' in self._data_dict[modality]['interactions'] and 'text_column' in self._data_dict[modality]['interactions']:
+                if len(self._data_dict[modality]['interactions']['interaction_columns']) != 2:
+                    raise ValueError('The value of interaction_columns in the configuration file should be a 2-length list!')
+                return self._data_dict[modality]['interactions']['interaction_columns'], self._data_dict[modality]['interactions']['text_column']
+            else:
+                raise KeyError('Please, specify both interaction_columns and text_column in the configuration file!')
 
     def paths_for_extraction(self, origin_of_elaboration, type_of_extraction):
         """

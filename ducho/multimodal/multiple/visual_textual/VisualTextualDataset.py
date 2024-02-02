@@ -11,7 +11,7 @@ class VisualTextualDataset:
     def __init__(self,
                  input_directory_path,
                  output_directory_path,
-                 column=None,
+                 columns=None,
                  model_name='openai/clip-vit-base-patch32',
                  reshape=(224, 224)):
         self._backend_libraries_list = None
@@ -20,7 +20,7 @@ class VisualTextualDataset:
         self.input_image_path, self.input_text_path = input_directory_path['visual'], input_directory_path['textual']
         self.output_image_path, self.output_text_path = output_directory_path['visual'], output_directory_path['textual']
         self._visual_dataset = VisualDataset(self.input_image_path, self.output_image_path, model_name)
-        self._textual_dataset = TextualDataset(self.input_text_path, self.output_text_path, column)
+        self._textual_dataset = TextualDataset(self.input_text_path, self.output_text_path, columns)
         self.set_framework = self._visual_dataset.set_framework
         self.set_model = self._visual_dataset.set_model
         self.set_preprocessing_flag = self._visual_dataset.set_preprocessing_flag

@@ -3,11 +3,8 @@ import os
 # Hide TensorFlow warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-# import logging  # Deprecated
 from loguru import logger
-from tqdm import tqdm
 from alive_progress import alive_bar
-# from art import *  # Deprecated
 import torch
 import platform
 import tensorflow as tf
@@ -213,7 +210,7 @@ class MultimodalFeatureExtractor:
                 f"{camel_case(modality)}Dataset"
                 )(working_paths['input_path'],
                   working_paths['output_path'],
-                  column=self._config.get_item_column())
+                  columns=self._config.get_columns(modality))
             dataset._textual_dataset.set_type_of_extraction(source)
             extractor = getattr(importlib.import_module(
                 f"ducho.multimodal.multiple.{modality}.{camel_case(modality)}FeatureExtractor"),
@@ -228,7 +225,7 @@ class MultimodalFeatureExtractor:
                                   f"{camel_case(modality)}Dataset"
                                   )(working_paths['input_path'],
                                     working_paths['output_path'],
-                                    column=self._config.get_item_column())
+                                    columns=self._config.get_columns(modality))
                 dataset.set_type_of_extraction(source)
             else:
                 dataset = getattr(importlib.import_module(f"ducho.multimodal.{modality}.{camel_case(modality)}Dataset"),

@@ -1,0 +1,32 @@
+dataset_path: ./local/data/demo5
+gpu list: 0
+
+#visual:
+#    items:
+#        input_path: images
+#        output_path: visual_embeddings
+#        model: [
+#             # { model_name: ResNet50,  output_layers: avgpool, reshape: [224, 224], backend: torch},
+#               { model_name: ./demos/demo5/customResNet50.pt,  output_layers: avgpool, reshape: [224, 224], preprocessing: zscore, backend: torch}
+#        ]
+##
+textual:
+    items:
+        input_path: meta.tsv
+        item_column: asin
+        text_column: description
+        output_path: textual_embeddings
+        model: [
+              { model_name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: False, backend: sentence_transformers},
+          ]
+
+#visual_textual:
+#    items:
+#        input_path: {visual: images, textual: meta.tsv}
+#        item_column: asin
+#        text_column: description
+#        output_path: {visual: visual_embeddings, textual: textual_embeddings}
+#        model: [
+#            # { model_name: openai/clip-vit-base-patch16, backend: transformers, output_layers: 1},
+#            { model_name: ./demos/demo5/checkpoint_best.pth, backend: torch, output_layers: '1'},
+#        ]
