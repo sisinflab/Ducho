@@ -8,9 +8,16 @@ import copy
 
 
 def _clean_preprocessing_flag_of_models(model, type_of_extraction):
-    # here all the different flags of preprocessing will be renamend under the same name to easily manage the data
-    # in future
-    # nn
+    """
+    Clean preprocessing flags of models by renaming them under the same name for future data management.
+
+    Args:
+        model: The model object.
+        type_of_extraction: The type of data extraction: Textual, Visual, and Audio
+
+    Returns:
+        dict: The model object with the renamed preprocessing flag.
+    """
     data_flag = ''
 
     if type_of_extraction == 'textual':
@@ -38,14 +45,22 @@ def _clean_unique_flags_of_models(model, type_of_extraction):
 
 
 class Config:
+    """
+    Manage the configuration within the config YAML file.
+
+    These configurations are needed to define what extracions to perform.
+
+    """
     def __init__(self, config_file_path, argv):
         """
-        Manage the configuration within the config yaml file. This configuration are later needed to understand what
-        to do
+        Initialize ConfigurationManager with the specified configuration file path and command-line arguments.
 
         Args:
-            config_file_path: it is a string, it can be both absolute path to the file, or relative to the inside
-            of the Multimodal-Feature-Extractor folder
+            config_file_path (str): Path to the config YAML file.
+            argv (list): Runner's arguments.
+
+        Returns:
+            None
         """
         # both absolute and relative path are fine
         self._yaml_manager = YamlFileManager(config_file_path)
@@ -68,7 +83,27 @@ class Config:
         logger.info(f'Loaded configuration:\n\n{parse_and_print(self._data_dict)}\n')
 
     def __update_dict(self, keys_as_string, value):
+        """
+        Update the configuration dictionary with a new key-value pair, where keys are provided as a string.
+
+        Args:
+            keys_as_string (str): The keys as a string separated by '--' and '.'.
+            value: The value to set for the specified keys.
+        Returns:
+            None
+        """
         def sub_of_update_dict(lists_of_keys, last_value, sub_dict):
+            """
+            Recursively update a sub-dictionary with the given keys and value.
+
+            Args:
+                lists_of_keys (list): List of keys.
+                last_value: The value to set.
+                sub_dict (dict): The sub-dictionary to update.
+
+            Returns:
+                dict: The updated sub-dictionary.
+            """
             if len(lists_of_keys) == 1:
                 sub_dict.update({lists_of_keys.pop(0): last_value})
                 return sub_dict
@@ -121,10 +156,10 @@ class Config:
 
     def get_gpu(self):
         """
+        Get the GPU list as a string.
 
         Returns:
-            the gpu list as a string
-
+            str: The GPU list as a string.
         """
         # if there is not a gpu config then "-1" (use cpu only)
         # otherwise return the config
@@ -145,20 +180,25 @@ class Config:
             return '-1'
 
     def get_extractions(self):
+        """
+        Get the extraction configurations.
+
+        Returns:
+            dict: A dictionary containing extraction configurations for visual, textual, and visual_textual data.
+        """
         extractions_dict = {key: copy.deepcopy(self._data_dict[key]) for key in ['visual', 'textual', 'visual_textual'] if key in self._data_dict}
         return extractions_dict
 
     def has_config(self, origin_of_elaboration, type_of_extraction):
         """
-        Search the config in the data dicts then check that this config have values in it.
+        Check if the configuration contains values for the specified origin of elaboration and type of extraction.
 
         Args:
-            origin_of_elaboration: 'items' or 'interactions'
-            type_of_extraction: 'textual', 'visual' or 'audio'
+            origin_of_elaboration (str): Either 'items' or 'interactions'.
+            type_of_extraction (str): Either 'textual', 'visual', or 'audio'.
 
         Returns:
-            Bool True/False if contains the configuration
-
+            bool: True if the configuration contains values, False otherwise.
         """
         if type_of_extraction in self._data_dict and origin_of_elaboration in self._data_dict[type_of_extraction]:
             local_dict = self._data_dict[type_of_extraction][origin_of_elaboration]
@@ -197,14 +237,14 @@ class Config:
 
     def paths_for_extraction(self, origin_of_elaboration, type_of_extraction):
         """
-        Gives the working environments
+        Get the working environments for extraction.
+
         Args:
-            origin_of_elaboration: 'items' or 'interactions'
-            type_of_extraction: 'textual', 'visual' or 'audio'
+            origin_of_elaboration (str): Either 'items' or 'interactions'.
+            type_of_extraction (str): Either 'textual', 'visual', or 'audio'.
 
         Returns:
-            a dict as { 'input_path': input path, 'output_path': output_path }
-
+            dict: A dictionary containing input and output paths.
         """
         # {'input_path': ///, 'output_path': ///}
         relative_input_path = self._data_dict[type_of_extraction][origin_of_elaboration]['input_path']
@@ -216,14 +256,14 @@ class Config:
 
     def paths_for_multiple_extraction(self, origin_of_elaboration, type_of_extraction):
         """
-        Gives the working environments
+        Get the working environments for multiple extraction.
+
         Args:
-            origin_of_elaboration: 'items' or 'interactions'
-            type_of_extraction: 'textual', 'visual' or 'audio'
+            origin_of_elaboration (str): Either 'items' or 'interactions'.
+            type_of_extraction (str): Either 'textual', 'visual', or 'audio'.
 
         Returns:
-            a dict as { 'input_path': input path, 'output_path': output_path }
-
+            dict: A dictionary containing input and output paths for multiple extractions.
         """
         # {'input_path': ///, 'output_path': ///}
         relative_input_path = self._data_dict[type_of_extraction][origin_of_elaboration]['input_path']
@@ -237,18 +277,19 @@ class Config:
 
     def get_models_list(self, origin_of_elaboration, type_of_extraction):
         """
+        Get the list of models.
+
         Args:
-            origin_of_elaboration: 'items' or 'interactions'
-            type_of_extraction: 'textual', 'visual' or 'audio'
+            origin_of_elaboration (str): Either 'items' or 'interactions'.
+            type_of_extraction (str): Either 'textual', 'visual', or 'audio'.
 
         Returns:
-            a list of the models, every model is a dict with
-            - 'name': the name of the model, in same cases as transformers is repo/model name,
-            - 'output_layers': the layers of extraction,
-            - 'framework': framework to work with tensorflow/torch/transformers
-            - and a custom flag to manage the preprocessing of the data
+            list: A list of model dictionaries, where each model contains the following keys:
+                - 'name': The name of the model.
+                - 'output_layers': The layers of extraction.
+                - 'framework': The framework to work with (e.g., 'tensorflow', 'torch', 'transformers').
+                - 'preprocessing_flag': A custom flag to manage the preprocessing of the data.
         """
-
         models = self._data_dict[type_of_extraction][origin_of_elaboration]['model']
 
         for model in models:

@@ -23,14 +23,17 @@ def camel_case(s):
 
 def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
     """
-    Takes in input the class of Dataset and Extractor, then for every model, for every layer of the model,
-    Args:
-        models: dicts of data (see Config.get_models)
-        extractor_class: class Extractor
-        gpu: gpu list
-        dataset: class Dataset
-    """
+    Execute the extraction process for each model and each layer of the model.
+    It also displays the extraction graphically.
 
+    Args:
+        models (List[Dict[str, Any]]): List of dictionaries containing model data (see Config.get_models).
+        extractor_class (Type[Extractor]): Class representing the extractor.
+        gpu (str): List of GPU identifiers.
+        dataset (Type[Dataset]): Class representing the dataset.
+
+    Return None
+    """
     change_mean_std = False
 
     for model in models:
@@ -133,10 +136,17 @@ class MultimodalFeatureExtractor:
 
     def __init__(self, config_file_path='./config/config.yml', argv=None):
         """
-        It instantiates the framework. Note the config file is a yml file
+        Initialize the MultimodalFeatureExtractor.
+
         Args:
-             config_file_path: As a String, it could be the absolute path, or the path to the folder of the confg file
+            config_file_path (str): The path to the configuration file (default is './config/config.yml').
+                                    It can be either an absolute path or a path relative to the folder of the config file.
+            argv (Optional[List[str]]): Additional arguments (default is None).
+
+        Returns:
+            None
         """
+
         if not os.path.exists('./local/logs/'):
             os.makedirs('./local/logs/')
 
@@ -153,7 +163,7 @@ class MultimodalFeatureExtractor:
 
         logger.add(f"./local/logs/{log_file}.log", level="INFO",
                    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {message}")
-        # logging.add(lambda msg: print(msg, end=""), level="INFO")  # Stream handler for console output
+        # logging.add(lambda msg: print(msg, end=""), level="INFO")  # Stream handler for console output # Deprecated
 
         logger.info('\n' + banner)
         logger.log("WELCOME",

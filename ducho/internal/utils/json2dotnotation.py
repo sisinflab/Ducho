@@ -1,14 +1,19 @@
 # Json leaves to be formatted as list in output
 leaves = ("reshape", "output_layers", "mean", "std")
 
-# This function can be used to parse a .json file
-# def parse_json_to_dot_notation(json_file_path):
-#   # with open(json_file_path, 'r') as file:
-#   #   data = json.load(file)
-#   parse_and_print(json_file_path)
-
 output = ""
 def parse_and_print(obj, prefix="", output=output):
+  """
+  Recursively parse a JSON object and convert it to dot notation string.
+
+  Args:
+      obj: The JSON object to parse.
+      prefix (str, optional): The prefix for dot notation representation. Defaults to "".
+      output (str, optional): The output string. Defaults to the outer scope variable 'output'.
+
+  Returns:
+      str: The dot notation string representation.
+  """
   if isinstance(obj, dict):
     for key, value in obj.items():
       new_prefix = f"{prefix}{key}."
@@ -17,7 +22,6 @@ def parse_and_print(obj, prefix="", output=output):
     if prefix[:-1].endswith(leaves):
         formatted_value = format_leaf_value(obj)
         output += f"{prefix[:-1]}: {formatted_value}\n"
-        #print(f"{prefix[:-1]}: {formatted_value}")
     else:
       for i, item in enumerate(obj):
         new_prefix = f"{prefix}{i}."
@@ -25,10 +29,18 @@ def parse_and_print(obj, prefix="", output=output):
   else:
     formatted_value = format_leaf_value(obj)
     output += f"{prefix[:-1]}: {formatted_value}\n"
-    #print(f"{prefix[:-1]}: {formatted_value}")
   return output
 
 def format_leaf_value(value):
+  """
+  Format a leaf value for dot notation string representation.
+
+  Args:
+      value: The value to format.
+
+  Returns:
+      str: The formatted leaf value.
+  """
   if isinstance(value, list):
     return "[" + ", ".join(map(str, value)) + "]"
   elif isinstance(value, dict):

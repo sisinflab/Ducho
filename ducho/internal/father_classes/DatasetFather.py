@@ -6,7 +6,29 @@ from loguru import logger
 
 
 class DatasetFather:
+    """
+    Represents a dataset handler object.
+
+    This class provides functionality to manage dataset directories and filenames for data extraction.
+
+    Attributes:
+        _backend_libraries_list: A list of backend libraries (e.g. Tensorflow, Pytorch, Transformers)
+        _model_name (str): The name of the model.
+        _input_directory_path (str or dict): The path to the input directory or a dictionary containing data paths.
+        _output_directory_path (str): The path to the output directory, where the extraction will be saved.
+    """
     def __init__(self, input_directory_path, output_directory_path, model_name):
+        """
+        Initialize the DatasetFather object.
+
+        Args:
+            input_directory_path (str or dict): The path to the input directory or a dictionary containing paths.
+            output_directory_path (str): The path to the output directory.
+            model_name (str): The name of the model.
+
+        Returns:
+            None
+        """
         self._backend_libraries_list = None
         self._model_name = model_name
         self._input_directory_path = input_directory_path
@@ -53,24 +75,25 @@ class DatasetFather:
 
     def create_output_file(self, index, extracted_data, model_layer, fusion=None):
         """
+        Create an output numpy file with extracted data.
+        (E.g. datasetFolder/framework/modelName/modelLayer/fileName.npy)
 
         Args:
-            index: (int) is the index to the filenames list
-            extracted_data: blob of data to put in the npy
-            model_layer: the name of the layer
-            fusion: type of fusion (for multimodal models)
+            index (int): The index to the filenames list.
+            extracted_data (Any): The data to be stored in the .npy file.
+            model_layer (str): The name of the layer.
+            fusion (str, optional): The type of fusion for multimodal models.
 
         Returns:
-            it returns nothing to the program, but it creates a file as follows :
-            datasetFolder/framework/modelName/modelLayer/fileName.npy
+            None
 
         """
 
-        # generate file name
+        # Generate file name
         input_file_name = self._filenames[index].split('.')[0]
         output_file_name = input_file_name + '.npy'
 
-        # generate output path
+        # Generate output path
         backend_library = self._backend_libraries_list[0]
         output_path = os.path.join(self._output_directory_path, backend_library)
         output_path = os.path.join(output_path, os.path.splitext(os.path.basename(self._model_name))[0])
@@ -78,7 +101,7 @@ class DatasetFather:
         if not os.path.exists(output_path):
             os.makedirs(output_path)
 
-        # create file
+        # Create file
         path = os.path.join(output_path, output_file_name)
         numpy.save(path, extracted_data)
 
@@ -96,10 +119,14 @@ class DatasetFather:
 
     def set_framework(self, backend_libraries_list):
         """
-        It set the framework to use as e.g: 'torch', 'tensorflow', 'transformers', 'torchaudio'
+        Set the framework(s) to use.
 
         Args:
-            backend_libraries_list: the list of String of the framework. It's acceptable to have only one item in the list
+            backend_libraries_list (list of str): A list of strings representing the framework(s) to use.
+                It's acceptable to have only one item in the list.
+
+        Returns:
+            None
 
         """
         self._backend_libraries_list = backend_libraries_list

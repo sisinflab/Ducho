@@ -1,8 +1,7 @@
 import re
 
-# this code is inspired by
+# This code is inspired by the human sorting algorithm described at
 # https://nedbatchelder.com/blog/200712/human_sorting.html
-
 
 def _if_int(text):
     return int(text) if text.isdigit() else text
@@ -14,13 +13,16 @@ def _natural_keys(text):
 
 def human_sort(unsorted_list):
     """
-    It sorts a list of string both alphabetically and numerically. This means that the order follow the alphabet order
-    but also the cardinal one. E.g: ['10','2','1','8'] -> ['1','2','8','10']
+    Sorts a list of strings both alphabetically and numerically.
+
+    This function sorts the list in such a way that it follows both the alphabetical order and the numerical order.
+    For example, ['10','2','1','8'] will be sorted as ['1','2','8','10'].
 
     Args:
-        unsorted_list: the list of string to sort
+        unsorted_list (List[str]): The list of strings to sort.
+
     Returns:
-        the sorted list of string
+        List[str]: The sorted list of strings.
     """
     unsorted_list.sort(key=_natural_keys)
     return unsorted_list
