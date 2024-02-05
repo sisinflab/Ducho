@@ -3,6 +3,7 @@ import torch
 import torchvision.models as models
 from collections import OrderedDict
 import os
+import gdown
 
 
 def main():
@@ -11,8 +12,9 @@ def main():
 
 
 if __name__ == '__main__':
-    if not os.path.exists('./demos/demo_recsys/customResNet50.pth'):
-        model = torch.load('./demos/demo_recsys/model_best.pth', map_location=torch.device('cpu'))
+    if not os.path.exists('./demos/demo_recsys/MMFashion.pth'):
+        gdown.download(f'https://drive.google.com/uc?id=1LmC4aKiOY3qmm9qo6RNDU5v_o-xDCAdT', './demos/demo_recsys/MMFashion.pth', quiet=False)
+        model = torch.load('./demos/demo_recsys/MMFashion.pth', map_location=torch.device('cpu'))
         resnet50 = models.resnet50(pretrained=False)
         state_dict = model['state_dict']
         od = OrderedDict()
@@ -25,5 +27,5 @@ if __name__ == '__main__':
         od['fc.weight'] = fc.weight
         od['fc.bias'] = fc.bias
         resnet50.load_state_dict(od)
-        torch.save(resnet50, './demos/demo_recsys/customResNet50.pt')
+        torch.save(resnet50, './demos/demo_recsys/MMFashion.pt')
     main()

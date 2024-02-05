@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  demo1:
+  prepare_dataset:
     image: sisinflabpoliba/ducho
     tty: true
     stdin_open: true
@@ -12,10 +12,10 @@ services:
         reservations:
           devices:
             - capabilities: [ gpu ]
-    command: bash -c "nvidia-smi && python3.8 demos/demo1/run.py"
+    command: bash -c "nvidia-smi && demos/demo_recsys/download_amazon.sh && python3 demos/demo_recsys/prepare_dataset.py"
     volumes:
       - ./local:/Ducho/local
-  demo2:
+  extract_features:
     image: sisinflabpoliba/ducho
     tty: true
     stdin_open: true
@@ -26,20 +26,6 @@ services:
         reservations:
           devices:
             - capabilities: [ gpu ]
-    command: bash -c "nvidia-smi && python3.8 demos/demo2/run.py"
-    volumes:
-      - ./local:/Ducho/local
-  demo3:
-    image: sisinflabpoliba/ducho
-    tty: true
-    stdin_open: true
-    environment:
-      - PYTHONPATH=.
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [ gpu ]
-    command: bash -c "nvidia-smi && python3.8 demos/demo3/run.py"
+    command: bash -c "nvidia-smi && python3 demos/demo_recsys/run.py"
     volumes:
       - ./local:/Ducho/local

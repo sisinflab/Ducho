@@ -1,4 +1,5 @@
-art
 datasets
 sentence-transformers
 transformers
+loguru
+alive-progress

@@ -1,4 +1,4 @@
-#art Deprecated
+--extra-index-url https://download.pytorch.org/whl/cu118
 babel
 charset-normalizer
 config
@@ -6,6 +6,7 @@ datasets
 docopt
 flask-markdown
 frozen-flask
+gdown
 gensim
 gevent
 humanize
@@ -15,15 +16,16 @@ pandas
 pip-chill
 python-version
 sacremoses
-sentence-transformers
+sentence-transformers==2.2.2
 scikit-learn
 soundfile
 tensorflow-estimator
-tensorflow
-torchaudio
-torchtext
-torchvision
-#tqdm Deprecated
-transformers
+tensorflow==2.14.0
+torch==2.1.2
+torchaudio==2.1.2
+torchvision==0.16.2
+transformers==4.36.2
+tokenizers==0.15.0
+tqdm
 loguru
 alive-progress

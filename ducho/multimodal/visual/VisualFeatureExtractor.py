@@ -75,9 +75,10 @@ class VisualFeatureExtractor(FeatureExtractorFather):
                 raise ValueError(f"The specified output layer {self._output_layer} does not exist. Please carefully check its name!")
             feature_model = create_feature_extractor(self._model, return_nodes)
             feature_model.eval()
-            output = np.squeeze(feature_model(
-                image.to(self._device)
-            )[output_layer].data.cpu().numpy())
+            with torch.no_grad():
+                output = np.squeeze(feature_model(
+                    image.to(self._device)
+                )[output_layer].data.cpu().numpy())
             # update the framework list
             self._backend_libraries_list = ['torch']
             return output
@@ -90,7 +91,7 @@ class VisualFeatureExtractor(FeatureExtractorFather):
             self._backend_libraries_list = ['tensorflow']
             return output
         elif 'transformers' in self._backend_libraries_list:
-            model_input = self._image_processor(image, return_tensors="pt", do_rescale=False)
+            model_input = self._image_processor(image, return_tensors="pt")
             model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
             model_output = getattr(self._model(**model_input), self._output_layer.lower())
             return model_output.detach().cpu().numpy()
