@@ -12,7 +12,7 @@ services:
         reservations:
           devices:
             - capabilities: [ gpu ]
-    command: bash -c "nvidia-smi && demos/demo_recsys/download_amazon.sh && python3 demos/demo_recsys/prepare_dataset.py"
+    command: bash -c "nvidia-smi && chmod 777 demos/demo_recsys/download_amazon.sh && demos/demo_recsys/download_amazon.sh && python3 demos/demo_recsys/prepare_dataset.py"
     volumes:
       - ./local:/Ducho/local
   extract_features:

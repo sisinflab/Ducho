@@ -28,4 +28,5 @@ if __name__ == '__main__':
         od['fc.bias'] = fc.bias
         resnet50.load_state_dict(od)
         torch.save(resnet50, './demos/demo_recsys/MMFashion.pt')
+        os.remove('./demos/demo_recsys/MMFashion.pth')
     main()
