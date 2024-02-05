@@ -12,7 +12,7 @@ def main():
 
 
 if __name__ == '__main__':
-    if not os.path.exists('./demos/demo_recsys/MMFashion.pth'):
+    if not os.path.exists('./demos/demo_recsys/MMFashion.pt'):
         gdown.download(f'https://drive.google.com/uc?id=1LmC4aKiOY3qmm9qo6RNDU5v_o-xDCAdT', './demos/demo_recsys/MMFashion.pth', quiet=False)
         model = torch.load('./demos/demo_recsys/MMFashion.pth', map_location=torch.device('cpu'))
         resnet50 = models.resnet50(pretrained=False)
