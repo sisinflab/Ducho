@@ -6,12 +6,18 @@ from transformers import Wav2Vec2Model
 
 
 class AudioFeatureExtractor(FeatureExtractorFather):
+    """
+        This class represents the Audio Feature Extractor utilized for feature extraction.
+    """
     def __init__(self, gpu='-1'):
         """
-        It does Audio Extraction. It is needed also to give the model name, the framework and the output_layer. You can
-        later change one of them as needed.
+        This function carries out Audio Feature Extraction, requiring the 'model_name', 'framework', and 'output_layer'.
+
         Args:
-            gpu: String on which is explained which gpu to use. '-1' -> cpu
+            gpu: A string indicating the GPU to be used. '-1' specifies the CPU.
+
+        Returns:
+            None
         """
         self._model_to_initialize = None
         self._tokenizer = None
@@ -19,10 +25,13 @@ class AudioFeatureExtractor(FeatureExtractorFather):
 
     def set_model(self, model):
         """
+        This procedure facilitates the configuration of the Audio Feature Extractor model using YAML specifications.
+
         Args:
-            model: It is the dict which contains all the data relative to a model and the specific extraction to make
-            with it
-        Returns: nothing but it initializes the protected model, later used for extraction
+            model: The row of the YAML file containing the user's specifications.
+
+        Returns:
+            None
         """
         model_name = model['name']
         self._model_name = model_name
@@ -37,12 +46,14 @@ class AudioFeatureExtractor(FeatureExtractorFather):
 
     def extract_feature(self, sample_input):
         """
-        It does extract the feature from the input. Framework, model and layer HAVE TO be already set with their set
-        methods.
-        Args:
-            sample_input: the sample preprocessed within the dataset class
+        This function extracts features from the input data. Prior to calling this function, the framework,
+        model, and layer have to be configured using their respective set methods.
 
-        Returns: a numpy array that will be put in a .npy file calling the right Dataset Class' method
+        Args:
+            sample_input: The preprocessed data.
+
+        Returns:
+            A numpy array representing the extracted features, which will be stored in a .npy file using the appropriate method of the Dataset Class.
         """
         audio = sample_input[0]
         sample_rate = sample_input[1]

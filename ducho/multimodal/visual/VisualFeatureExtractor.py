@@ -8,11 +8,18 @@ from transformers import pipeline
 
 
 class VisualFeatureExtractor(FeatureExtractorFather):
+    """
+    This class represents the Visual Feature Extractor utilized for feature extraction.
+    """
     def __init__(self, gpu='-1'):
         """
-        It performs Image Feature Extraction. It needs the 'model_name', 'framework' and the 'output_layer'.
+        This function carries out Image Feature Extraction, requiring the 'model_name', 'framework', and 'output_layer'.
+
         Args:
-             gpu: the id of the gpu.
+             gpu: A string indicating the GPU to be used. '-1' specifies the CPU.
+
+        Returns:
+            None
         """
         self._pipeline = None
         self._image_processor = None
@@ -20,11 +27,13 @@ class VisualFeatureExtractor(FeatureExtractorFather):
 
     def set_model(self, model):
         """
-        Args:
-            model: is the model to use.
-        Returns:
-            nothing but it initializes the protected model attribute, later used for extraction
+        This procedure facilitates the configuration of the Visual Feature Extractor model using YAML specifications.
 
+        Args:
+            model: The row of the YAML file containing the user's specifications.
+
+        Returns:
+            None
         """
         model_name = model['model_name']
         image_processor = model['image_processor'] if 'image_processor' in model else None
@@ -50,12 +59,14 @@ class VisualFeatureExtractor(FeatureExtractorFather):
 
     def extract_feature(self, image):
         """
-        It does extract the feature from the input. Framework, model and layer HAVE TO be already set with their set
-        methods.
+        This function extracts features from the input image data. Prior to calling this function, the framework,
+        model, and layer have to be configured using their respective set methods.
+
         Args:
-            image: the data of the image preprocessed
+            image: The preprocessed image data.
+
         Returns:
-             a numpy array that will be put in a .npy file calling the right Dataset Class' method
+            A numpy array representing the extracted features, which will be stored in a .npy file using the appropriate method of the Dataset Class.
         """
         torchvision_list = list(torchvision.models.__dict__)
         tensorflow_keras_list = list(tf.keras.applications.__dict__)

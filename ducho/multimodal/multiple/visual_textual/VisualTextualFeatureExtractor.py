@@ -4,12 +4,18 @@ from ducho.internal.father_classes.FeatureExtractorFather import FeatureExtracto
 
 
 class VisualTextualFeatureExtractor(FeatureExtractorFather):
+    """
+    This class represents the Visual-Textual Feature Extractor utilized for feature extraction.
+    """
     def __init__(self, gpu='-1'):
         """
-        It does Textual extraction. It is needed also to give the model name, the framework and the output_layer. You can
-        later change one of them as needed.
+        This function carries out Visual-Textual Feature Extraction, requiring the 'model_name', 'framework', and 'output_layer'.
+
         Args:
-             gpu: String on which is explained which gpu to use. '-1' -> cpu
+             gpu: A string indicating the GPU to be used. '-1' specifies the CPU.
+
+        Returns:
+            None
         """
         self._pipeline = None
         self._tokenizer = None
@@ -19,9 +25,13 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
 
     def set_model(self, model):
         """
+        This procedure facilitates the configuration of the Visual-Textual Feature Extractor model using YAML specifications.
+
         Args:
-            model: is the dictionary of the configuration for the model
-        Returns: nothing but it initializes the protected model and tokenizer attributes, later used for extraction
+            model: The row of the YAML file containing the user's specifications.
+
+        Returns:
+            None
         """
         model_name = model['model_name']
         tokenizer_name = model['tokenizer_name'] if 'tokenizer_name' in model.keys() else model['model_name']
@@ -44,12 +54,14 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
 
     def extract_feature(self, sample_input):
         """
-        It performs the feature from the input. Framework, model and layer HAVE TO be already set with their set
-        methods.
+        This function extracts features from the input image and textual data. Prior to calling this function, the framework,
+        model, and layer have to be configured using their respective set methods.
+
         Args:
-            sample_input: a tuple containing the image and the text to preprocess
+            sample_input: The preprocessed data.
+
         Returns:
-             two numpy arrays that will be put in two .npy file calling the right Dataset Class' method
+            Two numpy array representing the extracted features, which will be stored in two .npy files using the appropriate method of the Dataset Class.
         """
 
         image, text = sample_input

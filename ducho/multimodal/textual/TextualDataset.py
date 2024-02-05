@@ -19,15 +19,23 @@ def complex_spit_of_list_of_string(sample, splitter):
 
 
 class TextualDataset(DatasetFather):
-
+    """
+    This class represents the Textual Dataset used for the data loading process.
+    """
     def __init__(self, input_directory_path, output_directory_path, columns=None):
         """
-        Manage the Text Dataset (folder of input and folder of output).
-        It will Manage data of input (and their preprocessing), and data of output
-        :param input_directory_path: folder of the input data to elaborate as String
-        :param output_directory_path: folder of where put Output as String, it will be created if does not exist
-        :param columns: columns for the textual modality
+        It manages the Textual Dataset, which consists of a folder containing input data and another folder for output data.
+        It handles the preprocessing of input data and manages the output data.
+
+        Args:
+            input_directory_path: folder of the input data to elaborate as String
+            output_directory_path: folder of where put Output as String, it will be created if it does not exist
+            columns: columns for the textual modality
+
+        Returns:
+            None
         """
+
         super().__init__(input_directory_path, output_directory_path, model_name=None)
         self._text_to_be_cleaned = False
         self._textual_file_manager = TextualFileManager(columns=columns)
@@ -39,8 +47,8 @@ class TextualDataset(DatasetFather):
 
     def _prepare_environment_for_single_file_extractions(self):
         """
-        it prepares the env to utilize only one file
-        the runner cycles trought the num samples. if there is only one file the num samples is the number of row of
+        It prepares the env to utilize only one file
+        the runner cycles through the num samples. if there is only one file the num samples is the number of row of
         the file. Right now this is the only choice, but in the future maybe a user will need to give different files,
         so this func is accommodated to build this kind of login in the future
         """
@@ -53,10 +61,13 @@ class TextualDataset(DatasetFather):
 
     def __getitem__(self, index):
         """
-        It retrieves a sample preprocessed given its id. Only in the Textual case the id refers to the row of the file
+        It retrieves a sample preprocessed given its id. Only in the Textual case the id refers to the row of the file.
+
         Args:
             index: is the index in the filenames list from which extract the name of te file to elaborate
-        Returns: a String which contains the data of the file. It may be processed and cleaned
+
+        Returns:
+            a String which contains the data of the file. It may be processed and cleaned
         """
         return self._pre_processing(self._textual_file_manager.get_item_from_id(self._ids[index])), self._ids[index]
 

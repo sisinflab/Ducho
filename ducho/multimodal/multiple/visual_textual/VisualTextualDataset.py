@@ -7,13 +7,29 @@ import numpy, os
 
 
 class VisualTextualDataset:
-
+    """
+    This class represents the Visual-Textual Dataset used for the data loading process.
+    """
     def __init__(self,
                  input_directory_path,
                  output_directory_path,
                  columns=None,
                  model_name='openai/clip-vit-base-patch32',
                  reshape=(224, 224)):
+        """
+        It manages the Visual-Textual Dataset, which consists of a folder containing input data and another folder for output data.
+        It handles the preprocessing of input data and manages the output data.
+
+        Args:
+            input_directory_path: A string representing the path to the folder containing the input data to be processed.
+            output_directory_path: A string representing the path to the folder where the output data will be stored. If the folder does not exist, it will be created.
+            columns: A list of columns to be considered.
+            model_name: A string specifying the model to be used. This can be reset later.
+            reshape: A tuple (int, int) representing the width and height for resizing the input images. This can be reset later.
+
+        Returns:
+            None
+        """
         self._backend_libraries_list = None
         self._model_name = model_name
         self._reshape = reshape
@@ -34,6 +50,20 @@ class VisualTextualDataset:
         return visual_input, textual_input
 
     def create_output_file(self, index, extracted_data, model_layer, fusion=None):
+        """
+        This procedure is responsible for generating output files.
+
+        Args:
+            index: The index of the file to be processed.
+            extracted_data: A tuple containing the extracted features.
+            model_layer: The name of the output layer for the selected model.
+            fusion: A string indicating the type of fusion to perform. If None, the procedure generates two separate output files.
+                    Otherwise, it creates a single output file based on the specified fusion type.
+
+
+        Returns:
+            None
+        """
         # generate file name
         input_file_name = self._visual_dataset._filenames[index].split('.')[0]
         output_file_name = input_file_name + '.npy'
@@ -93,16 +123,24 @@ class VisualTextualDataset:
 
     def set_reshape(self, reshape):
         """
-        Set the reshape data to reshape the image (resize)
+        Set the reshape variable according to the desired value.
+
         Args:
-             reshape: Tuple (int, int), is width and height
+             reshape: Tuple (int, int) representing the width and height for resizing the input.
+
+        Returns:
+            None
         """
         self._reshape = reshape
 
     def set_model_name(self, model_name):
         """
-        Set the model name for the serialization dir
+        Set the model name for the serialization dir.
+
         Args:
              model_name: name of the multimodal model
+
+        Returns:
+            None
         """
         self._model_name = model_name
