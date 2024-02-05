@@ -1,7 +1,6 @@
 # Ducho v2.0
 
-<img src="https://raw.githubusercontent.com/sisinflab/Ducho/main/docs/source/img/ducho_v2_overview.png"  width="600">
-
+<img src="docs/source/img/ducho_v2_overview.png"  width="600">
 This is the official GitHub repo for the paper "_Ducho 2.0: Towards a More Up-to-Date Feature Extraction and
 Processing Framework for Multimodal Recommendation_".
 
