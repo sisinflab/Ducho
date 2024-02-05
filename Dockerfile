@@ -10,7 +10,7 @@ RUN apt-get update -y && \
     python3.11 get-pip.py && \
     apt-get install -y python3.11-dev && \
     pip install --upgrade pip && \
-    git clone -b v2.0 https://github.com/sisinflab/Ducho.git && \
+    git clone -b daniele https://github.com/sisinflab/Ducho.git && \
     pip install -r Ducho/requirements_docker.txt --ignore-installed
 
 WORKDIR Ducho
