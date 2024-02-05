@@ -10,10 +10,9 @@ from transformers import pipeline
 class VisualFeatureExtractor(FeatureExtractorFather):
     def __init__(self, gpu='-1'):
         """
-        It does Image Extraction. It is needed also to give the model name, the framework and the output_layer. You can
-        later change one of them as needed.
+        It performs Image Feature Extraction. It needs the 'model_name', 'framework' and the 'output_layer'.
         Args:
-             gpu:
+             gpu: the id of the gpu.
         """
         self._pipeline = None
         self._image_processor = None
@@ -47,7 +46,7 @@ class VisualFeatureExtractor(FeatureExtractorFather):
             self._model = built_pipeline.model
             self._image_processor = built_pipeline.image_processor
         else:
-            raise NotImplemented('This feature extractor has not been added yet!')
+            raise NotImplementedError('This feature extractor has not been added yet!')
 
     def extract_feature(self, image):
         """
