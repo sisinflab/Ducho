@@ -147,7 +147,6 @@ To ease the usage of Ducho, here we provide a demo spanning different multimodal
 
 - **Demo RecSys:**  It performs visual, textual and multiple feature extraction from items. More precisely, it demonstrates the process of extracting visual and textual features, incorporating custom models as well. Additionally, it showcases the extraction of visual-textual features via multiple modality ([link](demos/demo_recsys/README.md)).
 
-To perform the recommendation task utilizing the features extracted by Ducho v2.0, please refer to the following GitHub repository ([link](https://github.com/sisinflab/Formal-MultiMod-Rec)).
 
 ## Use Ducho
 

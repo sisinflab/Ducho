@@ -16,6 +16,8 @@ ducho.multimodal.multiple.visual_textual.VisualTextualDataset module
 
 .. automodule:: ducho.multimodal.multiple.visual_textual.VisualTextualDataset
 
+
 .. autoclass:: VisualTextualDataset
   :members:
   :inherited-members:
+

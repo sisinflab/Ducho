@@ -34,6 +34,8 @@ Note that the downloaded product images are stored to ```./local/data/demo_recsy
 │   ├── 9729375011.jpg
 │   ├── B00A0ACI4Q.jpg
 │   ├── ...
+├── meta.tsv
+├── reviews.tsv
 ```
 
 ## Extract multimodal features
