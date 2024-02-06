@@ -90,6 +90,7 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
             # set output layer
             extractor.set_output_layer(model_layer)
 
+
             if 'tensorflow' not in model['backend']:
                 dataloader = torch.utils.data.DataLoader(dataset,
                                                          batch_size=1,
@@ -167,7 +168,7 @@ class MultimodalFeatureExtractor:
 
         logger.info('\n' + banner)
         logger.log("WELCOME",
-                   '*** DUCHO: A Unified Framework for the Extraction of Multimodal Features in Recommendation ***')
+                   '*** Ducho 2.0: Towards a More Up-to-Date Feature Extraction and Processing Framework for Multimodal Recommendation ***')
         logger.log("WELCOME",
                    '*** Brought to you by: SisInfLab, Politecnico di Bari, Italy (https://sisinflab.poliba.it) ***\n')
         self._config = Config(config_file_path, argv)
