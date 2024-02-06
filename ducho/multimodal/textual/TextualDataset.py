@@ -28,9 +28,9 @@ class TextualDataset(DatasetFather):
         It handles the preprocessing of input data and manages the output data.
 
         Args:
-            input_directory_path: folder of the input data to elaborate as String
-            output_directory_path: folder of where put Output as String, it will be created if it does not exist
-            columns: columns for the textual modality
+            input_directory_path: Folder of the input data to elaborate as String.
+            output_directory_path: Folder of where put Output as String, it will be created if it does not exist.
+            columns: Columns for the textual modality.
 
         Returns:
             None
@@ -47,10 +47,12 @@ class TextualDataset(DatasetFather):
 
     def _prepare_environment_for_single_file_extractions(self):
         """
-        It prepares the env to utilize only one file
-        the runner cycles through the num samples. if there is only one file the num samples is the number of row of
-        the file. Right now this is the only choice, but in the future maybe a user will need to give different files,
-        so this func is accommodated to build this kind of login in the future
+        It prepares the env to utilize only one file the runner cycles through the num samples. if there is only one file
+        the num samples is the number of row of the file. Right now this is the only choice, but in the future maybe a
+        user will need to give different files, so this func is accommodated to build this kind of login in the future.
+
+        Returns:
+            None
         """
         if self._filenames[0] == '':
             file_path = self._input_directory_path
@@ -64,7 +66,7 @@ class TextualDataset(DatasetFather):
         It retrieves a sample preprocessed given its id. Only in the Textual case the id refers to the row of the file.
 
         Args:
-            index: is the index in the filenames list from which extract the name of te file to elaborate
+            index: It is the index in the filenames list from which extract the name of te file to elaborate.
 
         Returns:
             a String which contains the data of the file. It may be processed and cleaned
@@ -73,9 +75,11 @@ class TextualDataset(DatasetFather):
 
     def _pre_processing(self, sample):
         """
-        It cleans the String
+        It cleans the String.
+
         Args:
-            sample: String to clean
+            sample: String to clean.
+
         Returns:
              Cleaned String
         """
@@ -139,20 +143,29 @@ class TextualDataset(DatasetFather):
 
     def set_type_of_extraction(self, type_of_extraction):
         """
-        It set the origin of the data, from item or users interactions, it is needed later to read correctly the tsv
+        It set the origin of the data, from item or users interactions, it is needed later to read correctly the tsv.
+
         Args:
-             type_of_extraction: 'items' or 'interactions'
+             type_of_extraction: 'items' or 'interactions'.
+
+        Returns:
+            None
         """
         self._textual_file_manager.set_type_of_extraction(type_of_extraction)
 
     def create_output_file(self, index, extracted_data, model_layer, fusion=None):
         """
         Overwrites the method of the Father class because all the Strings come from the same file, and it only changes
-        the row
+        the row.
+
         Args:
-            index: it indicates the row of the String
-            extracted_data: the output to put in the file
-            model_layer: the layer used, it is a String, it will be shown on the final name
+            index: It indicates the row of the String.
+            extracted_data: The output to put in the file.
+            model_layer: The layer used, it is a String, it will be shown on the final name.
+            fusion: Fusion is not used for TextualDataset's objects.
+
+        Returns:
+            None
         """
         # generate file name
         input_file_name = self._filenames[0].split('.')[0] + self._textual_file_manager.build_path_from_id(
