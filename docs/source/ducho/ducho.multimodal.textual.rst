@@ -1,29 +1,21 @@
 ducho.multimodal.textual package
 ====================================
 
-Submodules
--------------
 
-ducho.multimodal.textual.TextualCnnFeatureExtractor module
+ducho.multimodal.textual.TextualFeatureExtractor module
 --------------------------------------------------------------
 
-.. automodule:: ducho.multimodal.textual.TextualCnnFeatureExtractor
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. automodule:: ducho.multimodal.textual.TextualFeatureExtractor
+
+.. autoclass:: TextualFeatureExtractor
+  :members:
+  :inherited-members:
 
 ducho.multimodal.textual.TextualDataset module
 --------------------------------------------------
 
 .. automodule:: ducho.multimodal.textual.TextualDataset
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
-Module contents
---------------------
-
-.. automodule:: ducho.multimodal.textual
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autoclass:: TextualDataset
+  :members:
+  :inherited-members:

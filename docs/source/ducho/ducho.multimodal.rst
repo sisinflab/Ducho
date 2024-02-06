@@ -10,6 +10,7 @@ Subpackages
    ducho.multimodal.audio
    ducho.multimodal.textual
    ducho.multimodal.visual
+   ducho.multimodal.visual_textual
 
 Module contents
 ---------------
