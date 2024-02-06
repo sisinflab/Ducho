@@ -117,7 +117,7 @@ Depending on where you are running Ducho, you might need to first clone this rep
 If you are running Ducho on your local machine or Google Colab, you first need to clone this repository:
 
 ```sh
-git clone https://github.com/sisinflab/Ducho.git
+git clone -b v2 https://github.com/sisinflab/Ducho.git
 ```
 
 Then, install the needed dependencies through pip:
