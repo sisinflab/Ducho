@@ -1,6 +1,8 @@
 ducho.multimodal.audio package
 ==================================
 
+Submodules
+----------
 
 ducho.multimodal.audio.AudioFeatureExtractor module
 ---------------------------------------------------------
@@ -19,3 +21,12 @@ ducho.multimodal.audio.AudioDataset module
 .. autoclass:: AudioDataset
   :members:
   :inherited-members:
+
+
+Module contents
+---------------
+
+.. automodule:: ducho.multimodal.audio
+   :members:
+   :undoc-members:
+   :show-inheritance:
