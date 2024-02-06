@@ -9,21 +9,15 @@ Welcome to Ducho's documentation!
 What is Ducho
 -------------
 
-Ducho is a Python framework for the extraction of multimodal features for recommendation. It provides a unified
-interface to most of the common libraries for deep learning (e.g., TensorFlow, PyTorch, Transformers) to extract
-high-level features from items (e.g., product images/descriptions) and user-item interactions (e.g., users reviews).
-It is highly configurable through a YAML-based configuration file (which may be override by input arguments from the
-command line in case). Users can indicate the source from which to extract the multimodal features
-(i.e., items/interactions), the modalities (i.e., visual/textual/audio), and the list of models along with output
-layers and preprocessing steps to extract the features.
+Ducho v2.0 is a Python framework for the extraction of multimodal features for recommendation. It provides a unified interface to most of the common libraries for deep learning (e.g., TensorFlow, PyTorch, Transformers, Sentence-Transformers) to extract high-level features from items (e.g., product images/descriptions) and user-item interactions (e.g., users reviews). It is highly configurable through a YAML-based configuration file (which may be override by input arguments from the command line in case). Users can indicate the source from which to extract the multimodal features (i.e., items/interactions), the modalities (i.e., visual/textual/audio/multiple), and the list of models along with output layers and preprocessing steps to extract the features. Moreover, with the new version of Ducho, users can conduct extractions by utilizing their own pretrained models.
 
-.. figure:: ./img/ducho_img.png
+.. figure:: ./img/ducho_v2_overview.png
    :alt: system schema
 
    system schema
 
 
-.. flat-table:: Characteristics of the BLE badge
+.. flat-table:: Backends-Modalities available settings in Ducho v2.0
    :header-rows: 2
 
    * -
@@ -35,6 +29,7 @@ layers and preprocessing steps to extract the features.
      - TensorFlow
      - PyTorch
      - Transformers
+     - Sentence-Transformers
    * - Audio
      - .. image:: ./img/checkbox-mark.png
           :align: center
@@ -45,7 +40,10 @@ layers and preprocessing steps to extract the features.
           :align: center
      - .. image:: ./img/checkbox-mark.png
           :align: center
+     -
    * - Visual
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
      - .. image:: ./img/checkbox-mark.png
           :align: center
      - .. image:: ./img/checkbox-mark.png
@@ -64,6 +62,18 @@ layers and preprocessing steps to extract the features.
      -
      - .. image:: ./img/checkbox-mark.png
           :align: center
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
+   * - Visual-Textual
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
+     -
+     -
+     - .. image:: ./img/checkbox-mark.png
+          :align: center
+     -
 
 
 .. toctree::

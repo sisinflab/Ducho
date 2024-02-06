@@ -5,7 +5,7 @@ You may choose among three options:
 
 - Locally by cloning this GitHub repo.
 - By pulling our docker image on Docker Hub (`link <https://hub.docker.com/repository/docker/sisinflabpoliba/ducho/general>`_).
-- On Google Colab (`link <https://colab.research.google.com/drive/1ouKkdxOObOL0BI00r0c157oNRqwxqTgt>`_).
+- On Google Colab (`link <https://colab.research.google.com/drive/1vPUALePlrjv4rfSn6CX2zMkpH2Xrw_cp>`_).
 
 Prerequisites
 ^^^^^^^^^^^^^^^^
@@ -13,7 +13,7 @@ Prerequisites
 Local
 ^^^^^^^^^
 
-Ducho may work on both CPU and GPU. However, if you want to speed up your feature extraction, we highly recommend to go for the GPU-accelerated option.
+Ducho may work on both CPU and GPU, harnessing the power of CUDA and MPS engines. However, if you want to speed up your feature extraction, we highly recommend to go for the GPU-accelerated option.
 
 In that case, if your machine is equipped with NVIDIA drivers, you should first make sure CUDA is installed along with the compatible NVIDIA drivers.
 
@@ -22,8 +22,8 @@ For example, a possible working environment involves the following (you may refe
 .. code:: bash
     Nvidia drivers: 525.85.12
     Cuda: 11.8.89
-    Python: 3.10.11
-    Pip: 23.1.2
+    Python: 3.11.2
+    Pip: 23.3.2
 
 
 Please, refer to this `link <https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html>`_ for the official guidelines on how to install the nvidia toolkit on linux from scratch.

@@ -12,9 +12,9 @@ sys.path.insert(0, os.path.abspath('../..'))
 sys.setrecursionlimit(10000)
 
 project = 'Ducho'
-copyright = '2023, Daniele Malitesta, Giuseppe Gassi, Claudio Pomo, Tommaso Di Noia'
-author = 'Daniele Malitesta, Giuseppe Gassi, Claudio Pomo, Tommaso Di Noia'
-release = '0.0.1'
+copyright = '2024, Matteo Attimonelli, Danilo Danese, Daniele Malitesta, Giuseppe Gassi, Claudio Pomo, Tommaso Di Noia'
+author = 'Matteo Attimonelli, Danilo Danese, Daniele Malitesta, Giuseppe Gassi, Claudio Pomo, Tommaso Di Noia'
+release = '2.0.0'
 
 # -- General configuration ---------------------------------------------------
 

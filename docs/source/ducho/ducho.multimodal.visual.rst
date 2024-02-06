@@ -7,7 +7,7 @@ Submodules
 ducho.multimodal.visual.VisualCnnFeatureExtractor module
 ----------------------------------------------------------
 
-.. automodule:: ducho.multimodal.visual.VisualCnnFeatureExtractor
+.. automodule:: ducho.multimodal.visual.VisualFeatureExtractor
    :members:
    :undoc-members:
    :show-inheritance:
