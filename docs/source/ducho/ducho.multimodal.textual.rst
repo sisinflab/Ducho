@@ -6,16 +6,14 @@ ducho.multimodal.textual.TextualFeatureExtractor module
 --------------------------------------------------------------
 
 .. automodule:: ducho.multimodal.textual.TextualFeatureExtractor
-
-.. autoclass:: TextualFeatureExtractor
-  :members:
-  :inherited-members:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 ducho.multimodal.textual.TextualDataset module
---------------------------------------------------
+--------------------------------------------------------------
 
 .. automodule:: ducho.multimodal.textual.TextualDataset
-
-.. autoclass:: TextualDataset
-  :members:
-  :inherited-members:
+   :members:
+   :undoc-members:
+   :show-inheritance:
