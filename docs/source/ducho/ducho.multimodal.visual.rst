@@ -10,7 +10,6 @@ ducho.multimodal.visual.VisualFeatureExtractor module
 .. automodule:: ducho.multimodal.visual.VisualFeatureExtractor
    :members:
    :undoc-members:
-   :show-inheritance:
 
 .. autoclass:: VisualFeatureExtractor
   :members:
@@ -27,7 +26,6 @@ ducho.multimodal.visual.VisualDataset module
 Module contents
 ---------------
 
-.. automodule:: ducho.multimodal.visual
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autoclass:: VisualDataset
+  :members:
+  :inherited-members:
