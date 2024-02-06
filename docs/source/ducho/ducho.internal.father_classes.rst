@@ -4,10 +4,10 @@ ducho.internal.father\_classes package
 Submodules
 ----------
 
-ducho.internal.father\_classes.CnnFeatureExtractorFather module
+ducho.internal.father\_classes.FeatureExtractorFather module
 -----------------------------------------------------------------
 
-.. automodule:: ducho.internal.father_classes.CnnFeatureExtractorFather
+.. automodule:: ducho.internal.father_classes.FeatureExtractorFather
    :members:
    :undoc-members:
    :show-inheritance:

@@ -12,10 +12,3 @@ Subpackages
    ducho.multimodal.visual
    ducho.multimodal.visual_textual
 
-Module contents
----------------
-
-.. automodule:: ducho.multimodal
-   :members:
-   :undoc-members:
-   :show-inheritance:
