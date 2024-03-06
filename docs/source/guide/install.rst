@@ -6,14 +6,16 @@ Depending on where you are running Ducho, you might need to first clone this rep
 If you are running Ducho on your local machine or Google Colab, you first need to clone this repository:
 
 .. code-block:: bash
-    git clone -b v2 https://github.com/sisinflab/Ducho.git
+
+    $ git clone https://github.com/sisinflab/Ducho.git
 
 
 Then, install the needed dependencies through pip:
 
 .. code-block:: bash
-    pip install -r requirements.txt # Local
-    pip install -r requirements_colab.txt # Google Colab
+
+    $ pip install -r requirements.txt # Local
+    $ pip install -r requirements_colab.txt # Google Colab
 
 
 P.S. Since Google Colab already comes with almost all necessary packages, you just need to install very few missing ones.

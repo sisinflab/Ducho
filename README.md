@@ -179,3 +179,42 @@ Currently, Ducho is maintained by:
 - Giuseppe Gassi (g.gassi@studenti.poliba.it)
 - Claudio Pomo (claudio.pomo@poliba.it)
 - Tommaso Di Noia (tommaso.dinoia@poliba.it)
+
+### Cite Us
+
+#### DUCHO 2.0
+
+If you use our code in a scientific work, don't forget to cite us :)
+
+```bibtex
+@inproceedings{DBLP:conf/www/AttimonelliDMPGD24,
+  author       = {Matteo Attimonelli and
+                  Danilo Danese and
+                  Daniele Malitesta and
+                  Claudio Pomo and
+                  Giuseppe Gassi and
+                  Tommaso Di Noia},
+  title        = {Ducho 2.0: Towards a More Up-to-Date Feature Extraction and
+Processing Framework for Multimodal Recommendation},
+  booktitle    = {{WWW}},
+  doi          = {10.1145/3589335.3651440}
+  publisher    = {{ACM}},
+  year         = {2024}
+}
+```
+
+#### DUCHO 1.0
+```bibtex
+@inproceedings{DBLP:conf/mm/MalitestaGPN23,
+  author       = {Daniele Malitesta and
+                  Giuseppe Gassi and
+                  Claudio Pomo and
+                  Tommaso Di Noia},
+  title        = {Ducho: {A} Unified Framework for the Extraction of Multimodal Features
+                  in Recommendation},
+  booktitle    = {{ACM} Multimedia},
+  pages        = {9668--9671},
+  doi          = {10.1145/3581783.3613458},
+  publisher    = {{ACM}},
+  year         = {2023}
+}

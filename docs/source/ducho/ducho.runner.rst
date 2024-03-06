@@ -1,11 +1,11 @@
 ducho.runner package
-==================
+====================
 
 Submodules
-----------
+-----------
 
 ducho.runner.Runner module
-------------------------
+----------------------------
 
 .. automodule:: ducho.runner.Runner
    :members:
@@ -13,7 +13,7 @@ ducho.runner.Runner module
    :show-inheritance:
 
 Module contents
----------------
+----------------
 
 .. automodule:: ducho.runner
    :members:

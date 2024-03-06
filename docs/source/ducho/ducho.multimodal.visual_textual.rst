@@ -1,9 +1,9 @@
 ducho.multimodal.multiple.visual_textual package
-================================
+=================================================
 
 
 ducho.multimodal.multiple.visual_textual.VisualTextualFeatureExtractor module
-----------------------------------------------------------
+--------------------------------------------------------------------------------
 
 .. automodule:: ducho.multimodal.multiple.visual_textual.VisualTextualFeatureExtractor
 
@@ -12,7 +12,7 @@ ducho.multimodal.multiple.visual_textual.VisualTextualFeatureExtractor module
   :inherited-members:
 
 ducho.multimodal.multiple.visual_textual.VisualTextualDataset module
-----------------------------------------------
+-----------------------------------------------------------------------
 
 .. automodule:: ducho.multimodal.multiple.visual_textual.VisualTextualDataset
 

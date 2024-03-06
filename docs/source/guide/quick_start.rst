@@ -1,5 +1,5 @@
 How can I run Ducho
-------------
+-------------------
 
 You may choose among three options:
 
@@ -20,6 +20,7 @@ In that case, if your machine is equipped with NVIDIA drivers, you should first 
 For example, a possible working environment involves the following (you may refer to any Google Colab notebook):
 
 .. code:: bash
+
     Nvidia drivers: 525.85.12
     Cuda: 11.8.89
     Python: 3.11.2
@@ -40,6 +41,7 @@ Quite conveniently, you can find several CUDA-equipped images on Docker Hub. You
 To test if everything worked smoothly, pull and run a container from the following docker image through this command:
 
 .. code:: bash
+
     docker run --rm --gpus all nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 nvidia-smi
 
 
