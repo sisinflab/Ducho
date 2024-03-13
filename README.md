@@ -175,9 +175,12 @@ this will override the same entry in the configuration file you provided. We do 
 Currently, Ducho is maintained by:
 - Matteo Attimonelli (matteo.attimonelli@poliba.it)
 - Danilo Danese (danilo.danese@poliba.it)
-- Daniele Malitesta (daniele.malitesta@poliba.it)
+- Angela Di Fazio (angela.difazio@poliba.it)
 - Giuseppe Gassi (g.gassi@studenti.poliba.it)
+- Daniele Malitesta (daniele.malitesta@centralesupelec.fr)
 - Claudio Pomo (claudio.pomo@poliba.it)
+
+The scientific supervision is driven by:
 - Tommaso Di Noia (tommaso.dinoia@poliba.it)
 
 ### Cite Us
