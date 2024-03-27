@@ -1,8 +1,4 @@
 import os
-
-# Hide TensorFlow warnings
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
 from loguru import logger
 from alive_progress import alive_bar
 import torch
@@ -15,6 +11,11 @@ from ducho.config.Config import Config
 from ducho.multimodal.visual.VisualDataset import VisualDataset
 from ducho.multimodal.multiple.visual_textual.VisualTextualDataset import VisualTextualDataset
 from ducho.internal.utils.json2dotnotation import banner
+
+# Hiding TensorFlow warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
+# Hiding Transformers' tokenizer warnings
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
 def camel_case(s):
@@ -53,12 +54,10 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
         dataset.set_framework(model['backend'])
 
         # set model
-        # extractor.set_model(model['name'])
         extractor.set_model(model)
         dataset.set_model(model['model_name'])
 
         # set preprocessing flag
-
         dataset.set_preprocessing_flag(model['preprocessing_flag'])
         if isinstance(dataset, VisualDataset):
             if 'preprocessing' in model.keys():  # preprocessing
@@ -82,9 +81,12 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
         if isinstance(dataset, VisualTextualDataset):
             dataset.set_model_name(model['model_name'])
 
+        # assess if the extractor is visual or visual-textual in order to properly set the dataset's image processor. 
+        if (isinstance(dataset, VisualDataset) or isinstance(dataset, VisualTextualDataset)) and 'transformers' in model['backend']:
+            dataset.set_image_processor(extractor._image_processor)
+
         # execute extractions
         for model_layer in model['output_layers']:
-
             logger.info(f'Extraction layer: {model["model_name"]}.{model_layer}')
 
             # set output layer
@@ -92,21 +94,27 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
 
 
             if 'tensorflow' not in model['backend']:
-                dataloader = torch.utils.data.DataLoader(dataset,
-                                                         batch_size=1,
-                                                         shuffle=False,
-                                                         sampler=None,
-                                                         num_workers=multiprocessing.cpu_count(),
-                                                         pin_memory=True
-                                                         )
+                dataloader = torch.utils.data.DataLoader(
+                    dataset,
+                    batch_size=int(model['batch_size']) if 'batch_size' in model.keys() else 1,
+                    shuffle=False,
+                    sampler=None,
+                    num_workers=multiprocessing.cpu_count(),
+                    pin_memory=True
+                    )
+                
                 with alive_bar(len(dataloader)) as t:
                     # for evey item do the extraction
                     for index, batch in enumerate(dataloader):
                         # do the extraction
                         extractor_output = extractor.extract_feature(batch)
                         # create the npy file with the extraction output
-                        dataset.create_output_file((index), extractor_output, model_layer,
-                                                   fusion=model['fusion'] if 'fusion' in model.keys() else None)
+                        dataset.create_output_file(
+                            batch, 
+                            extractor_output, 
+                            model_layer,
+                            fusion=model['fusion'] if 'fusion' in model.keys() else None
+                            )
                         # update the progress bar
                         t()
             else:
