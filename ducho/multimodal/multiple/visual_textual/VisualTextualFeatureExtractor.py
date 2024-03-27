@@ -65,10 +65,13 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
         """
 
         image, text = sample_input
-        preprocessed_text = self._tokenizer(text[0], truncation=True)
-        preprocessed_image = self._image_processor(image)
+        preprocessed_text = self._tokenizer.batch_encode_plus(text, return_tensors="pt", padding=True, truncation=True)
 
-        preprocessed_text = {k: torch.tensor(v).unsqueeze(dim=0).to(self._device) for k, v in preprocessed_text.items()}
+        # converting the input image tensor - outcome of the pre-processor - in a set.
+        preprocessed_image = {'pixel_values': image[0]}
+
+        # preprocessed_text = {k: torch.tensor(v).unsqueeze(dim=0).to(self._device) for k, v in preprocessed_text.items()}
+        preprocessed_text = {k: torch.tensor(v).to(self._device) for k, v in preprocessed_text.items()}
         preprocessed_image = {k: torch.tensor(v).to(self._device) for k, v in preprocessed_image.items()}
 
         preprocessed_text.update(preprocessed_image)

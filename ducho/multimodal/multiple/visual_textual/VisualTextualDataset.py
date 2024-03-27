@@ -48,13 +48,16 @@ class VisualTextualDataset:
         visual_input = self._visual_dataset.__getitem__(idx)
         textual_input, _ = self._textual_dataset.__getitem__(idx)
         return visual_input, textual_input
+    
+    def set_image_processor(self, image_processor):
+        self._visual_dataset._image_processor = image_processor
 
-    def create_output_file(self, index, extracted_data, model_layer, fusion=None):
+    def create_output_file(self, input_batch, extracted_data, model_layer, fusion=None):
         """
         This procedure is responsible for generating output files.
 
         Args:
-            index: The index of the file to be processed.
+            input_batch: The batch just processed by the extractor. It contains the filenames too.
             extracted_data: A tuple containing the extracted features.
             model_layer: The name of the output layer for the selected model.
             fusion: A string indicating the type of fusion to perform. If None, the procedure generates two separate output files.
@@ -64,12 +67,11 @@ class VisualTextualDataset:
         Returns:
             None
         """
-        # generate file name
-        input_file_name = self._visual_dataset._filenames[index].split('.')[0]
-        output_file_name = input_file_name + '.npy'
 
-        # generate output path
         backend_library = self._visual_dataset._backend_libraries_list[0]
+        filenames = input_batch[0][1]
+
+        # assessing whether the user required fusion.
 
         if not fusion:
             # visual
@@ -78,19 +80,13 @@ class VisualTextualDataset:
             output_image_path = os.path.join(output_image_path, str(model_layer))
             if not os.path.exists(output_image_path):
                 os.makedirs(output_image_path)
-            # create file
-            path = os.path.join(output_image_path, output_file_name)
-            numpy.save(path, extracted_data[0])
 
-            # textual
             output_text_path = os.path.join(self.output_text_path, backend_library)
             output_text_path = os.path.join(output_text_path, self._model_name)
             output_text_path = os.path.join(output_text_path, str(model_layer))
             if not os.path.exists(output_text_path):
                 os.makedirs(output_text_path)
-            # create file
-            path = os.path.join(output_text_path, output_file_name)
-            numpy.save(path, extracted_data[1])
+        
         else:
             last_image_path = os.path.basename(os.path.normpath(self.output_image_path))
             last_text_path = os.path.basename(os.path.normpath(self.output_text_path))
@@ -101,25 +97,115 @@ class VisualTextualDataset:
             output_path = os.path.join(output_path, str(model_layer))
             if not os.path.exists(output_path):
                 os.makedirs(output_path)
-            # create file
-            path = os.path.join(output_path, output_file_name)
-            # fusion
-            if fusion == 'concat':
-                extracted_data = numpy.concatenate(extracted_data, axis=1)
-            elif fusion == 'sum':
-                if extracted_data[0].shape != extracted_data[1].shape:
-                    raise ValueError(f'The shapes of visual and textual embeddings should be the same for {fusion} fusion!')
-                extracted_data = numpy.add(extracted_data[0], extracted_data[1])
-            elif fusion == 'mul':
-                if extracted_data[0].shape != extracted_data[1].shape:
-                    raise ValueError(f'The shapes of visual and textual embeddings should be the same for {fusion} fusion!')
-                extracted_data = numpy.multiply(extracted_data[0], extracted_data[1])
-            elif fusion == 'mean':
-                if extracted_data[0].shape != extracted_data[1].shape:
-                    raise ValueError(f'The shapes of visual and textual embeddings should be the same for {fusion} fusion!')
-                extracted_data = numpy.mean(extracted_data, axis=0)
+        
+        # checking whether batch size is > 1     
 
-            numpy.save(path, extracted_data)
+        if len(extracted_data[0]) > 1:
+            filenames = [f.split('.')[0] for f in filenames]
+
+            # for this type of extractor, we do need to check the 'fusion' field again to properly save the features.
+
+            if not fusion:
+                for f, e in zip(filenames, extracted_data[0]):
+                    output_file_name = f + '.npy'
+                    path = os.path.join(output_image_path, output_file_name)
+                    numpy.save(path, e)
+                
+                for f, e in zip(filenames, extracted_data[1]):
+                    output_file_name = f + '.npy'
+                    path = os.path.join(output_text_path, output_file_name)
+                    numpy.save(path, e)
+            else:
+                if fusion == 'concat':
+                    extracted_data = numpy.concatenate(extracted_data, axis=1)
+                elif fusion == 'sum':
+                    if extracted_data[0].shape != extracted_data[1].shape:
+                        raise ValueError(f'The shapes of visual and textual embeddings should be the same for {fusion} fusion!')
+                    extracted_data = numpy.add(extracted_data[0], extracted_data[1])
+                elif fusion == 'mul':
+                    if extracted_data[0].shape != extracted_data[1].shape:
+                        raise ValueError(f'The shapes of visual and textual embeddings should be the same for {fusion} fusion!')
+                    extracted_data = numpy.multiply(extracted_data[0], extracted_data[1])
+                elif fusion == 'mean':
+                    if extracted_data[0].shape != extracted_data[1].shape:
+                        raise ValueError(f'The shapes of visual and textual embeddings should be the same for {fusion} fusion!')
+                    extracted_data = numpy.mean(extracted_data, axis=0)
+
+                filenames = [f.split('.')[0] for f in filenames]
+
+                for f, e in zip(filenames, extracted_data):
+                    output_file_name = f + '.npy'
+                    path = os.path.join(output_path, output_file_name)
+                    numpy.save(path, e)
+        else:
+            if fusion:
+                output_file_name = filenames[0] + '.npy'
+                numpy.save(os.path.join(output_path, output_file_name), extracted_data[0])
+            else:
+
+                output_file_name = filenames[0] + '.npy'
+                numpy.save(os.path.join(output_image_path, output_file_name), extracted_data[0])
+                numpy.save(os.path.join(output_text_path, output_file_name), extracted_data[1])
+
+
+            
+
+        # # generate file name
+        # input_file_name = self._visual_dataset._filenames[index].split('.')[0]
+        # output_file_name = input_file_name + '.npy'
+
+        # # generate output path
+        # backend_library = self._visual_dataset._backend_libraries_list[0]
+
+        # if not fusion:
+        #     # visual
+        #     output_image_path = os.path.join(self.output_image_path, backend_library)
+        #     output_image_path = os.path.join(output_image_path, self._model_name)
+        #     output_image_path = os.path.join(output_image_path, str(model_layer))
+        #     if not os.path.exists(output_image_path):
+        #         os.makedirs(output_image_path)
+        #     # create file
+        #     path = os.path.join(output_image_path, output_file_name)
+        #     numpy.save(path, extracted_data[0])
+
+        #     # textual
+        #     output_text_path = os.path.join(self.output_text_path, backend_library)
+        #     output_text_path = os.path.join(output_text_path, self._model_name)
+        #     output_text_path = os.path.join(output_text_path, str(model_layer))
+        #     if not os.path.exists(output_text_path):
+        #         os.makedirs(output_text_path)
+        #     # create file
+        #     path = os.path.join(output_text_path, output_file_name)
+        #     numpy.save(path, extracted_data[1])
+        # else:
+        #     last_image_path = os.path.basename(os.path.normpath(self.output_image_path))
+        #     last_text_path = os.path.basename(os.path.normpath(self.output_text_path))
+        #     first_path = self.output_image_path.replace(last_image_path, '')
+        #     output_path = f'{last_image_path}_{last_text_path}_{fusion}'
+        #     output_path = os.path.join(first_path, output_path, backend_library)
+        #     output_path = os.path.join(output_path, self._model_name)
+        #     output_path = os.path.join(output_path, str(model_layer))
+        #     if not os.path.exists(output_path):
+        #         os.makedirs(output_path)
+        #     # create file
+        #     path = os.path.join(output_path, output_file_name)
+        #     # fusion
+        #     if fusion == 'concat':
+        #         extracted_data = numpy.concatenate(extracted_data, axis=1)
+        #     elif fusion == 'sum':
+        #         if extracted_data[0].shape != extracted_data[1].shape:
+        #             raise ValueError(f'The shapes of visual and textual embeddings should be the same for {fusion} fusion!')
+        #         extracted_data = numpy.add(extracted_data[0], extracted_data[1])
+        #     elif fusion == 'mul':
+        #         if extracted_data[0].shape != extracted_data[1].shape:
+        #             raise ValueError(f'The shapes of visual and textual embeddings should be the same for {fusion} fusion!')
+        #         extracted_data = numpy.multiply(extracted_data[0], extracted_data[1])
+        #     elif fusion == 'mean':
+        #         if extracted_data[0].shape != extracted_data[1].shape:
+        #             raise ValueError(f'The shapes of visual and textual embeddings should be the same for {fusion} fusion!')
+        #         extracted_data = numpy.mean(extracted_data, axis=0)
+
+        #     numpy.save(path, extracted_data)
 
     def set_reshape(self, reshape):
         """
@@ -132,6 +218,7 @@ class VisualTextualDataset:
             None
         """
         self._reshape = reshape
+        self._visual_dataset._reshape = reshape
 
     def set_model_name(self, model_name):
         """
