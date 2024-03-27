@@ -54,6 +54,9 @@ class VisualDataset(DatasetFather, ABC):
         self._preprocessing_type = None
         self._mean = [0.485, 0.456, 0.406]
         self._std = [0.229, 0.224, 0.225]
+        
+        # _image_processor is needed for the transformers' library, otherwise it must be None.
+        self._image_processor = None
 
     def __getitem__(self, idx):
         """
@@ -78,7 +81,7 @@ class VisualDataset(DatasetFather, ABC):
             return np.expand_dims(norm_sample, axis=0)
         else:
             # torch
-            return norm_sample
+            return norm_sample, self._filenames[idx]
 
     def _pre_processing(self, sample):
         """
@@ -124,9 +127,9 @@ class VisualDataset(DatasetFather, ABC):
             self._backend_libraries_list = ['torch']
 
         elif 'transformers' in self._backend_libraries_list:
-            transform = transforms.PILToTensor()
-            norm_sample = transform(res_sample)
-
+            # transformers' visual features extractor inputs need to be properly preprocessed with the respective pre-processors. 
+            # aiming to avoid dataloader issues, norm_sample contains a torch.tensor, instead of a set.
+            norm_sample = self._image_processor(res_sample).pixel_values[0]
             # update the framework list
             self._backend_libraries_list = ['transformers']
 
@@ -143,6 +146,18 @@ class VisualDataset(DatasetFather, ABC):
             None
         """
         self._reshape = reshape
+
+    def set_image_processor(self, image_processor):
+        """
+        Set the image_processor functional pointer for the tranformers library.
+        Args:
+            image_processor: the image processor function.
+
+        Returns:
+            None
+        """
+        assert 'transformers' in self._backend_libraries_list
+        self._image_processor = image_processor
 
     def set_preprocessing_flag(self, preprocessing_flag):
         self._reshape = preprocessing_flag

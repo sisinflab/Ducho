@@ -87,11 +87,12 @@ class VisualFeatureExtractor(FeatureExtractorFather):
             feature_model.eval()
             with torch.no_grad():
                 output = np.squeeze(feature_model(
-                    image.to(self._device)
+                    image[0].to(self._device)
                 )[output_layer].data.cpu().numpy())
             # update the framework list
             self._backend_libraries_list = ['torch']
             return output
+        
         elif self._model_name in tensorflow_keras_list and 'tensorflow' in self._backend_libraries_list:
             # tensorflow
             input_model = self._model.input
@@ -100,8 +101,10 @@ class VisualFeatureExtractor(FeatureExtractorFather):
             # update the framework list
             self._backend_libraries_list = ['tensorflow']
             return output
+        
         elif 'transformers' in self._backend_libraries_list:
-            model_input = self._image_processor(image, return_tensors="pt")
+            # converting the input image tensor - outcome of the pre-processor - in a set.
+            model_input = {'pixel_values': image}
             model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
             model_output = getattr(self._model(**model_input), self._output_layer.lower())
             return model_output.detach().cpu().numpy()
