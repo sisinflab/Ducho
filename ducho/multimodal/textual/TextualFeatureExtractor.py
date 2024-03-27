@@ -1,26 +1,7 @@
 from transformers import pipeline
 from sentence_transformers import SentenceTransformer
-from transformers import FeatureExtractionPipeline
-from transformers import PreTrainedModel
-from operator import attrgetter
-# import transformers.pipelines.
-
 import torch
-# import torchtext
 from ducho.internal.father_classes.FeatureExtractorFather import FeatureExtractorFather
-
-
-# def flatten_model(previous_name, model, layer_list):
-#     current_list = list(model.named_children())
-#     if current_list:
-#         for current_name, value in current_list:
-#             next_name = f'{previous_name}.{current_name}'
-#             flat = flatten_model(next_name, value, layer_list)
-#             if not isinstance(flat, list):
-#                 layer_list.append(flat)
-#     else:
-#         return previous_name.replace('x.', '')
-#     return layer_list
 
 
 class TextualFeatureExtractor(FeatureExtractorFather):
@@ -75,7 +56,7 @@ class TextualFeatureExtractor(FeatureExtractorFather):
             A numpy array representing the extracted features, which will be stored in a .npy file using the appropriate method of the Dataset Class.
         """
         if 'transformers' in self._backend_libraries_list:
-            model_input = self._tokenizer.encode_plus(sample_input[0][0], return_tensors="pt", padding=False)
+            model_input = self._tokenizer.batch_encode_plus(sample_input[0], return_tensors="pt", padding=True, truncation=True)
             model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
             model_output = getattr(self._model(**model_input), self.output_layer)
             return model_output.detach().cpu().numpy()

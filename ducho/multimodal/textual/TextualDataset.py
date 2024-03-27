@@ -153,7 +153,7 @@ class TextualDataset(DatasetFather):
         """
         self._textual_file_manager.set_type_of_extraction(type_of_extraction)
 
-    def create_output_file(self, index, extracted_data, model_layer, fusion=None):
+    def create_output_file(self, input_batch, extracted_data, model_layer, fusion=None):
         """
         Overwrites the method of the Father class because all the Strings come from the same file, and it only changes
         the row.
@@ -167,11 +167,8 @@ class TextualDataset(DatasetFather):
         Returns:
             None
         """
-        # generate file name
-        input_file_name = self._filenames[0].split('.')[0] + self._textual_file_manager.build_path_from_id(
-            self._ids[index])
-        output_file_name = input_file_name + '.npy'
-
+        filenames = input_batch[1]
+        
         # generate output path
         framework = self._backend_libraries_list[0]
         output_path = os.path.join(self._output_directory_path, framework)
@@ -179,7 +176,15 @@ class TextualDataset(DatasetFather):
         output_path = os.path.join(output_path, str(model_layer))
         if not os.path.exists(output_path):
             os.makedirs(output_path)
-
-        # create file
-        path = os.path.join(output_path, output_file_name)
-        numpy.save(path, extracted_data)
+        
+        # checking whether batch size is > 1.
+            
+        if len(extracted_data) > 1:
+            output_file_name = [f + '.npy' for f in filenames]
+            for f, e in zip(output_file_name, extracted_data):
+                path = os.path.join(output_path, f)
+                numpy.save(path, e)
+        else:
+            output_file_name = filenames[0] + '.npy'
+            path = os.path.join(output_path, output_file_name)
+            numpy.save(path, extracted_data)
