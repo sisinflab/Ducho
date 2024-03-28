@@ -1,4 +1,8 @@
 import os
+# Hiding TensorFlow warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
+# Hiding Transformers' tokenizer warnings
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 from loguru import logger
 from alive_progress import alive_bar
 import torch
@@ -11,11 +15,6 @@ from ducho.config.Config import Config
 from ducho.multimodal.visual.VisualDataset import VisualDataset
 from ducho.multimodal.multiple.visual_textual.VisualTextualDataset import VisualTextualDataset
 from ducho.internal.utils.json2dotnotation import banner
-
-# Hiding TensorFlow warnings
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
-# Hiding Transformers' tokenizer warnings
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
 def camel_case(s):
