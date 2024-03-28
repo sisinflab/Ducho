@@ -119,14 +119,19 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                         t()
             else:
                 with alive_bar(total=dataset.__len__()) as t:
-                    # for evey item do the extraction
+                    # for evey item do the extraction                    
                     for index in range(dataset.__len__()):
                         # retrieve the item (preprocessed) from dataset
-                        preprocessed_item = dataset.__getitem__(index)
+                        batch = dataset.__getitem__(index)
                         # do the extraction
-                        extractor_output = extractor.extract_feature(preprocessed_item)
+                        extractor_output = extractor.extract_feature(batch)
                         # create the npy file with the extraction output
-                        dataset.create_output_file((index), extractor_output, model_layer)
+                        dataset.create_output_file(
+                            batch, 
+                            extractor_output, 
+                            model_layer,
+                            fusion=model['fusion'] if 'fusion' in model.keys() else None
+                            )
                         # update the progress bar
                         t()
 

@@ -76,12 +76,7 @@ class VisualDataset(DatasetFather, ABC):
 
         norm_sample = self._pre_processing(sample)
 
-        if 'tensorflow' in self._backend_libraries_list:
-            # np for tensorflow
-            return np.expand_dims(norm_sample, axis=0)
-        else:
-            # torch
-            return norm_sample, self._filenames[idx]
+        return norm_sample, self._filenames[idx]
 
     def _pre_processing(self, sample):
         """

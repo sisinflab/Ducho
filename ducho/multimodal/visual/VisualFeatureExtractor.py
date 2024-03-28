@@ -97,7 +97,7 @@ class VisualFeatureExtractor(FeatureExtractorFather):
             # tensorflow
             input_model = self._model.input
             output_layer = self._model.get_layer(self._output_layer).output
-            output = tf.keras.Model(input_model, output_layer)(image, training=False)
+            output = np.array(tf.keras.Model(input_model, output_layer)(image[0][None], training=False))
             # update the framework list
             self._backend_libraries_list = ['tensorflow']
             return output
