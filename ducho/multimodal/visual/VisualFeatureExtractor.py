@@ -91,7 +91,7 @@ class VisualFeatureExtractor(FeatureExtractorFather):
                 )[output_layer].data.cpu().numpy())
             # update the framework list
             self._backend_libraries_list = ['torch']
-            return output
+            return np.expand_dims(output, axis=0) if output.ndim == 1 else output
         
         elif self._model_name in tensorflow_keras_list and 'tensorflow' in self._backend_libraries_list:
             # tensorflow
@@ -100,11 +100,12 @@ class VisualFeatureExtractor(FeatureExtractorFather):
             output = np.array(tf.keras.Model(input_model, output_layer)(image[0][None], training=False))
             # update the framework list
             self._backend_libraries_list = ['tensorflow']
-            return output
+            return np.expand_dims(output, axis=0) if output.ndim == 1 else output
         
         elif 'transformers' in self._backend_libraries_list:
             # converting the input image tensor - outcome of the pre-processor - in a set.
             model_input = {'pixel_values': image[0]}
             model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
             model_output = getattr(self._model(**model_input), self._output_layer.lower())
-            return model_output.detach().cpu().numpy()
+            output = model_output.detach().cpu().numpy()
+            return np.expand_dims(output, axis=0) if output.ndim == 1 else output
