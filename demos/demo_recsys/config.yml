@@ -6,8 +6,8 @@ visual:
         input_path: images
         output_path: visual_embeddings
         model: [
-               { model_name: ResNet50,  output_layers: avgpool, reshape: [224, 224], preprocessing: zscore, backend: torch, batch_size: 16},
-               { model_name: ./demos/demo_recsys/MMFashion.pt,  output_layers: avgpool, reshape: [224, 224], preprocessing: zscore, backend: torch, batch_size: 16}
+               { model_name: ResNet50,  output_layers: avgpool, reshape: [224, 224], preprocessing: zscore, backend: torch},
+               { model_name: ./demos/demo_recsys/MMFashion.pt,  output_layers: avgpool, reshape: [224, 224], preprocessing: zscore, backend: torch}
         ]
 
 textual:
@@ -17,7 +17,7 @@ textual:
         text_column: description
         output_path: textual_embeddings
         model: [
-            { model_name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: False, backend: sentence_transformers, batch_size: 4},
+            { model_name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: False, backend: sentence_transformers},
           ]
 
 visual_textual:
@@ -27,5 +27,5 @@ visual_textual:
         text_column: description
         output_path: {visual: visual_embeddings, textual: textual_embeddings}
         model: [
-            { model_name: openai/clip-vit-base-patch16, backend: transformers, output_layers: 1, batch_size: 4}
+            { model_name: openai/clip-vit-base-patch16, backend: transformers, output_layers: 1}
         ]

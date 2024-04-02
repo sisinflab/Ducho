@@ -138,12 +138,13 @@ class VisualTextualDataset:
                     path = os.path.join(output_path, output_file_name)
                     numpy.save(path, e)
         else:
+            filenames = filenames[0].split('.')[0]
             if fusion:
-                output_file_name = filenames[0] + '.npy'
+                output_file_name = filenames + '.npy'
                 numpy.save(os.path.join(output_path, output_file_name), extracted_data[0])
             else:
 
-                output_file_name = filenames[0] + '.npy'
+                output_file_name = filenames + '.npy'
                 numpy.save(os.path.join(output_image_path, output_file_name), extracted_data[0])
                 numpy.save(os.path.join(output_text_path, output_file_name), extracted_data[1])
 

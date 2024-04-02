@@ -101,6 +101,7 @@ class DatasetFather:
 
         # checking whether batch size is > 1.
 
+        # if extracted_data.ndim > 1:
         if len(extracted_data) > 1:
             filenames = [f.split('.')[0] for f in filenames]
             for f, e in zip(filenames, extracted_data):
@@ -109,7 +110,7 @@ class DatasetFather:
                 numpy.save(path, e)
 
         else:
-            filenames = filenames.split('.')[0]
+            filenames = filenames[0].split('.')[0]
             output_file_name = filenames + '.npy'
             path = os.path.join(output_path, output_file_name)
             numpy.save(path, extracted_data)
