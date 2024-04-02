@@ -56,7 +56,8 @@ class TextualFeatureExtractor(FeatureExtractorFather):
             A numpy array representing the extracted features, which will be stored in a .npy file using the appropriate method of the Dataset Class.
         """
         if 'transformers' in self._backend_libraries_list:
-            model_input = self._tokenizer.batch_encode_plus(sample_input[0], return_tensors="pt", padding=True, truncation=True)
+            # model_input = self._tokenizer.batch_encode_plus(sample_input[0], return_tensors="pt", padding=True, truncation=True)
+            model_input = self._tokenizer.batch_encode_plus(sample_input[0], return_tensors="pt", pad_to_max_length=True)
             model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
             model_output = getattr(self._model(**model_input), self.output_layer)
             return model_output.detach().cpu().numpy()

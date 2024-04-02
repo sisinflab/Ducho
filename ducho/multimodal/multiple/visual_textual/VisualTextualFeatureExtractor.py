@@ -65,7 +65,8 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
         """
 
         image, text = sample_input
-        preprocessed_text = self._tokenizer.batch_encode_plus(text, return_tensors="pt", padding=True, truncation=True)
+        # preprocessed_text = self._tokenizer.batch_encode_plus(text, return_tensors="pt", padding=True, truncation=True)
+        preprocessed_text = self._tokenizer.batch_encode_plus(text, return_tensors="pt", pad_to_max_length=True)
 
         # converting the input image tensor - outcome of the pre-processor - in a set.
         preprocessed_image = {'pixel_values': image[0]}
