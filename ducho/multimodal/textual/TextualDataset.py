@@ -183,6 +183,7 @@ class TextualDataset(DatasetFather):
             output_file_name = [f + '.npy' for f in filenames]
             for f, e in zip(output_file_name, extracted_data):
                 path = os.path.join(output_path, f)
+                e = numpy.expand_dims(e, axis=0)
                 numpy.save(path, e)
         else:
             output_file_name = filenames[0] + '.npy'

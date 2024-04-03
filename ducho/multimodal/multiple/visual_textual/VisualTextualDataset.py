@@ -109,11 +109,13 @@ class VisualTextualDataset:
                 for f, e in zip(filenames, extracted_data[0]):
                     output_file_name = f + '.npy'
                     path = os.path.join(output_image_path, output_file_name)
+                    e = numpy.expand_dims(e, axis=0)
                     numpy.save(path, e)
                 
                 for f, e in zip(filenames, extracted_data[1]):
                     output_file_name = f + '.npy'
                     path = os.path.join(output_text_path, output_file_name)
+                    e = numpy.expand_dims(e, axis=0)
                     numpy.save(path, e)
             else:
                 if fusion == 'concat':
@@ -136,6 +138,7 @@ class VisualTextualDataset:
                 for f, e in zip(filenames, extracted_data):
                     output_file_name = f + '.npy'
                     path = os.path.join(output_path, output_file_name)
+                    e = numpy.expand_dims(e, axis=0)
                     numpy.save(path, e)
         else:
             filenames = filenames[0].split('.')[0]

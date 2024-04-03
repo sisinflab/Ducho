@@ -107,10 +107,11 @@ class DatasetFather:
             for f, e in zip(filenames, extracted_data):
                 output_file_name = f + '.npy'
                 path = os.path.join(output_path, output_file_name)
+                e = numpy.expand_dims(e, axis=0)
                 numpy.save(path, e)
 
         else:
-            filenames = filenames[0].split('.')[0]
+            filenames = filenames[0].split('.')[0] if isinstance(filenames, list) else filenames.split('.')[0]
             output_file_name = filenames + '.npy'
             path = os.path.join(output_path, output_file_name)
             numpy.save(path, extracted_data)
