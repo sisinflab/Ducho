@@ -2,8 +2,7 @@
 
 <img src="docs/source/img/ducho_v2_overview.png"  width="800">
 
-This is the official GitHub repo for the paper "_Ducho 2.0: Towards a More Up-to-Date Feature Extraction and
-Processing Framework for Multimodal Recommendation_".
+This is the official GitHub repo for the paper "_Ducho 2.0: Towards a More Up-to-Date Unified Framework for the Extraction of Multimodal Features in Recommendation_".
 
 
 ## Table of contents
@@ -197,8 +196,7 @@ If you use our code in a scientific work, don't forget to cite us :)
                   Claudio Pomo and
                   Giuseppe Gassi and
                   Tommaso Di Noia},
-  title        = {Ducho 2.0: Towards a More Up-to-Date Feature Extraction and
-Processing Framework for Multimodal Recommendation},
+  title        = {Ducho 2.0: Towards a More Up-to-Date Unified Framework for the Extraction of Multimodal Features in Recommendation},
   booktitle    = {{WWW}},
   doi          = {10.1145/3589335.3651440}
   publisher    = {{ACM}},

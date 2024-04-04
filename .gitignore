@@ -58,3 +58,9 @@ docs/_build/_doctrees
 *.pth
 *.hdf5
 *.safetensors
+
+demos/demo_baby/
+demos/demo_music/
+demos/demo_office/
+datasets/
+datasets.zip
