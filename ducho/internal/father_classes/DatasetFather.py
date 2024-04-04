@@ -67,6 +67,8 @@ class DatasetFather:
                 self._filenames = human_sort(self._filenames)
                 self._num_samples = len(self._filenames)
 
+        self._filenames = sorted(self._filenames)
+
     def __len__(self):
         return self._num_samples
 
