@@ -2,7 +2,7 @@ from transformers import pipeline
 from sentence_transformers import SentenceTransformer
 import torch
 from ducho.internal.father_classes.FeatureExtractorFather import FeatureExtractorFather
-
+import numpy as np
 
 class TextualFeatureExtractor(FeatureExtractorFather):
     """
@@ -43,7 +43,10 @@ class TextualFeatureExtractor(FeatureExtractorFather):
             self.output_layer = model['output_layers'][0] if 'output_layers' in model.keys() else 'pooler_output'
         elif 'sentence_transformers' in self._backend_libraries_list:
             self._model = SentenceTransformer(model_name)
+        
+        self._model.eval()
 
+    @torch.no_grad
     def extract_feature(self, sample_input):
         """
         This function extracts features from the input text. Prior to calling this function, the framework,
@@ -59,6 +62,6 @@ class TextualFeatureExtractor(FeatureExtractorFather):
             model_input = self._tokenizer.batch_encode_plus(sample_input[0], return_tensors="pt", padding='max_length', truncation=True)
             model_input = {k: torch.tensor(v).to(self._device) for k, v in model_input.items()}
             model_output = getattr(self._model(**model_input), self.output_layer)
-            return model_output.detach().cpu().numpy()
+            return model_output.detach().cpu().numpy().astype(np.float32)
         elif 'sentence_transformers' in self._backend_libraries_list:
             return self._model.encode(sentences=sample_input[0])

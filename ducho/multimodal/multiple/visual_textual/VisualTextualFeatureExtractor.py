@@ -52,6 +52,7 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
         else:
             raise NotImplemented('This feature extractor has not been added yet!')
 
+    @torch.no_grad
     def extract_feature(self, sample_input):
         """
         This function extracts features from the input image and textual data. Prior to calling this function, the framework,
@@ -65,7 +66,7 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
         """
 
         image, text = sample_input
-        preprocessed_text = self._tokenizer.batch_encode_plus(text, return_tensors="pt", padding='max_length', truncation=True)
+        preprocessed_text = self._tokenizer.batch_encode_plus(text[0], return_tensors="pt", padding='max_length', truncation=True)
 
         # converting the input image tensor - outcome of the pre-processor - in a set.
         preprocessed_image = {'pixel_values': image[0]}

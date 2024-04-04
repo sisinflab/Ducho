@@ -46,7 +46,7 @@ class VisualTextualDataset:
 
     def __getitem__(self, idx):
         visual_input = self._visual_dataset.__getitem__(idx)
-        textual_input, _ = self._textual_dataset.__getitem__(idx)
+        textual_input = self._textual_dataset.__getitem__(idx)
         return visual_input, textual_input
     
     def set_image_processor(self, image_processor):

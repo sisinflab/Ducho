@@ -57,6 +57,7 @@ class VisualFeatureExtractor(FeatureExtractorFather):
         else:
             raise NotImplementedError('This feature extractor has not been added yet!')
 
+    @torch.no_grad
     def extract_feature(self, image):
         """
         This function extracts features from the input image data. Prior to calling this function, the framework,
