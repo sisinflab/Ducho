@@ -180,7 +180,7 @@ class MultimodalFeatureExtractor:
 
         logger.info('\n' + banner)
         logger.log("WELCOME",
-                   '*** Ducho 2.0: Towards a More Up-to-Date Feature Extraction and Processing Framework for Multimodal Recommendation ***')
+                   '***  Ducho 2.0: Towards a More Up-to-Date Unified Framework for the Extraction of Multimodal Features in Recommendation ***')
         logger.log("WELCOME",
                    '*** Brought to you by: SisInfLab, Politecnico di Bari, Italy (https://sisinflab.poliba.it) ***\n')
         self._config = Config(config_file_path, argv)
@@ -212,10 +212,14 @@ class MultimodalFeatureExtractor:
         """
         It executes all the extraction that have to be done
         """
+        logger.info('Extraction is starting...')
         extractions_dict = self._config.get_extractions()
         for modality, modality_extractions in extractions_dict.items():
             for source, source_extractions in modality_extractions.items():
                 self.do_extraction(modality, source)
+        
+        logger.success(f'Extraction is complete, it\'s coffee break! ☕️')
+
 
     def do_extraction(self, modality, source):
         """
@@ -261,9 +265,9 @@ class MultimodalFeatureExtractor:
             )
 
         # execute extraction
-        logger.info('Extraction is starting...')
+        # logger.info('Extraction is starting...')
         _execute_extraction_from_models_list(models=models,
                                              extractor_class=extractor,
                                              gpu=self._config.get_gpu(),
                                              dataset=dataset)
-        logger.success(f'Extraction is complete, it\'s coffee break! ☕️')
+        # logger.success(f'Extraction is complete, it\'s coffee break! ☕️')
