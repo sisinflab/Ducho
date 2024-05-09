@@ -1,4 +1,5 @@
 import os
+import time
 # Hiding TensorFlow warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
 # Hiding Transformers' tokenizer warnings
@@ -91,6 +92,7 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
             # set output layer
             extractor.set_output_layer(model_layer)
 
+            start_time = time.time()
 
             if 'tensorflow' not in model['backend']:
                 dataloader = torch.utils.data.DataLoader(
@@ -138,7 +140,8 @@ def _execute_extraction_from_models_list(models, extractor_class, gpu, dataset):
                 dataset._reset_mean_std()
                 change_mean_std = False
 
-            logger.success(f'Extraction with layer: {model["model_name"]}.{model_layer} is complete')
+            end_time = time.time()
+            logger.success(f'Extraction with layer: {model["model_name"]}.{model_layer} has been completed in {round(end_time - start_time, 2)} seconds!')
 
         logger.success(f'Extraction with model: {model["model_name"]} is complete')
         del extractor
