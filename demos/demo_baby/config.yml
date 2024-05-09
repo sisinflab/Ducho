@@ -1,0 +1,32 @@
+dataset_path: ./local/data/demo_baby
+gpu list: 0
+
+visual:
+    items:
+        input_path: images
+        output_path: visual_embeddings_1
+        model: [
+                { model_name: ResNet50,  output_layers: avgpool, reshape: [224, 224], preprocessing: zscore, backend: torch, batch_size: 1},
+                { model_name: ./demos/demo_recsys/MMFashion.pt,  output_layers: avgpool, reshape: [224, 224], preprocessing: zscore, backend: torch, batch_size: 1},
+        ]
+
+textual:
+    items:
+        input_path: meta.tsv
+        item_column: asin
+        text_column: description
+        output_path: textual_embeddings_1
+        model: [
+            { model_name: sentence-transformers/all-mpnet-base-v2,  output_layers: 1, clear_text: False, backend: sentence_transformers, batch_size: 1},
+          ]
+
+visual_textual:
+    items:
+        input_path: {visual: images, textual: meta.tsv}
+        item_column: asin
+        text_column: description
+        output_path: {visual: visual_embeddings_1, textual: textual_embeddings_1}
+        model: [
+            { model_name: openai/clip-vit-base-patch16, backend: transformers, output_layers: 1, batch_size: 1},
+        ]
+        
