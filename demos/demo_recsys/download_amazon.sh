@@ -1,5 +1,9 @@
 #!/bin/bash
 
-mkdir -p local/data/demo_recsys/
-wget http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Baby_5.json.gz -P local/data/demo_recsys/
-wget http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_Baby.json.gz -P local/data/demo_recsys/
+mkdir -p datasets/
+
+for name in 'Baby' 'Digital_Music' 'Office_Products'
+do
+  wget http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_${name}_5.json.gz -P datasets/
+  wget http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_${name}.json.gz -P datasets/
+done
