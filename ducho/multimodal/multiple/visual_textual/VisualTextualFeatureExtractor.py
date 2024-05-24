@@ -1,7 +1,7 @@
 from transformers import pipeline
 import torch
 from ducho.internal.father_classes.FeatureExtractorFather import FeatureExtractorFather
-
+from transformers import AutoTokenizer
 
 class VisualTextualFeatureExtractor(FeatureExtractorFather):
     """
@@ -47,8 +47,29 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
                 )
 
             self._model = built_pipeline.model
-            self._tokenizer = built_pipeline.tokenizer
+            self._tokenizer = built_pipeline.tokenizer if not type(built_pipeline.tokenizer) is str else AutoTokenizer.from_pretrained(tokenizer_name)
             self._image_processor = built_pipeline.image_processor
+
+            # if type(model['output_layers']) is not str and type(model['output_layers']) is not list:
+            #     self._vision_output = ['image_embeds']
+            #     self._text_output = ['text_embeds']
+            # else:
+            #     self._vision_output = model['output_layers'][0].split('.')
+            #     self._text_output = model['output_layers'][1].split('.')
+
+            if all(isinstance(x, int) for x in model['output_layers']):
+                self._vision_output = ['image_embeds']
+                self._text_output = ['text_embeds']
+            elif all(isinstance(x, str) for x in model['output_layers']):
+                if len(model['output_layers']) > 1:
+                    self._vision_output = model['output_layers'][0].split('.')
+                    self._text_output = model['output_layers'][1].split('.')
+                else:
+                    self._vision_output = model['output_layers'][0].split('.')
+                    self._text_output = model['output_layers'][0].split('.')
+            else:
+                raise ValueError('Layers must be of the same type!')
+
         else:
             raise NotImplemented('This feature extractor has not been added yet!')
 
@@ -66,7 +87,11 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
         """
 
         image, text = sample_input
-        preprocessed_text = self._tokenizer.batch_encode_plus(text[0], return_tensors="pt", padding='max_length', truncation=True)
+        
+        try:
+            preprocessed_text = self._tokenizer.batch_encode_plus(text[0], return_tensors="pt", padding='max_length', truncation=True)
+        except ValueError:
+            preprocessed_text = self._tokenizer.batch_encode_plus(text[0], return_tensors="pt", padding=True, truncation=True)
 
         # converting the input image tensor - outcome of the pre-processor - in a set.
         preprocessed_image = {'pixel_values': image[0]}
@@ -78,9 +103,26 @@ class VisualTextualFeatureExtractor(FeatureExtractorFather):
         preprocessed_text.update(preprocessed_image)
 
         outputs = self._model(**preprocessed_text)
+        
+        if len(self._vision_output) > 1:
+            temp_output_vis = outputs
+            for name in self._vision_output:
+                temp_output_vis = getattr(temp_output_vis, name)
+        else:
+            temp_output_vis = getattr(outputs, self._vision_output[0])
 
-        return (outputs.image_embeds.detach().cpu().numpy(),
-                outputs.text_embeds.detach().cpu().numpy())
+
+        if len(self._text_output) > 1:
+            temp_output_text = outputs
+            for name in self._text_output:
+                temp_output_text = getattr(temp_output_text, name)
+        else:
+            temp_output_text = getattr(outputs, self._text_output[0])
+
+        vis_output = temp_output_vis.detach().cpu().numpy()
+        text_output = temp_output_text.detach().cpu().numpy()
+
+        return vis_output, text_output
 
 
 
