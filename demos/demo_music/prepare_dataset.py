@@ -115,24 +115,6 @@ print(f'Empty url: {len(items_empty_url)}')
 missing_visual = items_nan_url.union(items_empty_url)
 missing_textual = items_nan_description.union(items_empty_description)
 
-if not os.path.exists(f'{folder}/images/'):
-    os.makedirs(f'{folder}/images/')
-
-images = []
-with tqdm(total=len(meta)) as t:
-    for index, row in meta.iterrows():
-        if pd.notna(row['imUrl']):
-            output = download_image(row['imUrl'], row['asin'], f'{folder}/images/{row["asin"]}.jpg')
-            if output is None:
-                missing_visual.add(row['asin'])
-            images.append(output)
-            t.update()
-
-broken_urls = set([im for im in images if im is None])
-print(f'Broken url: {len(broken_urls)}')
-remaining_items = remaining_items.intersection(set([im for im in images if im]))
-print(f'Remaining items: {len(remaining_items)}')
-
 # save original df
 meta.to_csv(f'{folder}/original_meta.tsv', sep='\t', index=None)
 reviews.to_csv(f'{folder}/original_reviews.tsv', sep='\t', index=None, header=None)
@@ -158,6 +140,25 @@ reviews.to_csv(f'{folder}/reviews.tsv', sep='\t', index=None, header=None)
 meta = pd.read_csv(f'{folder}/meta.tsv', sep='\t')
 print(len(meta[meta['description'].isna()]))
 print(len(meta[meta['description'].str.len() == 0]))
+
+
+if not os.path.exists(f'{folder}/images/'):
+    os.makedirs(f'{folder}/images/')
+
+images = []
+with tqdm(total=len(meta)) as t:
+    for index, row in meta.iterrows():
+        if pd.notna(row['imUrl']):
+            output = download_image(row['imUrl'], row['asin'], f'{folder}/images/{row["asin"]}.jpg')
+            if output is None:
+                missing_visual.add(row['asin'])
+            images.append(output)
+            t.update()
+
+broken_urls = set([im for im in images if im is None])
+print(f'Broken url: {len(broken_urls)}')
+remaining_items = remaining_items.intersection(set([im for im in images if im]))
+print(f'Remaining items: {len(remaining_items)}')
 
 # save missing items
 pd.DataFrame(list(missing_visual)).to_csv(f'{folder}/missing_visual.tsv', sep='\t',
