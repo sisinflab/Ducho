@@ -28,7 +28,7 @@ visual_textual:
         output_path: {visual: visual_embeddings_32, textual: textual_embeddings_32}
         model: [
             { model_name: openai/clip-vit-base-patch16, backend: transformers, output_layers: 1, batch_size: 32},
-            { model_name: kakaobrain/align-base, backend: transformers, output_layers: 1, batch_size: 1},
-            { model_name: BAAI/AltCLIP, backend: transformers, output_layers: 1, batch_size: 1},
+            { model_name: kakaobrain/align-base, backend: transformers, output_layers: 1, batch_size: 32},
+            { model_name: BAAI/AltCLIP, backend: transformers, output_layers: 1, batch_size: 32},
         ]
         

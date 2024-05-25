@@ -1,9 +1,7 @@
 # data taken from: https://cseweb.ucsd.edu/~jmcauley/datasets/amazon/links.html
 import os.path
 import time
-
 from tqdm import tqdm
-
 import pandas as pd
 import gzip
 import requests
@@ -133,15 +131,6 @@ print(len(meta[meta['description'].str.contains('N\/A')]))
 print(f'Remaining users: {reviews["reviewerID"].nunique()}')
 print(f'Remaining interactions: {len(reviews)}')
 
-# save final df
-meta.to_csv(f'{folder}/meta.tsv', sep='\t', index=None)
-reviews.to_csv(f'{folder}/reviews.tsv', sep='\t', index=None, header=None)
-
-meta = pd.read_csv(f'{folder}/meta.tsv', sep='\t')
-print(len(meta[meta['description'].isna()]))
-print(len(meta[meta['description'].str.len() == 0]))
-
-
 if not os.path.exists(f'{folder}/images/'):
     os.makedirs(f'{folder}/images/')
 
@@ -159,6 +148,13 @@ broken_urls = set([im for im in images if im is None])
 print(f'Broken url: {len(broken_urls)}')
 remaining_items = remaining_items.intersection(set([im for im in images if im]))
 print(f'Remaining items: {len(remaining_items)}')
+
+if len(broken_urls) > 0:
+    meta = meta[~meta['asin'].isin(missing_visual)]
+    reviews = reviews[~reviews['asin'].isin(missing_visual)]
+
+meta.to_csv(f'{folder}/meta.tsv', sep='\t', index=None)
+reviews.to_csv(f'{folder}/reviews.tsv', sep='\t', index=None, header=None)
 
 # save missing items
 pd.DataFrame(list(missing_visual)).to_csv(f'{folder}/missing_visual.tsv', sep='\t',
