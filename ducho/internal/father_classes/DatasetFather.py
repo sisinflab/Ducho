@@ -3,7 +3,7 @@ from ducho.internal.utils.human_sorting import human_sort
 import os
 import numpy
 from loguru import logger
-
+from collections.abc import Iterable
 
 class DatasetFather:
     """
@@ -107,14 +107,15 @@ class DatasetFather:
         if len(extracted_data) > 1:
             filenames = [f.split('.')[0] for f in filenames]
             for f, e in zip(filenames, extracted_data):
-                output_file_name = f + '.npy'
+                output_file_name = str(f) + '.npy'
                 path = os.path.join(output_path, output_file_name)
                 e = numpy.expand_dims(e, axis=0)
                 numpy.save(path, e)
 
         else:
-            filenames = filenames[0].split('.')[0] if isinstance(filenames, list) else filenames.split('.')[0]
-            output_file_name = filenames + '.npy'
+            # filenames = filenames[0].split('.')[0] if (isinstance(filenames, list) or isinstance(filenames, tuple)) else filenames.split('.')[0]
+            filenames = filenames[0].split('.')[0] if isinstance(filenames, Iterable) else filenames.split('.')[0]
+            output_file_name = str(filenames) + '.npy'
             path = os.path.join(output_path, output_file_name)
             numpy.save(path, extracted_data)
     # def create_output_file(self, index, extracted_data, model_layer, fusion=None):

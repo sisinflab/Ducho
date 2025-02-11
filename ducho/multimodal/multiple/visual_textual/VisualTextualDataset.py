@@ -4,6 +4,7 @@ from loguru import logger
 from ducho.multimodal.visual.VisualDataset import VisualDataset
 from ducho.multimodal.textual.TextualDataset import TextualDataset
 import numpy, os
+from collections.abc import Iterable
 
 
 class VisualTextualDataset:
@@ -101,7 +102,7 @@ class VisualTextualDataset:
         # checking whether batch size is > 1     
 
         if len(extracted_data[0]) > 1:
-            filenames = [f.split('.')[0] for f in filenames]
+            filenames = [str(f).split('.')[0] for f in filenames]
 
             # for this type of extractor, we do need to check the 'fusion' field again to properly save the features.
 
@@ -133,7 +134,7 @@ class VisualTextualDataset:
                         raise ValueError(f'The shapes of visual and textual embeddings should be the same for {fusion} fusion!')
                     extracted_data = numpy.mean(extracted_data, axis=0)
 
-                filenames = [f.split('.')[0] for f in filenames]
+                filenames = [str(f).split('.')[0] for f in filenames]
 
                 for f, e in zip(filenames, extracted_data):
                     output_file_name = f + '.npy'
@@ -141,7 +142,8 @@ class VisualTextualDataset:
                     e = numpy.expand_dims(e, axis=0)
                     numpy.save(path, e)
         else:
-            filenames = filenames[0].split('.')[0]
+            # filenames = filenames[0].split('.')[0]
+            filenames = filenames[0].split('.')[0] if isinstance(filenames, Iterable) else filenames.split('.')[0]
             if fusion:
                 output_file_name = filenames + '.npy'
                 numpy.save(os.path.join(output_path, output_file_name), extracted_data[0])

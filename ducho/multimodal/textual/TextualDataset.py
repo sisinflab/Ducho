@@ -71,7 +71,7 @@ class TextualDataset(DatasetFather):
         Returns:
             a String which contains the data of the file. It may be processed and cleaned
         """
-        return self._pre_processing(self._textual_file_manager.get_item_from_id(self._ids[index])), self._ids[index]
+        return self._pre_processing(self._textual_file_manager.get_item_from_id(self._ids[index])), str(self._ids[index])
 
     def _pre_processing(self, sample):
         """
@@ -180,12 +180,12 @@ class TextualDataset(DatasetFather):
         # checking whether batch size is > 1.
             
         if len(extracted_data) > 1:
-            output_file_name = [f + '.npy' for f in filenames]
+            output_file_name = [str(f) + '.npy' for f in filenames]
             for f, e in zip(output_file_name, extracted_data):
                 path = os.path.join(output_path, f)
                 e = numpy.expand_dims(e, axis=0)
                 numpy.save(path, e)
         else:
-            output_file_name = filenames[0] + '.npy'
+            output_file_name = str(filenames[0]) + '.npy'
             path = os.path.join(output_path, output_file_name)
             numpy.save(path, extracted_data)
