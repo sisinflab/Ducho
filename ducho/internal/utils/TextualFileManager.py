@@ -66,9 +66,9 @@ class TextualFileManager:
         Returns:
             Tuple[int, List[Any]]: A tuple containing the length of the object to be elaborated and a list of IDs.
         """
-        df = pd.read_csv(self._file_path, sep='\t')
         self._id_column = self._columns[0]
         self._text_column = self._columns[1]
+        df = pd.read_csv(self._file_path, sep='\t', dtype={f"{self._id_column}": str, f"{self._text_column}": str})
         self._internal_list = df
         ids_list = df[self._id_column].tolist() if type(self._id_column) != list else \
             list(zip(df[self._id_column[0]].tolist(), df[self._id_column[1]].tolist()))
