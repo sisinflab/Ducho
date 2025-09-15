@@ -5,7 +5,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
 # Hiding Transformers' tokenizer warnings
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 from loguru import logger
-from alive_progress import alive_bar
+from alive_progress import alive_bar, config_handler
+config_handler.set_global(force_tty=True)
 import torch
 import platform
 import tensorflow as tf
