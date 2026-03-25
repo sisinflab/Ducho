@@ -212,22 +212,23 @@ class Config:
                     return True
         return False
 
-    def get_columns(self, modality):
+    def get_columns(self, modality, source):
         """
         Gives the column names in the case of textual and visual_textual modalities
         Args:
             modality: 'textual', 'visual', 'audio', or 'visual_textual'
+            source: 'items' or 'interactions'
 
         Returns:
             for items: two dicts as { 'item_column': column name for items' ids, 'text_column': column name for items' descriptions }
             for interactions: two dicts as { 'interaction_columns': column name for items' ids, 'text_column': column name for items' descriptions }
         """
-        if 'items' in self._data_dict[modality]:
+        if source == 'items':
             if 'item_column' in self._data_dict[modality]['items'] and 'text_column' in self._data_dict[modality]['items']:
                 return self._data_dict[modality]['items']['item_column'], self._data_dict[modality]['items']['text_column']
             else:
                 raise KeyError('Please, specify both item_column and text_column in the configuration file!')
-        elif 'interactions' in self._data_dict[modality]:
+        elif source == 'interactions':
             if 'interaction_columns' in self._data_dict[modality]['interactions'] and 'text_column' in self._data_dict[modality]['interactions']:
                 if len(self._data_dict[modality]['interactions']['interaction_columns']) != 2:
                     raise ValueError('The value of interaction_columns in the configuration file should be a 2-length list!')
