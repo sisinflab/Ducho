@@ -1,5 +1,5 @@
-from ducho.runner.Runner import MultimodalFeatureExtractor
 import sys
+from ducho.runner.Runner import MultimodalFeatureExtractor
 
 
 def main(config, additional_argv):
