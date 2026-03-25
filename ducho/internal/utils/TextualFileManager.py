@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 
 
@@ -40,25 +41,6 @@ class TextualFileManager:
         """
         self._file_path = file_path
 
-    def build_path_from_id(self, id_):
-        """
-        Build the name of the output file for a single processed sentence.
-
-        This method constructs the name of the output file for a single processed sentence.
-        Later, this name will be used to build the complete path of the single output file.
-
-        Args:
-            id_ (Any): The row ID. This is used only to build the name.
-
-        Returns:
-            str: The output file name. This is not the complete path or the complete name of the file
-            (it misses the extension).
-        """
-        if self._type_of_extraction == 'interactions':
-            return f'{id_[0]}__{id_[1]}'
-        elif self._type_of_extraction == 'items':
-            return str(id_)
-
     def initiate_element_list_and_get_len(self):
         """
         Read the file, instantiate the internal list of its contents, and return the number of sentences to be elaborated.
@@ -68,11 +50,108 @@ class TextualFileManager:
         """
         self._id_column = self._columns[0]
         self._text_column = self._columns[1]
-        df = pd.read_csv(self._file_path, sep='\t', dtype={f"{self._id_column}": str, f"{self._text_column}": str})
+        df = self._load_textual_dataframe()
         self._internal_list = df
         ids_list = df[self._id_column].tolist() if type(self._id_column) != list else \
             list(zip(df[self._id_column[0]].tolist(), df[self._id_column[1]].tolist()))
         return len(self._internal_list), ids_list
+
+    def _build_dtype_map(self):
+        """
+        Build dtype hints for textual identifiers and text columns.
+
+        Returns:
+            dict: A dictionary mapping required columns to `str` dtype.
+        """
+        dtype_map = {self._text_column: str}
+        if isinstance(self._id_column, list):
+            for col in self._id_column:
+                dtype_map[col] = str
+        else:
+            dtype_map[self._id_column] = str
+        return dtype_map
+
+    def _detect_input_format(self):
+        """
+        Detect the textual input format from file extension.
+
+        Returns:
+            str: One among {'tsv', 'hdf', 'parquet'}.
+        """
+        extension = os.path.splitext(self._file_path)[1].lower()
+
+        if extension == '.tsv':
+            return 'tsv'
+        if extension in ['.h5', '.hdf5', '.hdf']:
+            return 'hdf'
+        if extension == '.parquet':
+            return 'parquet'
+
+        raise ValueError(
+            f"Unsupported textual input format '{extension}'. Supported formats: .tsv, .h5/.hdf5/.hdf, .parquet"
+        )
+
+    def _read_hdf_with_fallback(self):
+        """
+        Read an HDF5 file. If no key is explicitly provided in the file call, try the first available key.
+
+        Returns:
+            pandas.DataFrame: Data read from the HDF5 file.
+        """
+        try:
+            return pd.read_hdf(self._file_path)
+        except (ValueError, KeyError):
+            with pd.HDFStore(self._file_path, mode='r') as store:
+                keys = store.keys()
+            if not keys:
+                raise ValueError(f"No dataset key found in HDF5 file: {self._file_path}")
+            return pd.read_hdf(self._file_path, key=keys[0])
+
+    def _ensure_required_columns_are_string(self, dataframe):
+        """
+        Validate required columns and cast them to string.
+
+        Args:
+            dataframe (pandas.DataFrame): Input dataframe.
+
+        Returns:
+            pandas.DataFrame: Dataframe with casted required columns.
+        """
+        required_columns = [self._text_column]
+        if isinstance(self._id_column, list):
+            required_columns.extend(self._id_column)
+        else:
+            required_columns.append(self._id_column)
+
+        missing_columns = [col for col in required_columns if col not in dataframe.columns]
+        if missing_columns:
+            raise KeyError(f"Missing required textual columns in input file: {missing_columns}")
+
+        for col in required_columns:
+            dataframe[col] = dataframe[col].astype(str)
+
+        return dataframe
+
+    def _load_textual_dataframe(self):
+        """
+        Load textual data according to the input file format.
+
+        Returns:
+            pandas.DataFrame: Loaded textual dataframe.
+        """
+        input_format = self._detect_input_format()
+        dtype_map = self._build_dtype_map()
+
+        if input_format == 'tsv':
+            return pd.read_csv(self._file_path, sep='\t', dtype=dtype_map)
+        if input_format == 'hdf':
+            dataframe = self._read_hdf_with_fallback()
+            return self._ensure_required_columns_are_string(dataframe)
+        if input_format == 'parquet':
+            dataframe = pd.read_parquet(self._file_path)
+            return self._ensure_required_columns_are_string(dataframe)
+
+        raise ValueError(f"Unsupported textual input format: {input_format}")
 
     def get_item_from_id(self, idx):
         """

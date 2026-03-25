@@ -1,5 +1,7 @@
 datasets
+pyarrow
 sentence-transformers
+tables
 transformers
 loguru
 alive-progress

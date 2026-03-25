@@ -241,7 +241,7 @@ class MultimodalFeatureExtractor:
                 f"{camel_case(modality)}Dataset"
                 )(working_paths['input_path'],
                   working_paths['output_path'],
-                  columns=self._config.get_columns(modality))
+                  columns=self._config.get_columns(modality, source))
             dataset._textual_dataset.set_type_of_extraction(source)
             extractor = getattr(importlib.import_module(
                 f"ducho.multimodal.multiple.{modality}.{camel_case(modality)}FeatureExtractor"),
@@ -256,7 +256,7 @@ class MultimodalFeatureExtractor:
                                   f"{camel_case(modality)}Dataset"
                                   )(working_paths['input_path'],
                                     working_paths['output_path'],
-                                    columns=self._config.get_columns(modality))
+                                    columns=self._config.get_columns(modality, source))
                 dataset.set_type_of_extraction(source)
             else:
                 dataset = getattr(importlib.import_module(f"ducho.multimodal.{modality}.{camel_case(modality)}Dataset"),

@@ -13,7 +13,7 @@ visual|textual|audio:
 
   items|interactions:
   
-    input_path: <input_file_or_folder> # this path is relative to dataset_path
+    input_path: <input_file_or_folder> # this path is relative to dataset_path. Textual files support .tsv, .h5/.hdf5/.hdf, and .parquet
     
     output_path: <output_folder> # this path is relative to dataset_path
     
@@ -49,7 +49,9 @@ visual|textual|audio:
 ## Notes
 Please refer to the \[*\] reported in the YAML schema from above.
 
-**\[1\]** In case of textual/items, the tsv input file is supposed to be formatted in the following manner:
+**\[1\]** In case of textual/items, input files can be in **TSV (.tsv)**, **HDF5 (.h5/.hdf5/.hdf)**, or **Parquet (.parquet)** format.
+
+For TSV files, the input is supposed to be formatted in the following manner:
 
 ```tsv
 <ITEM_ID_COLUMN_NAME>\t<ITEM_DESCRIPTION_COLUMN_NAME>
@@ -57,9 +59,13 @@ Please refer to the \[*\] reported in the YAML schema from above.
 ...
 [last_item_id]\t[last_item_description]
 ```
-where <ITEM_ID_COLUMN_NAME> and <ITEM_DESCRIPTION_COLUMN_NAME> are customizable. Note that if no ```item_column``` is provided in the configuration file, Ducho takes the last column (i.e., <ITEM_DESCRIPTION_COLUMN_NAME>) of the tsv file as item column by default.
+where <ITEM_ID_COLUMN_NAME> and <ITEM_DESCRIPTION_COLUMN_NAME> are customizable. For HDF5/Parquet files, the same column naming constraints apply.
 
-**\[2\]** In case of textual/interactions, the tsv input file is supposed to be formatted in the following manner:
+Note that if no ```item_column``` is provided in the configuration file, Ducho takes the last column (i.e., <ITEM_DESCRIPTION_COLUMN_NAME>) of the file as item column by default.
+
+**\[2\]** In case of textual/interactions, input files can be in **TSV (.tsv)**, **HDF5 (.h5/.hdf5/.hdf)**, or **Parquet (.parquet)** format.
+
+For TSV files, the input is supposed to be formatted in the following manner:
 
 ```tsv
 <USER_ID_COLUMN_NAME>\t<ITEM_ID_COLUMN_NAME>\t<REVIEW_COLUMN_NAME>
@@ -67,7 +73,9 @@ where <ITEM_ID_COLUMN_NAME> and <ITEM_DESCRIPTION_COLUMN_NAME> are customizable.
 ...
 [last_user_id]\t[last_item_id]\t[last_review]
 ```
-where <USER_ID_COLUMN_NAME>, <ITEM_ID_COLUMN_NAME>, and <REVIEW_COLUMN_NAME> are customizable. Note that if no ```interaction_column``` is provided in the configuration file, Ducho takes the last column (i.e., <REVIEW_COLUMN_NAME>) of the tsv file as interaction column by default.
+where <USER_ID_COLUMN_NAME>, <ITEM_ID_COLUMN_NAME>, and <REVIEW_COLUMN_NAME> are customizable. For HDF5/Parquet files, the same column naming constraints apply.
+
+Note that if no ```interaction_column``` is provided in the configuration file, Ducho takes the last column (i.e., <REVIEW_COLUMN_NAME>) of the file as interaction column by default.
 
 **\[3\]** We provide a modality/backend table for this:
 

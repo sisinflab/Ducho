@@ -1,9 +1,56 @@
 [build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
 name = "Ducho"
 version = "0.0.1"
-requires = ["python >= 3.8", "setuptools"]
-build-backend = "setuptools.build_meta"
+requires-python = ">=3.10"
 dependencies = [
-        'numpy',
-        'pandas',
+    "babel",
+    "charset-normalizer",
+    "config",
+    "datasets",
+    "docopt",
+    "flask-markdown",
+    "frozen-flask",
+    "gdown",
+    "gensim",
+    "gevent",
+    "humanize",
+    "matplotlib",
+    "nltk",
+    "numpy<2",
+    "pandas",
+    "pyarrow",
+    "sacremoses",
+    "sentence-transformers>=2.2.2,<3",
+    "scikit-learn",
+    "soundfile",
+    "tables",
+    "tensorflow==2.14.0",
+    "tensorflow-estimator",
+    "tensorflow-intel==2.14.0 ; sys_platform == 'win32'",
+    "tensorflow-io-gcs-filesystem==0.31.0",
+    "torch==2.1.2",
+    "torchaudio==2.1.2",
+    "torchvision==0.16.2",
+    "transformers==4.36.2",
+    "tokenizers==0.15.0",
+    "tqdm",
+    "loguru",
+    "alive-progress",
 ]
+
+[[tool.uv.index]]
+name = "pytorch-cu118"
+url = "https://download.pytorch.org/whl/cu118"
+explicit = true
+
+[tool.setuptools.packages.find]
+include = ["ducho*"]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu118" }]
+torchaudio = [{ index = "pytorch-cu118" }]
+torchvision = [{ index = "pytorch-cu118" }]

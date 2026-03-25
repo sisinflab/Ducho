@@ -13,7 +13,9 @@ humanize
 matplotlib
 nltk
 pandas
+pyarrow
 pip-chill
+tables
 python-version
 sacremoses
 sentence-transformers==2.2.2
