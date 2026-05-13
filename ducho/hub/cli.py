@@ -13,6 +13,11 @@ from browser import search_models, DUCHO_TASK_MAP
 def search(modality, query, library, limit, sort, show_config):
     """Search HuggingFace Hub for models compatible with a Ducho modality."""
     results = search_models(modality, query, library, limit, sort)
+    
+    if not results:
+        click.echo("No models found. Try a different query or modality.")
+        return
+    
     for r in results:
         click.echo(f"{r['model_id']:60s}  ⬇ {r['downloads']:>10,}  ♥ {r['likes']:>5}  [{r['task']}]")
         if show_config:
