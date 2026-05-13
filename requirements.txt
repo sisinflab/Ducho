@@ -31,3 +31,4 @@ tokenizers==0.15.0
 tqdm
 loguru
 alive-progress
+huggingface-hub>=0.20.0
