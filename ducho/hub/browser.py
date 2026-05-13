@@ -31,7 +31,7 @@ def search_models(
         for m in models:
             results.append({
                 "model_id": m.modelId,
-                "task": task,
+                "task": task, # there is also m.pipeline_tag
                 "downloads": m.downloads or 0, # to catch None values
                 "likes": m.likes or 0, # to catch None values
                 "last_modified": str(m.lastModified),
@@ -49,5 +49,5 @@ def _make_config_snippet(modality: str, model_id: str) -> str:
         f"    - model: {model_id}\n"
         f"      backend: transformers\n"
         f"      output_layers: 1\n"
-        f"      batch_size: 32\n"
+        f"      batch_size: \n"
     )
