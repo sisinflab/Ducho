@@ -12,13 +12,16 @@ DUCHO_TASK_MAP = {
 def search_models(
     modality: Literal["visual", "textual", "audio", "visual-textual"],
     query: str = None,
-    library: str = None,          # "transformers", "sentence-transformers", etc.
+    library: str = None,
     limit: int = 10,
-    sort: str = "downloads",       # or "likes", "lastModified"
+    sort: str = "downloads",
+    task: str = None,
 ) -> list[dict]:
     api = HfApi()
     tasks = DUCHO_TASK_MAP.get(modality, [])
-    
+    if task is not None:
+        tasks = [task]
+
     results = []
     for task in tasks:
         models = api.list_models(
@@ -31,15 +34,16 @@ def search_models(
         for m in models:
             results.append({
                 "model_id": m.modelId,
-                "task": task, # there is also m.pipeline_tag
-                "downloads": m.downloads or 0, # to catch None values
-                "likes": m.likes or 0, # to catch None values
+                "task": task,
+                "downloads": m.downloads or 0,
+                "likes": m.likes or 0,
                 "last_modified": str(m.lastModified),
                 "tags": m.tags,
-                # Ready-to-paste Ducho YAML snippet:
                 "ducho_config_snippet": _make_config_snippet(modality, m.modelId),
             })
-    return results
+    sort_key = {"downloads": "downloads", "likes": "likes", "lastModified": "last_modified"}.get(sort, "downloads")
+    results.sort(key=lambda m: m[sort_key], reverse=True)
+    return results[:limit]
 
 def _make_config_snippet(modality: str, model_id: str) -> str:
     """Returns a ready-to-use YAML snippet for Ducho config."""
@@ -49,5 +53,5 @@ def _make_config_snippet(modality: str, model_id: str) -> str:
         f"    - model: {model_id}\n"
         f"      backend: transformers\n"
         f"      output_layers: 1\n"
-        f"      batch_size: \n"
+        f"      batch_size: 32\n"
     )
